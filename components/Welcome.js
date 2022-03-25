@@ -1,7 +1,8 @@
 import * as React from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { View, Text, StyleSheet, Image,TouchableOpacity } from 'react-native';
 import welcomepageData from '../assets/data/welcomepageData';
 import colors from '../assets/colors/colors';
+import FlatButton from './button';
 
 export default Welcome = () =>{
     return (
@@ -13,6 +14,9 @@ export default Welcome = () =>{
                 <Image source={require('../assets/images/tree.png')}></Image>
                 <Text style={styles.intro}>{'\n'}WELCOME TO FARM-O-MATIC</Text>
                 <Text style={styles.intro}>A PLATFORM THAT WILL MAKE PLANTING EASIER</Text>
+                <View style={styles.space}/>
+                <FlatButton text='LOGIN'/>
+                <FlatButton text='SIGN UP'/>
             </View>
             <View  style={{position:'absolute',top:500,right:0}}>
                 <Image source={require('../assets/images/lowercircle.png')}></Image>
@@ -30,5 +34,9 @@ const styles = StyleSheet.create({
         fontSize:13,
         lineHeight:30,
         color:colors.darkGray
-    }
+    },
+    space:{
+        width:20,
+        height:30,
+    },
 });
