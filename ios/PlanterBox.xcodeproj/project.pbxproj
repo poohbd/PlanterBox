@@ -43,17 +43,33 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = PlanterBox/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = PlanterBox/main.m; sourceTree = "<group>"; };
 		4278741D4E7B873CA7659CEA /* libPods-PlanterBox.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PlanterBox.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		4762D54281F44627801CA264 /* Mitr-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Mitr-Medium.ttf"; path = "../assets/fonts/Mitr-Medium.ttf"; sourceTree = "<group>"; };
-		4942F10D656B4EB094B9C96C /* Mitr-ExtraLight.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Mitr-ExtraLight.ttf"; path = "../assets/fonts/Mitr-ExtraLight.ttf"; sourceTree = "<group>"; };
+		4762D54281F44627801CA264 /* Mitr-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Mitr-Medium.ttf"; path = "../assets/fonts/Mitr-Medium.ttf"; sourceTree = "<group>"; };
+		4942F10D656B4EB094B9C96C /* Mitr-ExtraLight.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Mitr-ExtraLight.ttf"; path = "../assets/fonts/Mitr-ExtraLight.ttf"; sourceTree = "<group>"; };
 		5B9171E1F39D0FD881DD1136 /* libPods-PlanterBox-PlanterBoxTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PlanterBox-PlanterBoxTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		632B7EFD27EE32260007A6F5 /* Fontisto.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Fontisto.ttf; sourceTree = "<group>"; };
+		632B7EFE27EE32260007A6F5 /* Octicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Octicons.ttf; sourceTree = "<group>"; };
+		632B7EFF27EE32260007A6F5 /* Feather.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Feather.ttf; sourceTree = "<group>"; };
+		632B7F0027EE32260007A6F5 /* Entypo.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Entypo.ttf; sourceTree = "<group>"; };
+		632B7F0127EE32260007A6F5 /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome5_Brands.ttf; sourceTree = "<group>"; };
+		632B7F0227EE32260007A6F5 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MaterialCommunityIcons.ttf; sourceTree = "<group>"; };
+		632B7F0327EE32260007A6F5 /* AntDesign.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = AntDesign.ttf; sourceTree = "<group>"; };
+		632B7F0427EE32260007A6F5 /* Foundation.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Foundation.ttf; sourceTree = "<group>"; };
+		632B7F0527EE32260007A6F5 /* Ionicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Ionicons.ttf; sourceTree = "<group>"; };
+		632B7F0627EE32260007A6F5 /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome5_Solid.ttf; sourceTree = "<group>"; };
+		632B7F0727EE32260007A6F5 /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome5_Regular.ttf; sourceTree = "<group>"; };
+		632B7F0827EE32260007A6F5 /* FontAwesome.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome.ttf; sourceTree = "<group>"; };
+		632B7F0927EE32260007A6F5 /* Zocial.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Zocial.ttf; sourceTree = "<group>"; };
+		632B7F0A27EE32260007A6F5 /* EvilIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = EvilIcons.ttf; sourceTree = "<group>"; };
+		632B7F0B27EE32260007A6F5 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SimpleLineIcons.ttf; sourceTree = "<group>"; };
+		632B7F0C27EE32260007A6F5 /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MaterialIcons.ttf; sourceTree = "<group>"; };
 		7213907A72B5F1D7A3A6681A /* Pods-PlanterBox.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PlanterBox.debug.xcconfig"; path = "Target Support Files/Pods-PlanterBox/Pods-PlanterBox.debug.xcconfig"; sourceTree = "<group>"; };
-		73672D26BDA94A7CBB98F2EE /* Mitr-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Mitr-Light.ttf"; path = "../assets/fonts/Mitr-Light.ttf"; sourceTree = "<group>"; };
+		73672D26BDA94A7CBB98F2EE /* Mitr-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Mitr-Light.ttf"; path = "../assets/fonts/Mitr-Light.ttf"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = PlanterBox/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		879D7DA1B02B4062939D8559 /* Mitr-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Mitr-SemiBold.ttf"; path = "../assets/fonts/Mitr-SemiBold.ttf"; sourceTree = "<group>"; };
+		879D7DA1B02B4062939D8559 /* Mitr-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Mitr-SemiBold.ttf"; path = "../assets/fonts/Mitr-SemiBold.ttf"; sourceTree = "<group>"; };
 		C3CF028ACC56F1E0B18D3B84 /* Pods-PlanterBox-PlanterBoxTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PlanterBox-PlanterBoxTests.debug.xcconfig"; path = "Target Support Files/Pods-PlanterBox-PlanterBoxTests/Pods-PlanterBox-PlanterBoxTests.debug.xcconfig"; sourceTree = "<group>"; };
 		C5C26A67DCCFA5813F63F454 /* Pods-PlanterBox-PlanterBoxTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PlanterBox-PlanterBoxTests.release.xcconfig"; path = "Target Support Files/Pods-PlanterBox-PlanterBoxTests/Pods-PlanterBox-PlanterBoxTests.release.xcconfig"; sourceTree = "<group>"; };
-		CC79FB0F54B7400B8A3C6AA4 /* Mitr-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Mitr-Regular.ttf"; path = "../assets/fonts/Mitr-Regular.ttf"; sourceTree = "<group>"; };
-		E9662FE6148E42ECB478CDC0 /* Mitr-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Mitr-Bold.ttf"; path = "../assets/fonts/Mitr-Bold.ttf"; sourceTree = "<group>"; };
+		CC79FB0F54B7400B8A3C6AA4 /* Mitr-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Mitr-Regular.ttf"; path = "../assets/fonts/Mitr-Regular.ttf"; sourceTree = "<group>"; };
+		E9662FE6148E42ECB478CDC0 /* Mitr-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Mitr-Bold.ttf"; path = "../assets/fonts/Mitr-Bold.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		F7F9EC011B093597C88C8A5F /* Pods-PlanterBox.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PlanterBox.release.xcconfig"; path = "Target Support Files/Pods-PlanterBox/Pods-PlanterBox.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -98,6 +114,7 @@
 		13B07FAE1A68108700A75B9A /* PlanterBox */ = {
 			isa = PBXGroup;
 			children = (
+				632B7EFC27EE32260007A6F5 /* Fonts */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -116,6 +133,30 @@
 				5B9171E1F39D0FD881DD1136 /* libPods-PlanterBox-PlanterBoxTests.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		632B7EFC27EE32260007A6F5 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				632B7EFD27EE32260007A6F5 /* Fontisto.ttf */,
+				632B7EFE27EE32260007A6F5 /* Octicons.ttf */,
+				632B7EFF27EE32260007A6F5 /* Feather.ttf */,
+				632B7F0027EE32260007A6F5 /* Entypo.ttf */,
+				632B7F0127EE32260007A6F5 /* FontAwesome5_Brands.ttf */,
+				632B7F0227EE32260007A6F5 /* MaterialCommunityIcons.ttf */,
+				632B7F0327EE32260007A6F5 /* AntDesign.ttf */,
+				632B7F0427EE32260007A6F5 /* Foundation.ttf */,
+				632B7F0527EE32260007A6F5 /* Ionicons.ttf */,
+				632B7F0627EE32260007A6F5 /* FontAwesome5_Solid.ttf */,
+				632B7F0727EE32260007A6F5 /* FontAwesome5_Regular.ttf */,
+				632B7F0827EE32260007A6F5 /* FontAwesome.ttf */,
+				632B7F0927EE32260007A6F5 /* Zocial.ttf */,
+				632B7F0A27EE32260007A6F5 /* EvilIcons.ttf */,
+				632B7F0B27EE32260007A6F5 /* SimpleLineIcons.ttf */,
+				632B7F0C27EE32260007A6F5 /* MaterialIcons.ttf */,
+			);
+			name = Fonts;
+			path = "../node_modules/react-native-vector-icons/Fonts";
 			sourceTree = "<group>";
 		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
@@ -161,7 +202,6 @@
 				879D7DA1B02B4062939D8559 /* Mitr-SemiBold.ttf */,
 			);
 			name = Resources;
-			path = "";
 			sourceTree = "<group>";
 		};
 		E3710E63DFC2C8F881DC6517 /* Pods */ = {
@@ -172,7 +212,6 @@
 				C3CF028ACC56F1E0B18D3B84 /* Pods-PlanterBox-PlanterBoxTests.debug.xcconfig */,
 				C5C26A67DCCFA5813F63F454 /* Pods-PlanterBox-PlanterBoxTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
