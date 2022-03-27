@@ -36,7 +36,7 @@
 		</dict>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string/>
+	<string></string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
@@ -59,6 +59,9 @@
 		<string>Mitr-ExtraLight.ttf</string>
 		<string>Mitr-Light.ttf</string>
 		<string>Mitr-SemiBold.ttf</string>
+		<string>Ionicons.ttf</string>
 	</array>
+	<key>NSCameraUsageDescription</key>
+	<string>Your message to user when the camera is accessed for the first time</string>
 </dict>
 </plist>

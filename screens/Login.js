@@ -24,7 +24,7 @@ export default Login = ({navigation}) => {
             <Text style={styles.baseText} >DON'T HAVE AN ACCOUNT?
                 <Text style={styles.signup} onPress={() => navigation.navigate('Signup')}> SIGN UP</Text>
             </Text>
-            
+            <Text style={{color:colors.newGreen2,fontSize:20,textAlign:'center'}} onPress={() => navigation.navigate('QRscan')}>{'\n'} QR SCAN PAGE</Text>
         </View>
         
     )
