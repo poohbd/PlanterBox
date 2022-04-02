@@ -37,13 +37,29 @@ export default QRscan= ({navigation}) => {
                 <ScrollView contentInsetAdjustmentBehavior="automatic">
                     <View style={styles.rect2}>
                      { result &&
+                        <>
                         <View>
-                         <Text style={styles.header}>{result}</Text>
-                        </View>}
+                          <Text style={styles.header}>{result}</Text>
+                        </View>
+                        <TouchableOpacity style={styles.buttonNext} onPress={() => navigation.navigate('Menu')}>
+                          <View>
+                            <Text style={styles.buttonNextText}>NEXT</Text>
+                          </View>
+                        </TouchableOpacity>
+                        </>
+                      }
                      { !scan &&
+                        <>
                         <View style={styles.rectangleContainer}>
                           <ScanButton text="Start Scan" onPress={this.startScan} />
+                          <TouchableOpacity style={styles.buttonNext} onPress={() => navigation.navigate('SuccesfulReg')}>
+                          <View>
+                            <Text style={styles.buttonNextText}>NEXT</Text>
+                          </View>
+                          </TouchableOpacity>
                         </View>
+                        
+                        </>
                      }
                      { scan &&
                         <View>
@@ -194,4 +210,16 @@ const styles = StyleSheet.create({
     backgroundColor: scanBarColor,
     alignSelf:'center'
   },
+  buttonNext: {
+    paddingVertical: 8,
+    width: 80,
+    backgroundColor: colors.newGreen2,
+    borderRadius: 20,
+  },
+  buttonNextText: {
+    color: '#FAFAFA',
+    textAlign: 'center',
+    fontFamily: 'Mitr-Regular',
+    fontSize: 13,
+  }
 })

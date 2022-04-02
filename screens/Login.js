@@ -20,7 +20,7 @@ export default Login = ({navigation}) => {
             <TranspInput secure={true} onChangeText={(password) => setPassword(password)} />
             <Text style={styles.forgetPass}>FORGET PASSWORD?</Text>
             <View style={styles.space} />
-            <FlatButton text="LOGIN" onPress={() => navigation.navigate('Login')} />
+            <FlatButton text="LOGIN" onPress={() => navigation.navigate('Register')} />
             <Text style={styles.baseText} >DON'T HAVE AN ACCOUNT?
                 <Text style={styles.signup} onPress={() => navigation.navigate('Signup')}> SIGN UP</Text>
             </Text>
