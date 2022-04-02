@@ -10,14 +10,24 @@ import CustomizeModal from '../components/customizemodal';
 
 export default MyPlant= ({navigation}) => {
     const [isSun, setIsSun] = React.useState(false);
+    const [isBasil, setIsBasil] = React.useState(false);
     const [notSelected, setNotSelected] = React.useState(true);
     const [openpreset, setOpenPreset] = React.useState(false);
-    const [valuepreset, setValuePreset] = React.useState(null);
+    const [valuepreset, setValuePreset] = React.useState();
     const [plantname, setPlantName] = React.useState('');
+    function sunSelected() {
+      setIsSun(true);
+      setNotSelected(false);
+    }
+    function basilSelected() {
+      setIsBasil(true);
+      setNotSelected(false);
+    }
     const [items, setItems] = React.useState([
-      {label: <Text style={{fontFamily: 'Mitr-Regular', color: colors.newGreen2}} onPress={(isSun) => setIsSun(true)}>Sunflower</Text>
-      , value: 'apple'},
-      {label: 'Banana', value: 'banana'},
+      {label: <Text style={{fontFamily: 'Mitr-Regular', color: colors.newGreen2}} onPress={() => {sunSelected();setValuePreset('Sunflower')}}>Sunflower</Text>
+      , value: 'Sunflower'},
+      {label: <Text style={{fontFamily: 'Mitr-Regular', color: colors.newGreen2}} onPress={() => {basilSelected();setValuePreset('Basil')}}>Basil</Text>
+      , value: 'Basil'},
     ]);
     const [opencustom, setOpenCustom] = React.useState(false);
     const [valuecustom, setValueCustom] = React.useState(null);
@@ -26,6 +36,12 @@ export default MyPlant= ({navigation}) => {
     const [modalVisible, setModalVisible] = React.useState(false);
     function closeModal(){
       setModalVisible(false);
+    }
+    pathImage=(type)=>{
+      switch(type){
+        case 'Sunflower': return(require("../assets/images/Sunflower.png"))
+        case 'Basil': return(require("../assets/images/Basil.png"))
+      }
     }
 
     return (
@@ -58,7 +74,7 @@ export default MyPlant= ({navigation}) => {
           inputStyle={{color:"#FFFFFF"}}
         />
         <View>
-          {!isSun?
+          {!valuepreset ?
           <View style={styles.cardContent}>
               <DropDownPicker
                 open={openpreset}
@@ -92,11 +108,12 @@ export default MyPlant= ({navigation}) => {
                   CUSTOMIZE
                 </Text>
               </TouchableOpacity>                    
-          </View>:
+          </View>:null}
           <View style={styles.containerNew}>
+          {valuepreset ?
             <View style={styles.cardContentDone}>
-              <Text style={{color:colors.newGreen2,fontSize:15, textAlign:'right', fontFamily:"Mitr-Regular", alignSelf:'flex-start', paddingLeft:10, marginTop:0   }}>SUNFLOWER</Text>
-              <Image style={styles.imageSun} source = {require("../assets/images/sunflower.png")}/>
+              <Text style={{color:colors.newGreen2,fontSize:15, textAlign:'right', fontFamily:"Mitr-Regular", alignSelf:'flex-start', paddingLeft:10, marginTop:0   }}>{valuepreset}</Text>
+              <Image style={styles.imageSun} source = {pathImage(valuepreset)}/>
               <View style={styles.cardContentCircle}>
                 <Text style={{color:'#DBB907',textAlign:"center",fontSize:20, fontFamily:"Mitr-Regular", alignSelf:'center', paddingTop:38  }}>46%</Text>
                 <Text style={{color:colors.newGreen2,textAlign:"center",fontSize:13, fontFamily:"Mitr-Regular", paddingTop:20  }}>Light</Text>
@@ -106,9 +123,23 @@ export default MyPlant= ({navigation}) => {
                 <Text style={{color:colors.newGreen2,textAlign:"center",fontSize:13, alignSelf:'baseline', fontFamily:"Mitr-Regular", marginTop:10  }}>Soil Moisture</Text>
               </View>       
               <Text style={{color:colors.newGreen2,fontSize:22, fontFamily:"Mitr-Regular", alignSelf:'center', paddingLeft:150, marginTop:40   }}>34°C</Text>
-       
+          </View>:null}
+          {/* {isBasil & !notSelected?
+          <View style={styles.cardContentDone}>
+              <Text style={{color:colors.newGreen2,fontSize:15, textAlign:'right', fontFamily:"Mitr-Regular", alignSelf:'flex-start', paddingLeft:10, marginTop:0   }}>{valuepreset}</Text>
+              <Image style={styles.imageSun} source = {pathImage(valuepreset)}/>
+              <View style={styles.cardContentCircle}>
+                <Text style={{color:'#DBB907',textAlign:"center",fontSize:20, fontFamily:"Mitr-Regular", alignSelf:'center', paddingTop:38  }}>50%</Text>
+                <Text style={{color:colors.newGreen2,textAlign:"center",fontSize:13, fontFamily:"Mitr-Regular", paddingTop:20  }}>Light</Text>
+              </View>
+              <View style={styles.cardContentCircle2}>
+                <Text style={{color:'#DBB907',textAlign:"center",fontSize:20, fontFamily:"Mitr-Regular", alignSelf:'center', paddingTop:18  }}>35%</Text>
+                <Text style={{color:colors.newGreen2,textAlign:"center",fontSize:13, alignSelf:'baseline', fontFamily:"Mitr-Regular", marginTop:10  }}>Soil Moisture</Text>
+              </View>       
+              <Text style={{color:colors.newGreen2,fontSize:22, fontFamily:"Mitr-Regular", alignSelf:'center', paddingLeft:150, marginTop:40   }}>34°C</Text>
+          </View>:null} */}
           </View>
-          </View>}
+          
           <TouchableOpacity style={styles.buttonAdd} onPress={() => navigation.navigate('SerialNumber')}>
             <View>
               <Text style={styles.buttonAddText}>+ ADD NEW BOX</Text>
@@ -120,6 +151,7 @@ export default MyPlant= ({navigation}) => {
 
     )
 }
+
 const deviceWidth = Dimensions.get('screen').width;
 const deviceHeight = Dimensions.get('screen').height;
 
