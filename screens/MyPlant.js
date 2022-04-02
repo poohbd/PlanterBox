@@ -5,14 +5,18 @@ import { Button, Searchbar } from 'react-native-paper';
 import DropDownPicker from 'react-native-dropdown-picker';
 import TranspInput from '../components/accountinput';
 import CustomizeModal from '../components/customizemodal';
+//import { CircularCard } from "react-native-circular-card-view";
 
 
 export default MyPlant= ({navigation}) => {
+    const [isSun, setIsSun] = React.useState(false);
+    const [notSelected, setNotSelected] = React.useState(true);
     const [openpreset, setOpenPreset] = React.useState(false);
     const [valuepreset, setValuePreset] = React.useState(null);
     const [plantname, setPlantName] = React.useState('');
     const [items, setItems] = React.useState([
-      {label: 'Apple', value: 'apple'},
+      {label: <Text style={{fontFamily: 'Mitr-Regular', color: colors.newGreen2}} onPress={(isSun) => setIsSun(true)}>Sunflower</Text>
+      , value: 'apple'},
       {label: 'Banana', value: 'banana'},
     ]);
     const [opencustom, setOpenCustom] = React.useState(false);
@@ -54,6 +58,7 @@ export default MyPlant= ({navigation}) => {
           inputStyle={{color:"#FFFFFF"}}
         />
         <View>
+          {!isSun?
           <View style={styles.cardContent}>
               <DropDownPicker
                 open={openpreset}
@@ -87,7 +92,23 @@ export default MyPlant= ({navigation}) => {
                   CUSTOMIZE
                 </Text>
               </TouchableOpacity>                    
+          </View>:
+          <View style={styles.containerNew}>
+            <View style={styles.cardContentDone}>
+              <Text style={{color:colors.newGreen2,fontSize:15, textAlign:'right', fontFamily:"Mitr-Regular", alignSelf:'flex-start', paddingLeft:10, marginTop:0   }}>SUNFLOWER</Text>
+              <Image style={styles.imageSun} source = {require("../assets/images/sunflower.png")}/>
+              <View style={styles.cardContentCircle}>
+                <Text style={{color:'#DBB907',textAlign:"center",fontSize:20, fontFamily:"Mitr-Regular", alignSelf:'center', paddingTop:38  }}>46%</Text>
+                <Text style={{color:colors.newGreen2,textAlign:"center",fontSize:13, fontFamily:"Mitr-Regular", paddingTop:20  }}>Light</Text>
+              </View>
+              <View style={styles.cardContentCircle2}>
+                <Text style={{color:'#DBB907',textAlign:"center",fontSize:20, fontFamily:"Mitr-Regular", alignSelf:'center', paddingTop:18  }}>30%</Text>
+                <Text style={{color:colors.newGreen2,textAlign:"center",fontSize:13, alignSelf:'baseline', fontFamily:"Mitr-Regular", marginTop:10  }}>Soil Moisture</Text>
+              </View>       
+              <Text style={{color:colors.newGreen2,fontSize:22, fontFamily:"Mitr-Regular", alignSelf:'center', paddingLeft:150, marginTop:40   }}>34°C</Text>
+       
           </View>
+          </View>}
           <TouchableOpacity style={styles.buttonAdd} onPress={() => navigation.navigate('SerialNumber')}>
             <View>
               <Text style={styles.buttonAddText}>+ ADD NEW BOX</Text>
@@ -117,6 +138,11 @@ const styles = StyleSheet.create({
   container: {
     display:"flex",
     flexDirection:"column",
+    backgroundColor: '#FFFFFF',
+  },
+  containerNew: {
+    display:"flex",
+    //flexDirection:"row",
     backgroundColor: '#FFFFFF',
   },
   inline: {
@@ -202,11 +228,80 @@ const styles = StyleSheet.create({
     marginLeft: 16,
     marginRight: 16,
   },
+  cardContentDone: {
+    fontFamily: 'Mitr-Regular',
+    fontSize: 23,
+    height: 150,
+    width: 358,
+    //alignItems: 'center',
+    //justifyContent: 'center',
+    backgroundColor: '#CAD0D0',
+    borderRadius: 15,
+    shadowColor: colors.lightGray,
+    shadowOffset: {width: 0, height: 0},
+    shadowOpacity: 1,
+    shadowRadius: 8,
+    flexDirection: 'column',
+    marginTop: 20,
+    marginBottom: 6,
+    marginLeft: 16,
+    marginRight: 16,
+  },
+  cardContentCircle: {
+    fontFamily: 'Mitr-Regular',
+    fontSize: 23,
+    height: 65,
+    width: 65,
+    alignSelf:'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: colors.lightYellow,
+    borderRadius: 65,
+    // shadowColor: colors.lightGray,
+    // shadowOffset: {width: 0, height: 0},
+    // shadowOpacity: 1,
+    // shadowRadius: 8,
+    //flexDirection: 'column',
+    marginTop: -140,
+    marginBottom: 10,
+    marginLeft: deviceWidth*0.25 ,
+    //marginRight: 16,
+  },
+  cardContentCircle2: {
+    fontFamily: 'Mitr-Regular',
+    fontSize: 23,
+    height: 65,
+    width: 65,
+    alignSelf:'flex-end',
+    //alignItems: 'center',
+    //justifyContent: 'center',
+    backgroundColor: colors.lightYellow,
+    borderRadius: 65,
+    // shadowColor: colors.lightGray,
+    // shadowOffset: {width: 0, height: 0},
+    // shadowOpacity: 1,
+    // shadowRadius: 8,
+    // flexDirection: 'column',
+    marginTop: deviceHeight*-0.088,
+    // marginBottom: 0,
+    // marginLeft: deviceWidth*0.7 ,
+    marginRight: 10,
+  },
   image : {
     opacity:0.5,
     paddingLeft: 150,
     paddingRight: 150,
     height: 150,
+  },
+  imageSun : {
+    //opacity:0.5,
+    alignSelf:'flex-start',
+    marginLeft:10,
+    // marginTop:deviceHeight*0.005,
+    // marginLeft:deviceWidth*0.1,
+    // marginBottom: deviceHeight*0.1,
+    width:120,
+    height:120
   },
   dropdownpreset : {
     width:200,

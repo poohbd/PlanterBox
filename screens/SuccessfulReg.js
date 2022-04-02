@@ -4,8 +4,10 @@ import { Card } from 'react-native-paper';
 import colors from '../assets/colors/colors';
 import FlatButtonReg from '../components/buttonReg';
 
+
 const deviceWidth = Dimensions.get('screen').width;
 const deviceHeight = Dimensions.get('screen').height;
+
 
 export default SuccesfulReg= ({navigation}) => {
     return (

@@ -22,6 +22,7 @@ import Settings from './screens/Settings';
 
 
 
+
 const Tab = createBottomTabNavigator();
 
 
