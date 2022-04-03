@@ -5,6 +5,7 @@ import { Button, Searchbar } from 'react-native-paper';
 import DropDownPicker from 'react-native-dropdown-picker';
 import TranspInput from '../components/accountinput';
 import CustomizeModal from '../components/customizemodal';
+import FadeInView from '../components/fadeInView';
 //import { CircularCard } from "react-native-circular-card-view";
 
 
@@ -109,21 +110,28 @@ export default MyPlant= ({navigation}) => {
                 </Text>
               </TouchableOpacity>                    
           </View>:null}
+          
           <View style={styles.containerNew}>
+            
           {valuepreset ?
-            <View style={styles.cardContentDone}>
-              <Text style={{color:colors.newGreen2,fontSize:15, textAlign:'right', fontFamily:"Mitr-Regular", alignSelf:'flex-start', paddingLeft:10, marginTop:0   }}>{valuepreset}</Text>
-              <Image style={styles.imageSun} source = {pathImage(valuepreset)}/>
-              <View style={styles.cardContentCircle}>
-                <Text style={{color:'#DBB907',textAlign:"center",fontSize:20, fontFamily:"Mitr-Regular", alignSelf:'center', paddingTop:38  }}>46%</Text>
-                <Text style={{color:colors.newGreen2,textAlign:"center",fontSize:13, fontFamily:"Mitr-Regular", paddingTop:20  }}>Light</Text>
+            <FadeInView>
+              <View style={styles.cardContentDone}>
+                <Text style={{color:colors.newGreen2,fontSize:15, textAlign:'right', fontFamily:"Mitr-Regular", alignSelf:'flex-start', paddingLeft:10, marginTop:0   }}>{valuepreset}</Text>
+                <Image style={styles.imageSun} source = {pathImage(valuepreset)}/>
+                <View style={styles.cardContentCircle}>
+                  <Text style={{color:'#DBB907',textAlign:"center",fontSize:20, fontFamily:"Mitr-Regular", alignSelf:'center', paddingTop:38  }}>46%</Text>
+                  <Text style={{color:colors.newGreen2,textAlign:"center",fontSize:13, fontFamily:"Mitr-Regular", paddingTop:20  }}>Light</Text>
+                </View>
+               
+                <View style={styles.cardContentCircle2}>
+                  <Text style={{color:'#DBB907',textAlign:"center",fontSize:20, fontFamily:"Mitr-Regular", alignSelf:'center', paddingTop:18  }}>30%</Text>
+                  <Text style={{color:colors.newGreen2,textAlign:"center",fontSize:13, alignSelf:'baseline', fontFamily:"Mitr-Regular", marginTop:10  }}>Soil Moisture</Text>
+                </View>
+                <Text style={{color:colors.newGreen2,fontSize:22, fontFamily:"Mitr-Regular", alignSelf:'center', paddingLeft:150, marginTop:40   }}>34°C</Text>
               </View>
-              <View style={styles.cardContentCircle2}>
-                <Text style={{color:'#DBB907',textAlign:"center",fontSize:20, fontFamily:"Mitr-Regular", alignSelf:'center', paddingTop:18  }}>30%</Text>
-                <Text style={{color:colors.newGreen2,textAlign:"center",fontSize:13, alignSelf:'baseline', fontFamily:"Mitr-Regular", marginTop:10  }}>Soil Moisture</Text>
-              </View>       
-              <Text style={{color:colors.newGreen2,fontSize:22, fontFamily:"Mitr-Regular", alignSelf:'center', paddingLeft:150, marginTop:40   }}>34°C</Text>
-          </View>:null}
+            </FadeInView>:null}
+
+          
           {/* {isBasil & !notSelected?
           <View style={styles.cardContentDone}>
               <Text style={{color:colors.newGreen2,fontSize:15, textAlign:'right', fontFamily:"Mitr-Regular", alignSelf:'flex-start', paddingLeft:10, marginTop:0   }}>{valuepreset}</Text>
@@ -139,6 +147,7 @@ export default MyPlant= ({navigation}) => {
               <Text style={{color:colors.newGreen2,fontSize:22, fontFamily:"Mitr-Regular", alignSelf:'center', paddingLeft:150, marginTop:40   }}>34°C</Text>
           </View>:null} */}
           </View>
+          
           
           <TouchableOpacity style={styles.buttonAdd} onPress={() => navigation.navigate('SerialNumber')}>
             <View>
