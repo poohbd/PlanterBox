@@ -9,9 +9,32 @@ import { Card } from 'react-native-paper';
 const deviceWidth = Dimensions.get('screen').width;
 const deviceHeight = Dimensions.get('screen').height;
 
-export default SeriaNumber = ({navigation}) => {
-    const [email,setEmail] = React.useState("");
-    const [password,setPassword] = React.useState("");
+export default SerialNumber = ({navigation}) => {
+    const [serialnumber,setSerialNumber] = React.useState("");
+    const addBox = async () =>{
+      const response = await fetch("http://localhost:3000/user/addbox/1",{
+          method:"POST",
+          headers : { 
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+          },
+          body:JSON.stringify({
+              "serrialNumber":serialnumber,
+              })
+      });
+      const json = await response.json()
+      console.log(json)
+      if (json.boxID != null) {
+          return navigation.navigate("SuccessfulReg");
+      }else {
+          console.log("Box is already registered!")
+          Alert.alert(
+              "Box is already registered!",
+              { text: "OK", onPress: () => this.setState({serialnumber:""})}
+          )
+          // return (setModalVisible(true));
+      }
+  }
 
     return (
         <View style={styles.container}>
@@ -26,10 +49,10 @@ export default SeriaNumber = ({navigation}) => {
             </View>
                  <View style={styles.headerContainer}>
                         <View style={styles.textInputContainer}>
-                            <TextInput placeholder='SERIAL NUMBER'/>
+                            <TextInput onChangeText={(serialnumber) => setSerialNumber(serialnumber)} placeholder ='SERIAL NUMBER'/>
                         </View>
                 </View>
-                <TouchableOpacity style={styles.buttonContainer2} onPress={() => navigation.navigate('SuccesfulReg')}>
+                <TouchableOpacity style={styles.buttonContainer2} onPress={addBox}>
                       <View>
                         <Text style={styles.buttonText}>NEXT</Text>
                       </View>
