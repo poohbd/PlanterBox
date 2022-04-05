@@ -20,7 +20,8 @@ import MyPlant from './screens/MyPlant';
 import Forum from './screens/Forum';
 import Wiki from './screens/Wiki';
 import Settings from './screens/Settings';
-import Test from './screens/Test';
+import Test from './screens/ChooseCard';
+import ChooseCard from './screens/ChooseCard';
 
 
 
@@ -174,7 +175,7 @@ function App() {
   return (
     
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login">
+      <Stack.Navigator initialRouteName="Welcome">
         <Stack.Screen name="Example" component={Example} options={{
           headerShown : false
         }}/>
@@ -214,7 +215,7 @@ function App() {
         <Stack.Screen name="Tabs_Settings" component={Tabs_Settings} options={{
           headerShown : false
         }}/>
-        <Stack.Screen name="Test" component={Test} options={{
+        <Stack.Screen name="ChooseCard" component={ChooseCard} options={{
           headerShown : false
         }}/>
       </Stack.Navigator>

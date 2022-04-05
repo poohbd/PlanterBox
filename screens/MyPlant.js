@@ -115,7 +115,7 @@ export default MyPlant= ({navigation}) => {
             
           {valuepreset ?
             <FadeInView>
-              <TouchableOpacity onPress={() => navigation.navigate('Test', {valuepreset: {valuepreset}})}>
+              <TouchableOpacity onPress={() => navigation.navigate('ChooseCard', {valuepreset: {valuepreset}})}>
               <View style={styles.cardContentDone}>
                 <Text style={{color:colors.newGreen2,fontSize:15, textAlign:'right', fontFamily:"Mitr-Regular", alignSelf:'flex-start', paddingLeft:10, marginTop:0   }}>{valuepreset}</Text>
                 <Image style={styles.imageSun} source = {pathImage(valuepreset)}/>

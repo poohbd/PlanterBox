@@ -1,0 +1,146 @@
+import * as React from 'react';
+import { View, Text, StyleSheet, Image,TouchableOpacity,Dimensions,ScrollView,SafeAreaView } from 'react-native';
+import { Card } from 'react-native-paper';
+import colors from '../assets/colors/colors';
+import FlatButtonReg from '../components/buttonReg';
+import TimeForm from '../components/timeform';
+import LightForm from '../components/lightform';
+import DropDownTime from '../components/dropdowntime';
+
+
+const deviceWidth = Dimensions.get('screen').width;
+const deviceHeight = Dimensions.get('screen').height;
+
+
+export default ChooseCard= ({route, navigation}) => {
+    const { valuepreset } = route.params;
+    const plantName = valuepreset.valuepreset;
+    return (
+      <SafeAreaView style={styles.container}>
+        <ScrollView>
+          <View style={styles.inline}>
+            <TouchableOpacity style={styles.buttonNoti} onPress={() => navigation.navigate('Tabs_Forum')}>
+                <Image source = {require("../assets/images/noti.png")}/>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.buttonName} onPress={() => navigation.navigate('Tabs_Wiki')}>
+              <View>
+                <Text style={{fontFamily: 'Mitr-Regular', color: colors.newGreen2}}>Michael</Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.buttonGray} onPress={() => navigation.navigate('Tabs_MyPlant')}>
+              <View>
+                <Image source = {require("../assets/images/graycircle.png")}/>
+              </View>
+            </TouchableOpacity>
+          </View>
+          <View>
+                <Text style={styles.header} >{plantName}{'\n'}</Text>
+          </View>
+          <View style={styles.card}>
+                <View style={styles.cardContent}>
+                    <TimeForm/>
+                    <LightForm/>
+                    <DropDownTime type="FERTILIZER"/>
+                    <DropDownTime type='PESTICIDE'/>
+                    
+                </View>
+          </View>
+        </ScrollView>
+      </SafeAreaView>
+    )
+}
+
+
+const styles = StyleSheet.create({
+  container: {
+        // flex: 1,
+        backgroundColor: '#FFFFFF',
+        // justifyContent: 'center',
+  },
+  header: {
+    fontFamily:'Mitr-Medium',
+    fontSize:23,
+    color:colors.newGreen1,
+    marginLeft: deviceWidth*0.1,
+  },
+  inline: {
+    backgroundColor: '#FFFFFF',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+  },
+  buttonNoti: {
+    //borderRadius: 20,
+    //backgroundColor: '#CAD0D0',
+    padding:5,
+    width: 30,
+    height: 30,
+    marginTop:deviceHeight*0.085,
+    marginLeft: deviceWidth*0.5,
+    backgroundColor: 'transparent'
+  },
+  buttonName: {
+    //borderRadius: 20,
+    backgroundColor: '#CAD0D0',
+    padding: 0,
+    width: 80,
+    height: 30,
+    marginTop:deviceHeight*0.087,
+    marginLeft: deviceWidth*0.05,
+    backgroundColor: 'transparent'
+  },
+  buttonGray: {
+    //borderRadius: 20,
+    backgroundColor: '#CAD0D0',
+    padding: 0,
+    width: 70,
+    height: 70,
+    marginTop:deviceHeight*0.06,
+    backgroundColor: 'transparent'
+  },  
+  back: {
+    fontFamily: 'Mitr-Regular',
+    fontSize: 23,
+    lineHeight: 30,
+    color: colors.newGreen2,
+  },
+  card: {
+    width: deviceWidth,
+    marginTop:-20,
+    borderRadius: 30,
+    backgroundColor: colors.newGreen1,
+    fontFamily: 'Mitr-Regular',
+    fontSize: 23,
+    padding: 10,
+    alignSelf:'center',
+
+  },
+  cardContent: {
+    textAlign: 'center',
+    fontFamily: 'Mitr-Regular',
+    fontSize: 16,
+    lineHeight: 30,
+    color: colors.darkGray,
+  },
+  image : {
+    marginBottom: 30,
+    alignSelf:'center',
+  },
+  space: {
+      width: 20,
+      height: 30,
+  },
+  button: {
+    paddingVertical: 8,
+    width: 80,
+    backgroundColor: colors.newGreen2,
+    borderRadius: 20,
+    marginTop: deviceHeight*0.25,
+    marginLeft: deviceWidth*0.55,
+  },
+  buttonText: {
+    color: '#FAFAFA',
+    textAlign: 'center',
+    fontFamily: 'Mitr-Regular',
+    fontSize: 13,
+  }
+})

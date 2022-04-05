@@ -42,6 +42,12 @@ export default function DropDownTime({type}){
             case 'PESTICIDE_TITLE':
                 console.log(type);
                 return(styles.pesticideTitle);
+            case 'FERTILIZER_BELL':
+                console.log(type);
+                return(styles.fertilizerBell);
+            case 'PESTICIDE_BELL':
+                console.log(type);
+                return(styles.pesticideBell);
         }
     }
     return(
@@ -49,7 +55,7 @@ export default function DropDownTime({type}){
             <View style={styles.cardContent}>
                 <View style={styles.cardHeader}>
                     <Text style={defineType(type+"_TITLE")}>{type}</Text>
-                    <Image style={{justifyContent:"center",marginLeft:220}} source={require("../assets/images/notificationbell.png")}/>
+                    <Image style={defineType(type+"_BELL")} source={require("../assets/images/notificationbell.png")}/>
                 </View>
                 <View style={defineType(type+"CARD") }>
                     <DropDownPicker
@@ -118,6 +124,7 @@ export default function DropDownTime({type}){
 
 const styles = StyleSheet.create({
     cardContent: {
+      width:350,
       fontFamily: 'Mitr-Regular',
       fontSize: 23,
       height: 100,
@@ -127,7 +134,7 @@ const styles = StyleSheet.create({
       shadowOffset: {width: 0, height: 0},
       shadowOpacity: 1,
       shadowRadius: 8,
-      marginTop: 20,
+      marginTop: 10,
       marginBottom: 6,
       marginLeft: 16,
       marginRight: 16,
@@ -155,6 +162,10 @@ const styles = StyleSheet.create({
         marginLeft:30,
         fontSize:15,
     },
+    fertilizerBell :{
+        justifyContent:"center",
+        marginLeft:215
+    },
     pesticideSmallCard : {
         backgroundColor: colors.brown,
         borderRadius:25,
@@ -170,6 +181,10 @@ const styles = StyleSheet.create({
         marginBottom:5,
         marginLeft:30,
         fontSize:15,
+    },
+    pesticideBell :{
+        justifyContent:"center",
+        marginLeft:222
     },
     dropdownSchedule : {
       width:120,
