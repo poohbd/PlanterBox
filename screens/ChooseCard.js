@@ -15,10 +15,19 @@ const deviceHeight = Dimensions.get('screen').height;
 export default ChooseCard= ({route, navigation}) => {
     const { valuepreset } = route.params;
     const plantName = valuepreset.valuepreset;
+    pathImage=(type)=>{
+      switch(type){
+        case 'Sunflower': return(require("../assets/images/Sunflower.png"))
+        case 'Basil': return(require("../assets/images/Basil.png"))
+      }
+    }
     return (
       <SafeAreaView style={styles.container}>
         <ScrollView>
           <View style={styles.inline}>
+            <TouchableOpacity style={styles.buttonBack} onPress={() => navigation.navigate('MyPlant')}>
+                <Image source = {require("../assets/images/back.png")}/>
+            </TouchableOpacity>
             <TouchableOpacity style={styles.buttonNoti} onPress={() => navigation.navigate('Tabs_Forum')}>
                 <Image source = {require("../assets/images/noti.png")}/>
             </TouchableOpacity>
@@ -33,8 +42,9 @@ export default ChooseCard= ({route, navigation}) => {
               </View>
             </TouchableOpacity>
           </View>
-          <View>
+          <View style={styles.containerNew}>
                 <Text style={styles.header} >{plantName}{'\n'}</Text>
+                <Image style={styles.imageSun} source = {pathImage(plantName)}/>
           </View>
           <View style={styles.card}>
                 <View style={styles.cardContent}>
@@ -57,6 +67,11 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFFFFF',
         // justifyContent: 'center',
   },
+  containerNew: {
+    display:"flex",
+    flexDirection:"row",
+    backgroundColor: '#FFFFFF',
+  },
   header: {
     fontFamily:'Mitr-Medium',
     fontSize:23,
@@ -77,6 +92,19 @@ const styles = StyleSheet.create({
     marginTop:deviceHeight*0.085,
     marginLeft: deviceWidth*0.5,
     backgroundColor: 'transparent'
+  },
+  buttonBack: {
+    //borderRadius: 20,
+    //backgroundColor: '#CAD0D0',
+    padding:5,
+    width: 30,
+    height: 30,
+    marginTop:deviceHeight*0.085,
+    //marginLeft: deviceWidth*0.03,
+    backgroundColor: 'transparent',
+    alignSelf:'flex-start',
+    paddingLeft:deviceWidth*0.06
+
   },
   buttonName: {
     //borderRadius: 20,
@@ -142,5 +170,15 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontFamily: 'Mitr-Regular',
     fontSize: 13,
-  }
+  },
+  imageSun : {
+    //opacity:0.5,
+    alignSelf:'flex-end',
+    marginLeft:deviceWidth*0.3,
+    // marginTop:deviceHeight*0.005,
+    // marginLeft:deviceWidth*0.1,
+    // marginBottom: deviceHeight*0.1,
+    height:100,
+    width:100
+  },
 })
