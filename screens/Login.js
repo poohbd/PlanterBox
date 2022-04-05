@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, StyleSheet, Image,TouchableOpacity,TextInput,Button} from 'react-native';
+import { View, Text, StyleSheet, Image,TouchableOpacity,TextInput,Button,Modal,Alert} from 'react-native';
 // import { HeaderBackButton } from 'react-navigation';
 import colors from '../assets/colors/colors';
 import TranspInput from '../components/accountinput';
@@ -8,6 +8,35 @@ import FlatButton from '../components/button';
 export default Login = ({navigation}) => {
     const [email,setEmail] = React.useState("");
     const [password,setPassword] = React.useState("");
+    const validateLogin = async () =>{
+        const response = await fetch("http://localhost:3000/user/login",{
+            method:"POST",
+            headers : { 
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body:JSON.stringify({
+                "email":email,
+                "password":password
+                })
+        });
+        const json = await response.json()
+        console.log(json)
+        if (json.error == false) {
+            console.log(json.error);
+            return navigation.navigate("Register");
+        }else {
+            console.log("Incorrect password")
+            console.log(email);
+            console.log(password);
+            console.log(json.error);
+            Alert.alert(
+                "Warning","Incorrect Password!!!",
+                { text: "OK", onPress: () => this.setState({email:""})}
+            )
+            // return (setModalVisible(true));
+        }
+    }
 
     return (
         <View style={styles.container}>
@@ -20,7 +49,8 @@ export default Login = ({navigation}) => {
             <TranspInput secure={true} onChangeText={(password) => setPassword(password)} />
             <Text style={styles.forgetPass}>FORGET PASSWORD?</Text>
             <View style={styles.space} />
-            <FlatButton text="LOGIN" onPress={() => navigation.navigate('Register')} />
+            {/* <FlatButton text="LOGIN" onPress={() => navigation.navigate('Register')} /> */}
+            <FlatButton text="LOGIN" onPress={validateLogin} />
             <Text style={styles.baseText} >DON'T HAVE AN ACCOUNT?
                 <Text style={styles.signup} onPress={() => navigation.navigate('Signup')}> SIGN UP</Text>
             </Text>
