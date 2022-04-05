@@ -7,6 +7,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { tabBarIcon } from "react-native-vector-icons";
 import {Image} from 'react-native';
 
+import Example from './screens/Example';
 import Welcome from './screens/Welcome';
 import Login from './screens/Login';
 import Signup from './screens/Signup';
@@ -173,7 +174,10 @@ function App() {
   return (
     
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Welcome">
+      <Stack.Navigator initialRouteName="Login">
+        <Stack.Screen name="Example" component={Example} options={{
+          headerShown : false
+        }}/>
         <Stack.Screen name="Welcome" component={Welcome} options={{
           headerShown : false
         }}/>
