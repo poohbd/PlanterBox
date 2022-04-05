@@ -115,6 +115,7 @@ export default MyPlant= ({navigation}) => {
             
           {valuepreset ?
             <FadeInView>
+              <TouchableOpacity onPress={() => navigation.navigate('Test', {valuepreset: {valuepreset}})}>
               <View style={styles.cardContentDone}>
                 <Text style={{color:colors.newGreen2,fontSize:15, textAlign:'right', fontFamily:"Mitr-Regular", alignSelf:'flex-start', paddingLeft:10, marginTop:0   }}>{valuepreset}</Text>
                 <Image style={styles.imageSun} source = {pathImage(valuepreset)}/>
@@ -129,6 +130,7 @@ export default MyPlant= ({navigation}) => {
                 </View>
                 <Text style={{color:colors.newGreen2,fontSize:22, fontFamily:"Mitr-Regular", alignSelf:'center', paddingLeft:150, marginTop:40   }}>34°C</Text>
               </View>
+              </TouchableOpacity>
             </FadeInView>:null}
 
           

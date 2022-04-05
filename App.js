@@ -19,6 +19,7 @@ import MyPlant from './screens/MyPlant';
 import Forum from './screens/Forum';
 import Wiki from './screens/Wiki';
 import Settings from './screens/Settings';
+import Test from './screens/Test';
 
 
 
@@ -207,6 +208,9 @@ function App() {
           headerShown : false
         }}/>
         <Stack.Screen name="Tabs_Settings" component={Tabs_Settings} options={{
+          headerShown : false
+        }}/>
+        <Stack.Screen name="Test" component={Test} options={{
           headerShown : false
         }}/>
       </Stack.Navigator>
