@@ -9,11 +9,12 @@ const deviceWidth = Dimensions.get('screen').width;
 const deviceHeight = Dimensions.get('screen').height;
 
 
-export default SuccesfulReg= ({navigation}) => {
+export default Test= ({route, navigation}) => {
+    const { valuepreset } = route.params;
     return (
         <View style={styles.container}>
             <View style={{ flex: 1, alignItems: 'center' }}>
-                <Text style={styles.header} >PLANT REGISTER{'\n'}</Text>
+                <Text style={styles.header} >PLANT TEST{'\n'}</Text>
             </View>
             <View style={styles.card}>
                 <View style={styles.cardContent}>
@@ -21,6 +22,7 @@ export default SuccesfulReg= ({navigation}) => {
                     <Image style={styles.image} source = {require("../assets/images/Tick.png")}/>
                     <Text style={styles.cardContent}>YOU HAVE SUCCESSFULLY</Text>
                     <Text style={styles.cardContent}>REGISTERED YOUR PLANT.{'\n'}</Text>
+                    <Text style={styles.cardContent}>valuepreset: {JSON.stringify(valuepreset.valuepreset)}{'\n'}</Text>
                     <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Menu')}>
                       <View>
                         <Text style={styles.buttonText}>NEXT</Text>
