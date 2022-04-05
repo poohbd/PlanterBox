@@ -1,17 +1,40 @@
 import * as React from 'react';
-import { View, Text, StyleSheet, Image,TouchableOpacity,TextInput,Button,Dimensions} from 'react-native';
+import { View, Text, Alert,StyleSheet, Image,TouchableOpacity,TextInput,Button,Dimensions} from 'react-native';
 // import { HeaderBackButton } from 'react-navigation';
 import colors from '../assets/colors/colors';
 import TranspInput from '../components/accountinput';
 import FlatButton from '../components/button';
 import { Card } from 'react-native-paper';
 
+
 const deviceWidth = Dimensions.get('screen').width;
 const deviceHeight = Dimensions.get('screen').height;
 
-export default SeriaNumber = ({navigation}) => {
-    const [email,setEmail] = React.useState("");
-    const [password,setPassword] = React.useState("");
+export default SerialNumber = ({navigation}) => {
+    const [serialNumber,setSerialNumber] = React.useState();
+    const addBox = async () =>{
+      const response = await fetch("http://localhost:3000/user/addbox/1",{
+          method:"POST",
+          headers : { 
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+          },
+          body:JSON.stringify({
+              "serialNumber":serialNumber,
+              })
+      });
+      const json = await response.json()
+      console.log(json)
+      if (json.serialNumber != null) {
+          return navigation.navigate("SuccesfulReg");
+      }else {
+          console.log("Box is already registered!")
+          Alert.alert(
+              "Box is already registered!",
+              { text: "OK"}
+          )
+      }
+  }
 
     return (
         <View style={styles.container}>
@@ -26,10 +49,10 @@ export default SeriaNumber = ({navigation}) => {
             </View>
                  <View style={styles.headerContainer}>
                         <View style={styles.textInputContainer}>
-                            <TextInput placeholder='SERIAL NUMBER'/>
+                            <TextInput onChangeText={(serialNumber) => setSerialNumber(parseInt(serialNumber))} placeholder ='SERIAL NUMBER'/>
                         </View>
                 </View>
-                <TouchableOpacity style={styles.buttonContainer2} onPress={() => navigation.navigate('SuccesfulReg')}>
+                <TouchableOpacity style={styles.buttonContainer2} onPress={addBox}>
                       <View>
                         <Text style={styles.buttonText}>NEXT</Text>
                       </View>
