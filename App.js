@@ -22,6 +22,7 @@ import Wiki from './screens/Wiki';
 import Settings from './screens/Settings';
 import Test from './screens/ChooseCard';
 import ChooseCard from './screens/ChooseCard';
+import Userregister from './screens/Userregister';
 
 
 
@@ -175,7 +176,7 @@ function App() {
   return (
     
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Welcome">
+      <Stack.Navigator initialRouteName="Userregister">
         <Stack.Screen name="Example" component={Example} options={{
           headerShown : false
         }}/>
@@ -216,6 +217,9 @@ function App() {
           headerShown : false
         }}/>
         <Stack.Screen name="ChooseCard" component={ChooseCard} options={{
+          headerShown : false
+        }}/>
+        <Stack.Screen name="Userregister" component={Userregister} options={{
           headerShown : false
         }}/>
       </Stack.Navigator>
