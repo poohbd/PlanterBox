@@ -19,26 +19,26 @@ import * as yup from 'yup';
 
 export default Userregister = ({navigation}) => {
   const loginValidateSchema = yup.object().shape({
-    email: yup.string().email('Email Address is required'),
+    email: yup.string().email('         Email Address is required'),
     password: yup
       .string()
-      .matches(/\w*[a-z]\w*/, 'Password must have a small letter')
-      .matches(/\w*[A-Z]\w*/, 'Password must have a capital letter')
-      .matches(/\d/, 'Password must have a number')
+      .matches(/\w*[a-z]\w*/, '         Password must have a small letter')
+      .matches(/\w*[A-Z]\w*/, '         Password must have a capital letter')
+      .matches(/\d/, '         Password must have a number')
       .matches(
         /[!@#$%^&*()\-_"=+{}; :,<.>]/,
-        'Password must have a special character',
+        '         Password must have a special character',
       )
-      .min(8, ({min}) => `Password must be at least ${min} characters`)
-      .required('Password is required'),
+      .min(8, ({min}) => `         Password must be at least ${min} characters`)
+      .required('         Password is required'),
     confirmPassword: yup
       .string()
-      .oneOf([yup.ref('password')], 'Passwords do not match')
-      .required('Confirm password is required'),
+      .oneOf([yup.ref('password')], '         Passwords do not match')
+      .required('         Confirm password is required'),
   });
-  //   const [username, setUsername] = React.useState('');
-  //   const [email, setEmail] = React.useState('');
-  //   const [password, setPassword] = React.useState('');
+     const [username, setUsername] = React.useState('');
+     const [email, setEmail] = React.useState('');
+     const [password, setPassword] = React.useState('');
 
   //   const validateRegister = async () => {
   //     const response = await fetch('http://localhost:3000/user/login', {
@@ -82,8 +82,10 @@ export default Userregister = ({navigation}) => {
       onSubmit={values => console.log(values)}>
       {({handleChange, handleBlur, handleSubmit, values, errors, touched}) => (
         <View style={styles.container}>
-          <Text style={styles.header}>SIGNUP</Text>
+          <Text style={styles.header}>FARM-O-MATIC</Text>
+          <View style={styles.space}/><View style={styles.space}/>
           <Text style={styles.infoname}>USERNAME</Text>
+          <TranspInput onChangeText={(username) => setUsername(username)} />
           <TextInput
             onChangeText={handleChange('username')}
             onBlur={handleBlur('username')}
@@ -93,6 +95,7 @@ export default Userregister = ({navigation}) => {
             <Text style={styles.errors}></Text>
           )} */}
           <Text style={styles.infoname}>EMAIL</Text>
+          <TranspInput onChangeText={(email) => setEmail(email)} />
           <TextInput
             onChangeText={handleChange('email')}
             onBlur={handleBlur('email')}
@@ -100,6 +103,7 @@ export default Userregister = ({navigation}) => {
           />
           {errors.email && touched.email ? <Text>{errors.email}</Text> : null}
           <Text style={styles.infoname}>PASSWORD</Text>
+          <TranspInput onChangeText={(password) => setPassword(password)} />
           <TextInput
             onChangeText={handleChange('password')}
             onBlur={handleBlur('password')}
@@ -109,6 +113,7 @@ export default Userregister = ({navigation}) => {
             <Text style={styles.errors}>{errors.password}</Text>
           ) : null}
           <Text style={styles.infoname}>RE ENTER PASSWORD</Text>
+          <TranspInput onChangeText={(confirmPassword) => setconfirmPassword(confirmPassword)} />
           <TextInput
             onChangeText={handleChange('confirmPassword')}
             onBlur={handleBlur('confirmPassword')}
@@ -120,7 +125,11 @@ export default Userregister = ({navigation}) => {
           {/* <Text style={styles.forgetPass}>FORGET PASSWORD?</Text>
           <View style={styles.space} /> */}
           {/* <FlatButton text="LOGIN" onPress={() => navigation.navigate('Register')} /> */}
-          <Button onPress={handleSubmit} title="Signup" />
+          <Text style={styles.privacyText}>BY CREATING AN ACCOUNT, YOU AGREE TO OUR</Text>
+          <Text style={styles.privacyText}>TERMS AND CONDITIONS AND PRIVACY POLICY</Text>
+          <View style={styles.space}/>
+          <FlatButton onPress={handleSubmit} text="SIGNUP" title="SIGNUP" color='white' height='20'/>
+          <Text style={styles.privacyText}>ALREADY HAVE AN ACCOUNT?<Text style={styles.loginText} onPress={() => navigation.navigate('Login')}> LOG IN</Text></Text>
         </View>
       )}
     </Formik>
@@ -129,7 +138,7 @@ export default Userregister = ({navigation}) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 0.6,
+    flex: 1,
     backgroundColor: '#FFFFFF',
     justifyContent: 'center',
   },
@@ -149,6 +158,7 @@ const styles = StyleSheet.create({
     fontSize: 17,
     color: colors.darkGray,
     marginLeft: 20,
+    marginTop: 0
   },
   forgetPass: {
     fontFamily: 'Mitr-Regular',
@@ -176,4 +186,30 @@ const styles = StyleSheet.create({
     color: colors.red,
     margintTop: 5,
   },
+  signupContainer:{
+    color: colors.newGreen2,
+    height:40,
+    width:100,
+    justifyContent:'center'
+  },
+  Button:{
+    borderRadius:8,
+    height:30,
+    width:100,
+    backgroundColor: '#f01d71'
+  },
+  privacyText:{
+    fontFamily: 'Mitr-Regular',
+    fontSize: 10,
+    color: colors.darkGray,
+    alignSelf: 'center',
+    marginTop: 0
+  },
+  loginText:{
+    fontFamily: 'Mitr-Regular',
+    fontSize: 10,
+    color: 'green',
+    alignSelf: 'center',
+    marginTop: 0
+  }
 });
