@@ -8,11 +8,11 @@ import {Formik} from 'Formik';
 import * as yup from 'yup';
 const loginValidateSchema = yup.object().shape({
         email: yup.string().email('Email Address is required'),
-        password: yup.string().min(8,{min}) => `Password must be at least ${min} characters`.required('Password is required').matches(
+        password: yup.string().min(8,{min}) => {`Password must be at least ${min} characters`.required('Password is required').matches(
             "^(?=.*[A-Za-z])(?=.*d)(?=.*[@$!%*#?&])[A-Za-zd@$!%*#?&]{8,}$",
             "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
-          )
-});
+        )
+;
 export default Userregister = ({navigation}) => {
     const [username,setUsername] = React.useState("");
     const [email,setEmail] = React.useState("");
