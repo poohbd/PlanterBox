@@ -19,7 +19,8 @@ import * as yup from 'yup';
 
 export default Userregister = ({navigation}) => {
   const loginValidateSchema = yup.object().shape({
-    email: yup.string().email('         Email Address is required'),
+    email: yup.string().email('         Email Address is required')
+    .matches(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,'         Invalid Email Address'),
     password: yup
       .string()
       .matches(/\w*[a-z]\w*/, '         Password must have a small letter')
@@ -40,36 +41,29 @@ export default Userregister = ({navigation}) => {
      const [email, setEmail] = React.useState('');
      const [password, setPassword] = React.useState('');
 
-  //   const validateRegister = async () => {
-  //     const response = await fetch('http://localhost:3000/user/login', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //         Accept: 'application/json',
-  //       },
-  //       body: JSON.stringify({
-  //         email: email,
-  //         password: password,
-  //       }),
-  //     });
-  //     const json = await response.json();
-  //     console.log(json);
-  //     if (json.error == false) {
-  //       console.log(json.error);
-  //       return navigation.navigate('Register');
-  //     } else {
-  //       console.log('Incorrect password');
-  //       console.log(email);
-  //       console.log(password);
-  //       console.log(json.error);
-  //       Alert.alert('Warning', 'Incorrect Password!!!', {
-  //         text: 'OK',
-  //         onPress: () => this.setState({email: ''}),
-  //       });
-  //       // return (setModalVisible(true));
-  //     }
-  //   };
-
+     const validateRegister = async () => {
+     const response = await fetch('http://localhost:3000/user/register', {
+         method: 'POST',
+         headers: {
+           'Content-Type': 'application/json',
+           Accept: 'application/json',
+         },
+         body: JSON.stringify({
+           username: username,
+           email: email,
+           password: password,
+         }),
+       });
+       const json = await response.json();
+       console.log(json);
+       if (json.error == false) {
+         console.log(json.error);
+         return navigation.navigate('Register');
+       } else {
+         console.log('This email is already used!');
+          //return (setModalVisible(true));
+       }
+     };
   return (
     <Formik
       initialValues={{
@@ -79,14 +73,13 @@ export default Userregister = ({navigation}) => {
         confirmPassword: '',
       }}
       validationSchema={loginValidateSchema}
-      onSubmit={values => console.log(values)}>
+      onSubmit={validateRegister}>
       {({handleChange, handleBlur, handleSubmit, values, errors, touched}) => (
         <View style={styles.container}>
           <Text style={styles.header}>FARM-O-MATIC</Text>
           <View style={styles.space}/><View style={styles.space}/>
           <Text style={styles.infoname}>USERNAME</Text>
-          <TranspInput onChangeText={(username) => setUsername(username)} />
-          <TextInput
+          <TranspInput
             onChangeText={handleChange('username')}
             onBlur={handleBlur('username')}
             value={values.username}
@@ -95,29 +88,28 @@ export default Userregister = ({navigation}) => {
             <Text style={styles.errors}></Text>
           )} */}
           <Text style={styles.infoname}>EMAIL</Text>
-          <TranspInput onChangeText={(email) => setEmail(email)} />
-          <TextInput
+          <TranspInput
             onChangeText={handleChange('email')}
             onBlur={handleBlur('email')}
             value={values.email}
           />
           {errors.email && touched.email ? <Text>{errors.email}</Text> : null}
           <Text style={styles.infoname}>PASSWORD</Text>
-          <TranspInput onChangeText={(password) => setPassword(password)} />
-          <TextInput
+          <TranspInput
             onChangeText={handleChange('password')}
             onBlur={handleBlur('password')}
             value={values.password}
+            secure={true}
           />
           {errors.password && touched.password ? (
             <Text style={styles.errors}>{errors.password}</Text>
           ) : null}
           <Text style={styles.infoname}>RE ENTER PASSWORD</Text>
-          <TranspInput onChangeText={(confirmPassword) => setconfirmPassword(confirmPassword)} />
-          <TextInput
+          <TranspInput
             onChangeText={handleChange('confirmPassword')}
             onBlur={handleBlur('confirmPassword')}
             value={values.confirmPassword}
+            secure={true}
           />
           {errors.confirmPassword && touched.confirmPassword ? (
             <Text style={styles.errors}>{errors.confirmPassword}</Text>
