@@ -16,6 +16,9 @@ import FlatButtonReg from '../components/buttonReg';
 import TimeForm from '../components/timeform';
 import LightForm from '../components/lightform';
 import DropDownTime from '../components/dropdowntime';
+import TimeFormAuto from '../components/timeformAuto';
+import LightFormAuto from '../components/lightformAuto';
+
 
 const deviceWidth = Dimensions.get('screen').width;
 const deviceHeight = Dimensions.get('screen').height;
@@ -95,6 +98,8 @@ export default ChooseCard = ({route, navigation}) => {
           </View>
           <View style={styles.card}>
             <View style={styles.cardContent}>
+              <TimeFormAuto />
+              <LightFormAuto />
               <TimeForm />
               <LightForm data={data} />
               <DropDownTime type="FERTILIZER" />
@@ -102,6 +107,7 @@ export default ChooseCard = ({route, navigation}) => {
               {/* <DropDownTime type="FERTILIZER" />
             <DropDownTime type="PESTICIDE" /> */}
             </View>
+
           </View>
         </ScrollView>
       )}
