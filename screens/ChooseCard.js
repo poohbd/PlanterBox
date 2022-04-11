@@ -22,6 +22,7 @@ export default ChooseCard= ({route, navigation}) => {
         case 'Basil': return(require("../assets/images/Basil.png"))
       }
     }
+    
     return (
       <SafeAreaView style={styles.container}>
         <ScrollView>
@@ -49,8 +50,8 @@ export default ChooseCard= ({route, navigation}) => {
           </View>
           <View style={styles.card}>
                 <View style={styles.cardContent}>
-                    <TimeFormAuto/>
-                    <LightFormAuto/>
+                    <TimeFormAuto />
+                    <LightFormAuto />
                     <DropDownTime type="FERTILIZER"/>
                     <DropDownTime type='PESTICIDE'/>
                     

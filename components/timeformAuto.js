@@ -12,8 +12,8 @@ export default function TimeFormAuto ({}){
     const [isPickerEndShow, setIsPickerEndShow] = React.useState(false);
     const [datefirst, setDateFirst] = React.useState(new Date(Date.now()));
     const [dateend, setDateEnd] = React.useState(new Date(Date.now()));
-    const [minAuto, setminAuto] = React.useState();
-    const [maxAuto, setmaxAuto] = React.useState();
+    const [minMoisture, setMinMoisture] = React.useState();
+    const [maxMoisture, setMaxMoisture] = React.useState();
     const [data, setData] = React.useState([]);
     const getJson = async () => {
         try {
@@ -23,10 +23,26 @@ export default function TimeFormAuto ({}){
          console.log(data)
        }catch (error) {
         console.error(error);
-      }}
+      }
+    }
       useEffect(() => {
         getJson();
       }, []);
+    const addMinMax = async () =>{
+      const response = await fetch("http://localhost:3000/planterbox/settings/3/updateBoxSettings",{
+        method:"PUT",
+        headers : { 
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body:JSON.stringify({
+            "minMoisture":minMoisture,
+            "maxMoisture":maxMoisture
+            })
+    }); console.log(minMoisture)
+}
+    
+    
 
     const showFirstTimePicker = () =>{
         setIsPickerFirstShow(true);
@@ -55,21 +71,28 @@ export default function TimeFormAuto ({}){
                     <Text style={styles.cardContent}>   MIN  </Text>
                     <View style={styles.smallCard}>
                         <View>
-                            <TextInput style={styles.textTime} onChangeText={(minAuto) => setminAuto(parseInt(minAuto))} defaultValue={data.minMoisture.toString()}/>
-                            <Text>{minAuto}</Text>
+                            <TextInput style={styles.textTime} onChangeText={(minMoisture) => setMinMoisture(parseFloat(minMoisture))} defaultValue={data.minMoisture.toString()}/>
+                            <Text>{minMoisture}</Text>
                         </View>
                     </View>
                     <Text style={styles.cardContent}> MAX  </Text>
                     <View style={styles.smallCard}>
                         <View>
-                            <TextInput style={styles.textTime} onChangeText={(maxAuto) => setmaxAuto(parseInt(maxAuto))} defaultValue={data.maxMoisture.toString()}/>
-                            <Text>{maxAuto}</Text>
+                            <TextInput style={styles.textTime} onChangeText={(maxMoisture) => setMaxMoisture(parseFloat(maxMoisture))} defaultValue={data.maxMoisture.toString()}/>
+                            <Text>{maxMoisture}</Text>
                         </View>
                     </View>
+                    <Text style={styles.cardContent}>  </Text>
+                    <TouchableOpacity style={styles.saveButton} onPress={() => {addMinMax()}}>
+                      <View>
+                        <Text style={styles.textTime}>SAVE</Text>
+                      </View>
+                    </TouchableOpacity>
+                    <Text style={styles.cardContent}>  </Text>
                 </View>
                 <Text style={styles.smText}>Soil Moisture</Text>
                 <Image style={styles.image} source = {require("../assets/images/Waterlogo.png")}/>
-                {isPickerFirstShow &&(
+                {/* {isPickerFirstShow &&(
                 <DateTimePicker
                             testID="dateTimePicker1"
                             value={datefirst}
@@ -92,7 +115,7 @@ export default function TimeFormAuto ({}){
                             accentColor ={colors.newGreen2}
                             style={{marginRight:30,marginTop:45}}  
                     />
-                )}
+                )} */}
         </View>
     )
 }
@@ -114,7 +137,7 @@ const styles = StyleSheet.create({
         zIndex: 3
     },
     mediumCard: {
-        width: 200,
+        //width: 200,
         height:40,
         borderRadius: 20,
         backgroundColor: '#436E71',
@@ -130,6 +153,17 @@ const styles = StyleSheet.create({
     },
     smallCard:{
         width: 60,
+        height:20,
+        borderRadius: 30,
+        backgroundColor: 'white',
+        fontFamily: 'Mitr-Regular',
+        fontSize: 10,
+        paddingTop:-3,
+        paddingLeft:10,
+        zIndex : 1
+    },
+    saveButton:{
+        width: 50,
         height:20,
         borderRadius: 30,
         backgroundColor: 'white',

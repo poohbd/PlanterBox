@@ -28,6 +28,19 @@ export default function LightFormAuto ({}){
       useEffect(() => {
         getJson();
       }, []);
+    const addMinMax = async () =>{
+        const response = await fetch("http://localhost:3000/planterbox/settings/3/updateBoxSettings",{
+          method:"PUT",
+          headers : { 
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+          },
+          body:JSON.stringify({
+              "minLightIntensity":lightMinAuto,
+              "maxLightIntensity":lightMaxAuto
+              })
+      }); console.log(lightMinAuto)
+  }
     const showFirstTimePicker = () =>{
         setIsPickerFirstShow(true);
     };
@@ -56,19 +69,27 @@ export default function LightFormAuto ({}){
                     <View style={styles.smallCard}>
                         <View>
                             <TextInput style={styles.textTime} onChangeText={(lightMinAuto) => setLightMinAuto(parseInt(lightMinAuto))} defaultValue={data.minLightIntensity.toString()}/>
-                            {/* <Text>{lightMinAuto}</Text> */}
+                            <Text>{lightMinAuto}</Text>
                         </View> 
                     </View>
                     <Text style={styles.cardContent}> MAX  </Text>
                     <View style={styles.smallCard}>
                         <View>
                             <TextInput style={styles.textTime} onChangeText={(lightMaxAuto) => setLightMaxAuto(parseInt(lightMaxAuto))} defaultValue={data.maxLightIntensity.toString()}/>
-                            {/* <Text>{lightMaxAuto}</Text> */}
+                            <Text>{lightMaxAuto}</Text>
                         </View>
-                        <TouchableOpacity onPress={() => {getJson()}}>
+                        {/* <TouchableOpacity onPress={() => {getJson()}}>
                             <Text>Reload</Text>
-                        </TouchableOpacity>
+                        </TouchableOpacity> */}
                     </View>
+                    <Text style={styles.cardContent}>  </Text>
+                    <TouchableOpacity style={styles.saveButton} onPress={() => {addMinMax()}}>
+                      <View>
+                        <Text style={styles.textTime}>SAVE</Text>
+                      </View>
+                    </TouchableOpacity>
+                    <Text style={styles.cardContent}>  </Text>
+                    
                 </View>
                 <Text style={styles.smText}>20,000 LUX</Text>
                 <Image style={styles.image} source = {require("../assets/images/lightlogo.png")}/>
@@ -127,7 +148,7 @@ const styles = StyleSheet.create({
         zIndex: 3
     },
     mediumCard: {
-        width: 200,
+        //width: 200,
         height:40,
         borderRadius: 20,
         backgroundColor: '#C8A805',
@@ -143,6 +164,17 @@ const styles = StyleSheet.create({
     },
     smallCard:{
         // width: 60,
+        height:20,
+        borderRadius: 30,
+        backgroundColor: 'white',
+        fontFamily: 'Mitr-Regular',
+        fontSize: 10,
+        paddingTop:-3,
+        paddingLeft:10,
+        zIndex : 1
+    },
+    saveButton:{
+        width: 50,
         height:20,
         borderRadius: 30,
         backgroundColor: 'white',
