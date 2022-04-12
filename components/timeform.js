@@ -14,8 +14,9 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import WateringDropdown from './WateringDropdown';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import OffWatering from './offwatering';
+import TimeFormAuto from './timeformAuto';
 
-export default function TimeForm({}) {
+export default function TimeForm({data}) {
   const [isPickerFirstShow, setIsPickerFirstShow] = React.useState(false);
   const [isPickerEndShow, setIsPickerEndShow] = React.useState(false);
   const [datefirst, setDateFirst] = React.useState(new Date(Date.now()));
@@ -36,14 +37,44 @@ export default function TimeForm({}) {
     setIsPickerEndShow(false);
     setDateEnd(currentDate);
   };
+  const [openplan, setOpenplan] = React.useState(false);
+  const [valueplan, setValuePlan] = React.useState(data.wateringMode.toUpperCase());
+  const [items, setItems] = React.useState([
+    {
+      label: (
+        <Text style={{fontFamily: 'Mitr-Regular', color: colors.newGreen2}}>
+          SCHEDULE
+        </Text>
+      ),
+      value: 'SCHEDULE',
+    },
+    {
+      label: (
+        <Text style={{fontFamily: 'Mitr-Regular', color: colors.newGreen2}}>
+          AUTO
+        </Text>
+      ),
+      value: 'AUTO',
+    },
+    {
+      label: (
+        <Text style={{fontFamily: 'Mitr-Regular', color: colors.newGreen2}}>
+          OFF
+        </Text>
+      ),
+      value: 'MANUAL',
+    },
+  ]);
+  console.log(valueplan);
   return (
     <View style={styles.bigCard}>
       <View style={styles.circleCard}>
         <Text style={styles.circleCardText}>46%</Text>
       </View>
       <Text style={styles.cardWatering}>WATERING</Text>
-      <WateringDropdown zIndex={300} />
-      {/* <View style={styles.mediumCard}>
+      <WateringDropdown zIndex={300} openplan={openplan} setOpenplan={setOpenplan} valueplan={valueplan} setValuePlan={setValuePlan} items={items} setItems={setItems}/>
+      {valueplan ==='SCHEDULE' &&(
+      <View style={styles.mediumCard}>
         <Text style={styles.cardContent}> FROM </Text>
         <View style={styles.smallCard}>
           <TouchableOpacity onPress={showFirstTimePicker}>
@@ -68,8 +99,14 @@ export default function TimeForm({}) {
             </Text>
           </TouchableOpacity>
         </View>
-      </View> */}
-      <OffWatering />
+      </View>
+      )}
+      {valueplan ==='AUTO' &&(
+        <TimeFormAuto data={data}/>
+      )}
+      {valueplan ==='MANUAL' &&(
+        <OffWatering />
+      )}
       <Text style={styles.smText}>Soil Moisture</Text>
       <Image
         style={styles.image}
@@ -110,7 +147,7 @@ const styles = StyleSheet.create({
     width: 350,
     height: 100,
     borderRadius: 30,
-    backgroundColor: 'lightgrey',
+    backgroundColor: '#FFFFFF',
     fontFamily: 'Mitr-Regular',
     fontSize: 23,
     paddingTop: 50,

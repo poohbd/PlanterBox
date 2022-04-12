@@ -7,27 +7,28 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import { useEffect } from 'react';
 
 
-export default function TimeFormAuto ({}){
+export default function TimeFormAuto ({data}){
     const [isPickerFirstShow, setIsPickerFirstShow] = React.useState(false);
     const [isPickerEndShow, setIsPickerEndShow] = React.useState(false);
     const [datefirst, setDateFirst] = React.useState(new Date(Date.now()));
     const [dateend, setDateEnd] = React.useState(new Date(Date.now()));
-    const [minMoisture, setMinMoisture] = React.useState();
-    const [maxMoisture, setMaxMoisture] = React.useState();
-    const [data, setData] = React.useState([]);
-    const getJson = async () => {
-        try {
-         const response = await fetch("http://localhost:3000/planterbox/3/settings");
-         const json = await response.json();
-         setData(json);
-         console.log(data)
-       }catch (error) {
-        console.error(error);
-      }
-    }
-      useEffect(() => {
-        getJson();
-      }, []);
+    const [minMoisture, setMinMoisture] = React.useState(data.minMoisture);
+    const [maxMoisture, setMaxMoisture] = React.useState(data.maxMoisture);
+
+    // const [data, setData] = React.useState([]);
+    // const getJson = async () => {
+    //     try {
+    //      const response = await fetch("http://localhost:3000/planterbox/3/settings");
+    //      const json = await response.json();
+    //      setData(json);
+    //      console.log(data)
+    //    }catch (error) {
+    //     console.error(error);
+    //   }
+    // }
+    //   useEffect(() => {
+    //     getJson();
+    //   }, []);
     const addMinMax = async () =>{
       const response = await fetch("http://localhost:3000/planterbox/settings/3/updateBoxSettings",{
         method:"PUT",
@@ -61,25 +62,19 @@ export default function TimeFormAuto ({}){
         setDateEnd(currentDate);
     };
     return(
-        <View style={styles.bigCard}>
-            <View style={styles.circleCard}>
-            <Text style={styles.circleCardText}>46%</Text>
-            </View>
-            <Text style={styles.cardWatering}>WATERING</Text>
-            <WateringDropdown zIndex={300}/>
+        <View >
+            
                 <View style={styles.mediumCard}>
                     <Text style={styles.cardContent}>   MIN  </Text>
                     <View style={styles.smallCard}>
                         <View>
                             <TextInput style={styles.textTime} onChangeText={(minMoisture) => setMinMoisture(parseFloat(minMoisture))} defaultValue={data.minMoisture.toString()}/>
-                            <Text>{minMoisture}</Text>
                         </View>
                     </View>
                     <Text style={styles.cardContent}> MAX  </Text>
                     <View style={styles.smallCard}>
                         <View>
                             <TextInput style={styles.textTime} onChangeText={(maxMoisture) => setMaxMoisture(parseFloat(maxMoisture))} defaultValue={data.maxMoisture.toString()}/>
-                            <Text>{maxMoisture}</Text>
                         </View>
                     </View>
                     <Text style={styles.cardContent}>  </Text>
@@ -90,8 +85,7 @@ export default function TimeFormAuto ({}){
                     </TouchableOpacity>
                     <Text style={styles.cardContent}>  </Text>
                 </View>
-                <Text style={styles.smText}>Soil Moisture</Text>
-                <Image style={styles.image} source = {require("../assets/images/Waterlogo.png")}/>
+                
                 {/* {isPickerFirstShow &&(
                 <DateTimePicker
                             testID="dateTimePicker1"

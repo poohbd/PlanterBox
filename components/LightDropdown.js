@@ -11,35 +11,7 @@ import {
 import DropDownPicker from 'react-native-dropdown-picker';
 import colors from '../assets/colors/colors';
 
-export default function LightDropdown() {
-  const [openplan, setOpenplan] = React.useState(false);
-  const [valueplan, setValuePlan] = React.useState('SCHEDULE ');
-  const [items, setItems] = React.useState([
-    {
-      label: (
-        <Text style={{fontFamily: 'Mitr-Regular', color: colors.newGreen2}}>
-          SCHEDULE
-        </Text>
-      ),
-      value: 'SCHEDULE',
-    },
-    {
-      label: (
-        <Text style={{fontFamily: 'Mitr-Regular', color: colors.newGreen2}}>
-          AUTO
-        </Text>
-      ),
-      value: 'AUTO',
-    },
-    {
-      label: (
-        <Text style={{fontFamily: 'Mitr-Regular', color: colors.newGreen2}}>
-          OFF
-        </Text>
-      ),
-      value: 'OFF',
-    },
-  ]);
+export default function LightDropdown({openplan,setOpenplan,valueplan,setValuePlan,items,setItems}) {
   return (
     <DropDownPicker
       open={openplan}
