@@ -23,7 +23,7 @@ import Settings from './screens/Settings';
 import Test from './screens/ChooseCard';
 import ChooseCard from './screens/ChooseCard';
 import Userregister from './screens/Userregister';
-
+import UserProfile from './screens/UserProfile';
 
 
 
@@ -220,6 +220,9 @@ function App() {
           headerShown : false
         }}/>
         <Stack.Screen name="Userregister" component={Userregister} options={{
+          headerShown : false
+        }}/>
+        <Stack.Screen name="UserProfile" component={UserProfile} options={{
           headerShown : false
         }}/>
       </Stack.Navigator>

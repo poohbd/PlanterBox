@@ -16,6 +16,9 @@ import TranspInput from '../components/accountinput';
 import FlatButton from '../components/button';
 import {Formik} from 'formik';
 import * as yup from 'yup';
+import UserProfile from './UserProfile';
+
+const a ={};
 
 export default Userregister = ({navigation}) => {
   const loginValidateSchema = yup.object().shape({
@@ -41,30 +44,37 @@ export default Userregister = ({navigation}) => {
      const [email, setEmail] = React.useState('');
      const [password, setPassword] = React.useState('');
 
-     const validateRegister = async () => {
+     const validateRegister = async (values) => {
+        const {email,username,password} = values;
      const response = await fetch('http://localhost:3000/user/register', {
          method: 'POST',
          headers: {
            'Content-Type': 'application/json',
-           Accept: 'application/json',
+           'Accept': 'application/json',
          },
          body: JSON.stringify({
-           username: username,
-           email: email,
-           password: password,
-         }),
+           "email": email,
+           "username": username,
+           "password": password
+         })
        });
        const json = await response.json();
-       console.log(json);
        if (json.error == false) {
          console.log(json.error);
-         return navigation.navigate('Register');
+         return navigation.navigate('UserProfile', {"UserID":json.description.UserID});
        } else {
-         console.log('This email is already used!');
-          //return (setModalVisible(true));
+          if (json.description.existedEmail == true) {
+            "Warning","This email is already used!!!",
+                { text: "OK", onPress: () => this.setState({email:""})}
+          }else if (json.description.existedUsername == true){
+            "Warning","This username is already used!!!",
+                { text: "OK", onPress: () => this.setState({username:""})}
+          }
        }
      };
+
   return (
+    
     <Formik
       initialValues={{
         username: '',
@@ -73,7 +83,9 @@ export default Userregister = ({navigation}) => {
         confirmPassword: '',
       }}
       validationSchema={loginValidateSchema}
-      onSubmit={validateRegister}>
+      onSubmit={values => {validateRegister(values)}
+    }
+     >
       {({handleChange, handleBlur, handleSubmit, values, errors, touched}) => (
         <View style={styles.container}>
           <Text style={styles.header}>FARM-O-MATIC</Text>
