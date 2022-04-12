@@ -18,36 +18,44 @@ import LightForm from '../components/lightform';
 import DropDownTime from '../components/dropdowntime';
 import TimeFormAuto from '../components/timeformAuto';
 import LightFormAuto from '../components/lightformAuto';
-
+import axios from 'axios';
 
 const deviceWidth = Dimensions.get('screen').width;
 const deviceHeight = Dimensions.get('screen').height;
 
 export default ChooseCard = ({route, navigation}) => {
-  const {valuepreset} = route.params;
-  const plantName = valuepreset.valuepreset;
+  const {valuepreset,id} = route.params;
+  const plantName = valuepreset;
   pathImage = type => {
     switch (type) {
       case 'Sunflower':
         return require('../assets/images/Sunflower.png');
       case 'Basil':
         return require('../assets/images/Basil.png');
+      case 'Cucumber':
+        return require('../assets/images/Cucumber.png');
     }
   };
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState();
   const getSetting = async () => {
     try {
-      const response = await fetch(
-        'http://localhost:3000/planterbox/1/settings',
-      );
-      const json = await response.json();
-      setData(json);
+      const config = {
+        method: 'POST',
+        url: 'http://localhost:3000/planterbox/settings',
+        data: {
+          id: id,
+        },
+      };
+      const setting = await axios
+        .request(config)
+        .then(res => setData(res.data));
+      console.log(data);
     } catch (error) {
       console.error(error);
     } finally {
       setLoading(false);
-      console.log(data);
+      // console.log(data);
     }
   };
 
@@ -98,16 +106,16 @@ export default ChooseCard = ({route, navigation}) => {
           </View>
           <View style={styles.card}>
             <View style={styles.cardContent}>
-              <TimeFormAuto />
-              <LightFormAuto />
-              <TimeForm />
+              <TimeForm data={data} />
               <LightForm data={data} />
               <DropDownTime type="FERTILIZER" />
               <DropDownTime type="PESTICIDE" />
+              <View style={styles.view} />
+              <View style={styles.view} />
+              <View style={styles.view} />
               {/* <DropDownTime type="FERTILIZER" />
             <DropDownTime type="PESTICIDE" /> */}
             </View>
-
           </View>
         </ScrollView>
       )}
@@ -116,6 +124,18 @@ export default ChooseCard = ({route, navigation}) => {
 };
 
 const styles = StyleSheet.create({
+  view: {
+    width: 350,
+    height: 100,
+    borderRadius: 30,
+    backgroundColor: '#FFFFFF',
+    fontFamily: 'Mitr-Regular',
+    fontSize: 23,
+    paddingTop: 50,
+    paddingLeft: 60,
+    alignSelf: 'center',
+    marginTop: 20,
+  },
   container: {
     // flex: 1,
     backgroundColor: '#FFFFFF',

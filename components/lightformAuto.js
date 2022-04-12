@@ -8,34 +8,37 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import { useEffect } from 'react';
 
 
-export default function LightFormAuto ({}){
+export default function LightFormAuto ({data}){
+    console.log(data);
     const [isPickerFirstShow, setIsPickerFirstShow] = React.useState(false);
     const [isPickerEndShow, setIsPickerEndShow] = React.useState(false);
     const [datefirst, setDateFirst] = React.useState(new Date(Date.now()));
     const [dateend, setDateEnd] = React.useState(new Date(Date.now()));
-    const [lightMinAuto, setLightMinAuto] = React.useState();
-    const [lightMaxAuto, setLightMaxAuto] = React.useState();
-    const [data, setData] = React.useState([]);
-    const getJson = async () => {
-        try {
-         const response = await fetch("http://localhost:3000/planterbox/3/settings");
-         const json = await response.json();
-         setData(json);
-         console.log(data)
-       }catch (error) {
-        console.error(error);
-      }}
-      useEffect(() => {
-        getJson();
-      }, []);
+    const [lightMinAuto, setLightMinAuto] = React.useState(data.minLightIntensity);
+    const [lightMaxAuto, setLightMaxAuto] = React.useState(data.maxLightIntensity);
+    const id = data.SettingsID;
+    // const [data, setData] = React.useState([]);
+    // const getJson = async () => {
+    //     try {
+    //      const response = await fetch("http://localhost:3000/planterbox/3/settings");
+    //      const json = await response.json();
+    //      setData(json);
+    //      console.log(data)
+    //    }catch (error) {
+    //     console.error(error);
+    //   }}
+    //   useEffect(() => {
+    //     getJson();
+    //   }, []);
     const addMinMax = async () =>{
-        const response = await fetch("http://localhost:3000/planterbox/settings/3/updateBoxSettings",{
+        const response = await fetch("http://localhost:3000/planterbox/settings/updateBoxSettings",{
           method:"PUT",
           headers : { 
               'Content-Type': 'application/json',
               'Accept': 'application/json'
           },
           body:JSON.stringify({
+              id: id,
               "minLightIntensity":lightMinAuto,
               "maxLightIntensity":lightMaxAuto
               })
@@ -58,25 +61,21 @@ export default function LightFormAuto ({}){
         setDateEnd(currentDate);
     };
     return(
-        <View style={styles.bigCard}>
-            <View style={styles.circleCard}>
-            <Text style={styles.circleCardText}>48%</Text>
-            </View>
-            <Text style={styles.cardWatering}>LIGHT EXPOSURE</Text>
-            <LightDropdown zIndex={300}/>
+        <View >
+            
                 <View style={styles.mediumCard}>
                     <Text style={styles.cardContent}>   MIN  </Text>
                     <View style={styles.smallCard}>
                         <View>
                             <TextInput style={styles.textTime} onChangeText={(lightMinAuto) => setLightMinAuto(parseInt(lightMinAuto))} defaultValue={data.minLightIntensity.toString()}/>
-                            <Text>{lightMinAuto}</Text>
+                            {/* <Text>{lightMinAuto}</Text> */}
                         </View> 
                     </View>
                     <Text style={styles.cardContent}> MAX  </Text>
                     <View style={styles.smallCard}>
                         <View>
                             <TextInput style={styles.textTime} onChangeText={(lightMaxAuto) => setLightMaxAuto(parseInt(lightMaxAuto))} defaultValue={data.maxLightIntensity.toString()}/>
-                            <Text>{lightMaxAuto}</Text>
+                            {/* <Text>{lightMaxAuto}</Text> */}
                         </View>
                         {/* <TouchableOpacity onPress={() => {getJson()}}>
                             <Text>Reload</Text>
@@ -91,42 +90,9 @@ export default function LightFormAuto ({}){
                     <Text style={styles.cardContent}>  </Text>
                     
                 </View>
-                <Text style={styles.smText}>20,000 LUX</Text>
-                <Image style={styles.image} source = {require("../assets/images/lightlogo.png")}/>
-                <Slider
-                    style={{width: 120, height: 40}}
-                    minimumValue={0}
-                    maximumValue={1}
-                    minimumTrackTintColor="#C8A805"
-                    maximumTrackTintColor="#000000"
-                    value={0.5}
-                    marginTop={6}
-                    marginLeft={45}
-                />
-                {isPickerFirstShow &&(
-                <DateTimePicker
-                            testID="dateTimePicker1"
-                            value={datefirst}
-                            display="compact"
-                            mode="time"
-                            is24Hour={false}
-                            onChange={onChangeFirst}
-                            accentColor ={colors.newGreen2}
-                            style={{marginRight:110,marginTop:-20}}  
-                    />
-                )}
-                {isPickerEndShow &&(
-                <DateTimePicker
-                            testID="dateTimePicker2"
-                            value={dateend}
-                            display="compact"
-                            mode="time"
-                            is24Hour={false}
-                            onChange={onChangeEnd}
-                            accentColor ={colors.newGreen2}
-                            style={{marginRight:30,marginTop:40}}  
-                    />
-                )}
+                
+                
+                
         </View>
     )
 }

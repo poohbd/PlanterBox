@@ -14,7 +14,9 @@ import LightDropdown from './LightDropdown';
 import Slider from '@react-native-community/slider';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import OffLight from './offlight';
+import LightFormAuto from './lightformAuto';
 export default function LightForm({data}) {
+  console.log(data);
   const [isPickerFirstShow, setIsPickerFirstShow] = React.useState(false);
   const [isPickerEndShow, setIsPickerEndShow] = React.useState(false);
   const [datefirst, setDateFirst] = React.useState(new Date(Date.now()));
@@ -35,14 +37,44 @@ export default function LightForm({data}) {
     setIsPickerEndShow(false);
     setDateEnd(currentDate);
   };
+  const [openplan, setOpenplan] = React.useState(false);
+  const [valueplan, setValuePlan] = React.useState(data.wateringMode.toUpperCase());
+  const [items, setItems] = React.useState([
+    {
+      label: (
+        <Text style={{fontFamily: 'Mitr-Regular', color: colors.newGreen2}}>
+          SCHEDULE
+        </Text>
+      ),
+      value: 'SCHEDULE',
+    },
+    {
+      label: (
+        <Text style={{fontFamily: 'Mitr-Regular', color: colors.newGreen2}}>
+          AUTO
+        </Text>
+      ),
+      value: 'AUTO',
+    },
+    {
+      label: (
+        <Text style={{fontFamily: 'Mitr-Regular', color: colors.newGreen2}}>
+          OFF
+        </Text>
+      ),
+      value: 'MANUAL',
+    },
+  ]);
+  console.log(valueplan);
   return (
     <View style={styles.bigCard}>
       <View style={styles.circleCard}>
         <Text style={styles.circleCardText}>48%</Text>
       </View>
       <Text style={styles.cardWatering}>LIGHT EXPOSURE</Text>
-      <LightDropdown zIndex={300} />
-      {/* <View style={styles.mediumCard}>
+      <LightDropdown zIndex={300} openplan={openplan} setOpenplan={setOpenplan} valueplan={valueplan} setValuePlan={setValuePlan} items={items} setItems={setItems}/>
+      {valueplan ==='SCHEDULE'&&(
+      <View style={styles.mediumCard}>
         <Text style={styles.cardContent}> FROM </Text>
         <View style={styles.smallCard}>
           <TouchableOpacity onPress={showFirstTimePicker}>
@@ -67,14 +99,27 @@ export default function LightForm({data}) {
             </Text>
           </TouchableOpacity>
         </View>
-      </View> */}
-      <OffLight lightStatus={data.lightStatus} />
+      </View>
+      )}
+      {valueplan ==='AUTO'&&(
+        <LightFormAuto data={data}/>)}
+      {valueplan ==='MANUAL'&&(
+        <OffLight lightStatus={data.lightStatus} />
+      )}
 
       <Text style={styles.smText}>20,000 LUX</Text>
-      <Image
-        style={styles.image}
-        source={require('../assets/images/lightlogo.png')}
-      />
+      {data.lightStatus ==='ON' &&(
+        <Image
+          style={styles.image}
+          source={require('../assets/images/lightlogo.png')}
+        />
+      )}
+      {data.lightStatus === 'OFF' &&(
+        <Image
+          style={styles.image}
+          source={require('../assets/images/light-off.png')}
+        />
+      )}
       <Slider
         style={{width: 120, height: 40, zIndex: 99}}
         minimumValue={0}
@@ -120,7 +165,7 @@ const styles = StyleSheet.create({
     width: 350,
     height: 150,
     borderRadius: 30,
-    backgroundColor: 'lightgrey',
+    backgroundColor: '#FFFFFF',
     fontFamily: 'Mitr-Regular',
     fontSize: 23,
     paddingTop: 50,
