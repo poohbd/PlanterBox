@@ -9,30 +9,32 @@ const deviceWidth = Dimensions.get('screen').width;
 const deviceHeight = Dimensions.get('screen').height;
 
 export default UserProfile = ({route, navigation}) => {
+    const [user,setUser] = React.useState("");
     const UU = route.params;
     const UserID = UU.UserID;
-    console.log(UserID);
 
     const getUserFromApi = async () => {
         try{
-            const response = await axios.get('http://localhost:3000/user/getuser'+ UserID);
-            console.log(response);
-        } catch {
+            const response = await axios.get('http://localhost:3000/user/getuser/'+UserID);
+            setUser(response.data);
+        } catch (error){
             console.error(error);
         }
     }
-    console.log(getUserFromApi.response);
+    getUserFromApi()
+    
     return (
         <View style={styles.container}>
             <View style={styles.space}/><View style={styles.space}/>
             <Text style={styles.header}>FARM-O-MATIC</Text>
             <View style={styles.space} /><View style={styles.space} />
             <Text style={styles.infoname}>USERNAME</Text>
+            <Text style={styles.infoname2}>{user.UserName}</Text>
             <View style={styles.space} /><View style={styles.space} />
             <Text style={styles.infoname}>EMAIL</Text>
+            <Text style={styles.infoname2}>{user.Email}</Text>
             <View style={styles.space} /><View style={styles.space} />
-            <Text style={styles.infoname}>PASSWORD</Text>
-            <View style={styles.space} /><View style={styles.space} />
+            
             {/* <FlatButton text="LOGIN" onPress={() => navigation.navigate('Register')} /> */}
             <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Register')}>
                 <View>
@@ -65,6 +67,12 @@ const styles = StyleSheet.create({
         fontFamily:'Mitr-Regular',
         fontSize:17,
         color:colors.darkGray,
+        alignSelf:'center'
+    },
+    infoname2:{
+        fontFamily:'Mitr-Regular',
+        fontSize:17,
+        color:colors.newGreen4,
         alignSelf:'center'
     },
     forgetPass: {

@@ -40,41 +40,31 @@ export default UserChangeName = ({navigation}) => {
       .oneOf([yup.ref('password')], '         Passwords do not match')
       .required('         Confirm password is required'),
   });
-     const [username, setUsername] = React.useState('');
-     const [email, setEmail] = React.useState('');
-     const [password, setPassword] = React.useState('');
+    
 
-     const validateRegister = async (values) => {
+     const updateUser = async (values) => {
         const {email,username,password} = values;
-     const response = await fetch('http://localhost:3000/user/register', {
-         method: 'POST',
+     const response = await fetch('http://localhost:3000/user/10', {
+         method: 'PATCH',
          headers: {
            'Content-Type': 'application/json',
            'Accept': 'application/json',
          },
          body: JSON.stringify({
-           "email": email,
-           "username": username,
-           "password": password
+           "Email": email,
+           "UserName": username,
+           "Password": password
          })
        });
        const json = await response.json();
-       if (json.error == false) {
-         console.log(json.error);
-         return navigation.navigate('UserProfile', {"UserID":json.description.UserID});
+       if (json.error == true) {
+        Alert.alert(
+          "Warning","This userID is invalid!!!", 
+          
+          )
        } else {
-          if (json.description.existedEmail == true) {
-            Alert.alert(
-            "Warning","This email is already used!!!",
-                { text: "OK", onPress: () => this.setState({email:""})} 
-            )
-          }else if (json.description.existedUsername == true){
-            Alert.alert(
-            "Warning","This username is already used!!!",
-                { text: "OK", onPress: () => this.setState({username:""})} 
-            )
-          }
-       }
+        return navigation.navigate("UserProfileHome");
+      }
      };
 
   return (
@@ -87,7 +77,7 @@ export default UserChangeName = ({navigation}) => {
         confirmPassword: '',
       }}
       validationSchema={loginValidateSchema}
-      onSubmit={values => {validateRegister(values)}
+      onSubmit={values => {updateUser(values)}
     }
      >
       {({handleChange, handleBlur, handleSubmit, values, errors, touched}) => (

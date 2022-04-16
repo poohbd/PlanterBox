@@ -250,7 +250,7 @@ function Tabs_Settings() {
 function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="UserChangeName">
+      <Stack.Navigator initialRouteName="Userregister">
         <Stack.Screen name="Example" component={Example} options={{
           headerShown : false
         }}/>
