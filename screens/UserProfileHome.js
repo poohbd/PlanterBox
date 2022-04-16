@@ -8,8 +8,8 @@ import axios from 'axios';
 const deviceWidth = Dimensions.get('screen').width;
 const deviceHeight = Dimensions.get('screen').height;
 
-export default UserProfile = ({route, navigation}) => {
-    const UU = route.params;
+export default UserProfileHome = ({route, navigation}) => {
+    /*const UU = route.params;
     const UserID = UU.UserID;
     console.log(UserID);
 
@@ -21,9 +21,14 @@ export default UserProfile = ({route, navigation}) => {
             console.error(error);
         }
     }
-    console.log(getUserFromApi.response);
+    console.log(getUserFromApi.response);*/
     return (
         <View style={styles.container}>
+            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Menu')}>
+                <View>
+                    <Text style={styles.buttonText}>BACK</Text>
+                </View>
+            </TouchableOpacity>
             <View style={styles.space}/><View style={styles.space}/>
             <Text style={styles.header}>FARM-O-MATIC</Text>
             <View style={styles.space} /><View style={styles.space} />
@@ -33,12 +38,7 @@ export default UserProfile = ({route, navigation}) => {
             <View style={styles.space} /><View style={styles.space} />
             <Text style={styles.infoname}>PASSWORD</Text>
             <View style={styles.space} /><View style={styles.space} />
-            {/* <FlatButton text="LOGIN" onPress={() => navigation.navigate('Register')} /> */}
-            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Register')}>
-                <View>
-                    <Text style={styles.buttonText}>NEXT</Text>
-                </View>
-            </TouchableOpacity>
+            <FlatButton text="Change USERNAME/EMAIL" onPress={() => navigation.navigate('Register')} /> 
         </View>
         
     )
@@ -93,8 +93,8 @@ const styles = StyleSheet.create({
         width: 80,
         backgroundColor: colors.newGreen2,
         borderRadius: 20,
-        marginTop: deviceHeight*0.3,
-        marginLeft: deviceWidth*0.7,
+        marginTop: deviceHeight*-0.2,
+        marginLeft: deviceWidth*0.1,
     },
         buttonText: {
         color: '#FAFAFA',

@@ -24,8 +24,8 @@ import Test from './screens/ChooseCard';
 import ChooseCard from './screens/ChooseCard';
 import Userregister from './screens/Userregister';
 import UserProfile from './screens/UserProfile';
-
-
+import UserProfileHome from './screens/UserProfileHome';
+import UserChangeName from './screens/UserChangeName';
 
 const Tab = createBottomTabNavigator();
 
@@ -250,7 +250,7 @@ function Tabs_Settings() {
 function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="ChooseCard">
+      <Stack.Navigator initialRouteName="UserChangeName">
         <Stack.Screen name="Example" component={Example} options={{
           headerShown : false
         }}/>
@@ -297,6 +297,12 @@ function App() {
           headerShown : false
         }}/>
         <Stack.Screen name="UserProfile" component={UserProfile} options={{
+          headerShown : false
+        }}/>
+        <Stack.Screen name="UserProfileHome" component={UserProfileHome} options={{
+          headerShown : false
+        }}/>
+        <Stack.Screen name="UserChangeName" component={UserChangeName} options={{
           headerShown : false
         }}/>
       </Stack.Navigator>

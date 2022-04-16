@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   Dimensions,
   ImageBackground,
+  ScrollView
 } from 'react-native';
 import colors from '../assets/colors/colors';
 import {Button, Searchbar} from 'react-native-paper';
@@ -144,7 +145,7 @@ export default MyPlant = ({navigation}) => {
   }, []);
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       {/* <Text>{settings.wateringMode}</Text> */}
       <View style={styles.inline}>
         <TouchableOpacity
@@ -432,7 +433,7 @@ export default MyPlant = ({navigation}) => {
         </TouchableOpacity>
       </View>
       <CustomizeModal modalVisible={modalVisible} closeModal={closeModal} />
-    </View>
+    </ScrollView>
   );
 };
 

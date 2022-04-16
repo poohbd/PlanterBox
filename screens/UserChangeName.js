@@ -20,8 +20,8 @@ import UserProfile from './UserProfile';
 
 const a ={};
 
-export default Userregister = ({navigation}) => {
-  const loginValidateSchema = yup.object().shape({
+export default UserChangeName = ({navigation}) => {
+    const loginValidateSchema = yup.object().shape({
     email: yup.string().email('         Email Address is required')
     .matches(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,'         Invalid Email Address'),
     password: yup
@@ -133,11 +133,9 @@ export default Userregister = ({navigation}) => {
           {/* <Text style={styles.forgetPass}>FORGET PASSWORD?</Text>
           <View style={styles.space} /> */}
           {/* <FlatButton text="LOGIN" onPress={() => navigation.navigate('Register')} /> */}
-          <Text style={styles.privacyText}>BY CREATING AN ACCOUNT, YOU AGREE TO OUR</Text>
-          <Text style={styles.privacyText}>TERMS AND CONDITIONS AND PRIVACY POLICY</Text>
+          <FlatButton onPress={handleSubmit} text="CHANGE" title="CHANGE" color='white' height='20'/>
           <View style={styles.space}/>
-          <FlatButton onPress={handleSubmit} text="SIGNUP" title="SIGNUP" color='white' height='20'/>
-          <Text style={styles.privacyText}>ALREADY HAVE AN ACCOUNT?<Text style={styles.loginText} onPress={() => navigation.navigate('Login')}> LOG IN</Text></Text>
+          <Text style={styles.loginText} onPress={() => navigation.navigate('Menu')}> CANCEL</Text>
         </View>
       )}
     </Formik>
@@ -215,7 +213,7 @@ const styles = StyleSheet.create({
   },
   loginText:{
     fontFamily: 'Mitr-Regular',
-    fontSize: 10,
+    fontSize: 13,
     color: 'green',
     alignSelf: 'center',
     marginTop: 0
