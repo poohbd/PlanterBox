@@ -188,7 +188,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Mitr-Regular',
     fontSize: 10,
     color: colors.red,
-    margintTop: 5,
+    marginTop: 5,
   },
   signupContainer:{
     color: colors.newGreen2,
