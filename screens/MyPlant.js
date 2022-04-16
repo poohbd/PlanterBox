@@ -7,6 +7,7 @@ import {
   Image,
   TouchableOpacity,
   Dimensions,
+  ScrollView,
   ImageBackground,
 } from 'react-native';
 import colors from '../assets/colors/colors';
@@ -144,7 +145,7 @@ export default MyPlant = ({navigation}) => {
   }, []);
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       {/* <Text>{settings.wateringMode}</Text> */}
       <View style={styles.inline}>
         <TouchableOpacity
@@ -189,7 +190,7 @@ export default MyPlant = ({navigation}) => {
               onPress={() =>
                 navigation.navigate('ChooseCard', {
                   valuepreset: setting.planterboxsettings.SettingName,
-                  id:setting.boxID,
+                  id: setting.boxID,
                 })
               }>
               <View style={styles.cardContentDone}>
@@ -432,7 +433,7 @@ export default MyPlant = ({navigation}) => {
         </TouchableOpacity>
       </View>
       <CustomizeModal modalVisible={modalVisible} closeModal={closeModal} />
-    </View>
+    </ScrollView>
   );
 };
 
