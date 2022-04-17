@@ -17,6 +17,7 @@ import FlatButton from '../components/button';
 import {Formik} from 'formik';
 import * as yup from 'yup';
 import UserProfile from './UserProfile';
+import axios from 'axios';
 
 const a ={};
 
@@ -41,30 +42,29 @@ export default UserChangeName = ({navigation}) => {
       .required('         Confirm password is required'),
   });
     
-
+     const [userresult, setUserresult] = React.useState('');
      const updateUser = async (values) => {
         const {email,username,password} = values;
-     const response = await fetch('http://localhost:3000/user/10', {
-         method: 'PATCH',
-         headers: {
-           'Content-Type': 'application/json',
-           'Accept': 'application/json',
-         },
-         body: JSON.stringify({
-           "Email": email,
-           "UserName": username,
-           "Password": password
-         })
-       });
-       const json = await response.json();
-       if (json.error == true) {
-        Alert.alert(
-          "Warning","This userID is invalid!!!", 
-          
-          )
-       } else {
-        return navigation.navigate("UserProfileHome");
-      }
+        const config = {
+          method: 'PATCH',
+          url: 'http://localhost:3000/user/1',
+          data: {
+            Email: email,
+            UserName: username,
+            Password: password,
+          },
+        };
+        const setting = await axios
+          .request(config)
+          .then(res => setUserresult(res.data));
+        if (userresult.error == true) {
+          Alert.alert(
+            "Warning","This userID is invalid!!!", 
+            
+            )
+        } else {
+          return navigation.navigate("UserProfileHome");
+        }
      };
 
   return (

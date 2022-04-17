@@ -17,6 +17,7 @@ import FlatButton from '../components/button';
 import {Formik} from 'formik';
 import * as yup from 'yup';
 import UserProfile from './UserProfile';
+import axios from 'axios';
 
 const a ={};
 
@@ -43,38 +44,44 @@ export default Userregister = ({navigation}) => {
      const [username, setUsername] = React.useState('');
      const [email, setEmail] = React.useState('');
      const [password, setPassword] = React.useState('');
+     const [userresult, setUserresult] = React.useState('');
 
      const validateRegister = async (values) => {
+      try {
         const {email,username,password} = values;
-     const response = await fetch('http://localhost:3000/user/register', {
-         method: 'POST',
-         headers: {
-           'Content-Type': 'application/json',
-           'Accept': 'application/json',
-         },
-         body: JSON.stringify({
-           "email": email,
-           "username": username,
-           "password": password
-         })
-       });
-       const json = await response.json();
-       if (json.error == false) {
-         console.log(json.error);
-         return navigation.navigate('UserProfile', {"UserID":json.description.UserID});
-       } else {
-          if (json.description.existedEmail == true) {
+        const config = {
+          method: 'POST',
+          url: 'http://localhost:3000/user/register',
+          data: {
+            Email: email,
+            UserName: username,
+            Password: password,
+          },
+        };
+        const setting = await axios
+          .request(config)
+          .then(res => setUserresult(res.data));
+        console.log(userresult);
+
+        if (userresult.error == false) {
+          console.log(json.error);
+          return navigation.navigate('UserProfile', {"UserID":userresult.description.UserID});
+        } else {
+          if (userresult.description.existedEmail == true) {
             Alert.alert(
             "Warning","This email is already used!!!",
                 { text: "OK", onPress: () => this.setState({email:""})} 
             )
-          }else if (json.description.existedUsername == true){
+          }else if (userresult.description.existedUsername == true){
             Alert.alert(
             "Warning","This username is already used!!!",
                 { text: "OK", onPress: () => this.setState({username:""})} 
             )
           }
-       }
+        }
+      } catch (error){
+        alert(error.message);
+      }
      };
 
   return (

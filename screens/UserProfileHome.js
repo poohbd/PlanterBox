@@ -12,7 +12,7 @@ export default UserProfileHome = ({route, navigation}) => {
     const [user,setUser] = React.useState("");
     const getUserFromApi = async () => {
         try{
-            const response = await axios.get('http://localhost:3000/user/getuser/10');
+            const response = await axios.get('http://localhost:3000/user/getuser/1');
             setUser(response.data);
         } catch (error){
             console.error(error);
