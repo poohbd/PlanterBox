@@ -7,6 +7,7 @@ import {
   Image,
   TouchableOpacity,
   Dimensions,
+  ScrollView,
   ImageBackground,
   ScrollView
 } from 'react-native';
@@ -190,7 +191,7 @@ export default MyPlant = ({navigation}) => {
               onPress={() =>
                 navigation.navigate('ChooseCard', {
                   valuepreset: setting.planterboxsettings.SettingName,
-                  id:setting.boxID,
+                  id: setting.boxID,
                 })
               }>
               <View style={styles.cardContentDone}>
