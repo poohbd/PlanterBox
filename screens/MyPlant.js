@@ -145,8 +145,9 @@ export default MyPlant = ({navigation}) => {
   useEffect(() => {
     getBoxList();
   }, []);
-  var sensor2 = '';
-  const [sensor, setSensor] = useState('');
+  const [sensor1, setSensor1] = useState('');
+  const [sensor2, setSensor2] = useState('');
+  let mqttClient = null;
   MQTT.createClient({
     uri: 'mqtts://66d6b91771ff4fc7bb664c04cc3e7fbb.s2.eu.hivemq.cloud:8883',
     clientId: 'clientId-YKICzmBta3',
@@ -165,12 +166,18 @@ export default MyPlant = ({navigation}) => {
 
       client.on('message', function (msg) {
         console.log('mqtt.event.message', msg);
-        setSensor(msg.data);
+        if(msg.topic==='sensor/light'){
+          setSensor1(msg.data);
+        }
+        if(msg.topic==='sensor/water'){
+          setSensor2(msg.data);
+        }
       });
 
       client.on('connect', function () {
         console.log('connected');
-        client.subscribe('sensor2', 2);
+        client.subscribe('sensor/+', 2);
+        mqttClient = client;
         // client.publish('sensor2', 'planterbox', 2, false);
       });
 
@@ -243,7 +250,7 @@ export default MyPlant = ({navigation}) => {
                 </Text>
                 <Text
                   style={{fontFamily: 'Mitr-Regular', color: colors.newGreen2}}>
-                  {sensor}
+                  sensor1:{sensor1} sensor2:{sensor2}
                 </Text>
                 <Image
                   style={styles.imageSun}
@@ -313,6 +320,23 @@ export default MyPlant = ({navigation}) => {
             </TouchableOpacity>
           </View>
         ))}
+        {sensor1 === '1' ?(
+        <TouchableOpacity style={{backgroundColor:"blue",width:100,height:50,alignSelf:'flex-start'}} onPress={()=>mqttClient.publish('sensor/light', '0', 2, true)}>
+          <Text>Test Light</Text>
+        </TouchableOpacity>) :( 
+        <TouchableOpacity style={{backgroundColor:"grey",width:100,height:50,alignSelf:'flex-start'}} onPress={()=>mqttClient.publish('sensor/light', '1', 2, true)}>
+        <Text>Test Light</Text>
+        </TouchableOpacity>)}
+        {sensor2 === '1' ?(
+        <TouchableOpacity style={{backgroundColor:"blue",width:100,height:50,alignSelf:'flex-end'}} onPress={()=>mqttClient.publish('sensor/water', '0', 2, true)}>
+        
+          <Text>Test Water</Text>
+        </TouchableOpacity>) :(
+          <TouchableOpacity style={{backgroundColor:"grey",width:100,height:50,alignSelf:'flex-end'}} onPress={()=>mqttClient.publish('sensor/water', '1', 2, true)}>
+        
+          <Text>Test Water</Text>
+        </TouchableOpacity>
+        )}
         {isNewBox && !valuepreset ? (
           <View style={styles.cardContent}>
             <DropDownPicker
