@@ -22,7 +22,7 @@ import Wiki from './screens/Wiki';
 import Settings from './screens/Settings';
 import Test from './screens/ChooseCard';
 import ChooseCard from './screens/ChooseCard';
-
+import TestMQTT from './screens/TestMQTT';
 const Tab = createBottomTabNavigator();
 
 const Stack = createNativeStackNavigator();
@@ -341,6 +341,13 @@ function App() {
         <Stack.Screen
           name="ChooseCard"
           component={ChooseCard}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="TestMQTT"
+          component={TestMQTT}
           options={{
             headerShown: false,
           }}

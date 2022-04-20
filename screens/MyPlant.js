@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {useState, useEffect} from 'react';
+import MQTT from 'sp-react-native-mqtt';
 import {
   View,
   Text,
@@ -21,6 +22,7 @@ import axios from 'axios';
 //import { CircularCard } from "react-native-circular-card-view";
 const baseUrl = 'http://localhost:3000';
 export default MyPlant = ({navigation}) => {
+  // console.log(sensor2);
   const [isNewBox, setIsNewBox] = React.useState(true);
   const [isSun, setIsSun] = React.useState(false);
   const [isBasil, setIsBasil] = React.useState(false);
@@ -143,7 +145,40 @@ export default MyPlant = ({navigation}) => {
   useEffect(() => {
     getBoxList();
   }, []);
+  var sensor2 = '';
+  const [sensor, setSensor] = useState('');
+  MQTT.createClient({
+    uri: 'mqtts://66d6b91771ff4fc7bb664c04cc3e7fbb.s2.eu.hivemq.cloud:8883',
+    clientId: 'clientId-YKICzmBta3',
+    user: 'ICERUS',
+    pass: 'Projectyear3',
+    auth: true,
+  })
+    .then(function (client) {
+      client.on('closed', function () {
+        console.log('mqtt.event.closed');
+      });
 
+      client.on('error', function (msg) {
+        console.log('mqtt.event.error', msg);
+      });
+
+      client.on('message', function (msg) {
+        console.log('mqtt.event.message', msg);
+        setSensor(msg.data);
+      });
+
+      client.on('connect', function () {
+        console.log('connected');
+        client.subscribe('sensor2', 2);
+        // client.publish('sensor2', 'planterbox', 2, false);
+      });
+
+      client.connect();
+    })
+    .catch(function (err) {
+      console.log(err);
+    });
   return (
     <ScrollView style={styles.container}>
       {/* <Text>{settings.wateringMode}</Text> */}
@@ -205,6 +240,10 @@ export default MyPlant = ({navigation}) => {
                     marginTop: 0,
                   }}>
                   {setting.planterboxsettings.SettingName}
+                </Text>
+                <Text
+                  style={{fontFamily: 'Mitr-Regular', color: colors.newGreen2}}>
+                  {sensor}
                 </Text>
                 <Image
                   style={styles.imageSun}
