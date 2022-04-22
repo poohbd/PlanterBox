@@ -51,11 +51,11 @@ export default Userregister = ({navigation}) => {
         const {email,username,password} = values;
         const config = {
           method: 'POST',
-          url: 'http://localhost:3000/user/register',
+          url: 'http://192.168.1.44:3000/user/register',
           data: {
-            Email: email,
-            UserName: username,
-            Password: password,
+            email: email,
+            username: username,
+            password: password,
           },
         };
         const setting = await axios
@@ -68,14 +68,16 @@ export default Userregister = ({navigation}) => {
           return navigation.navigate('UserProfile', {"UserID":userresult.description.UserID});
         } else {
           if (userresult.description.existedEmail == true) {
-            Alert.alert(
-            "Warning","This email is already used!!!",
-                { text: "OK", onPress: () => this.setState({email:""})} 
+            Alert.alert([
+            "Error","This email is already used!!!",
+                { text: "OK", onPress: () => console.log("OK Pressed")}],
+            { cancelable: false }
             )
           }else if (userresult.description.existedUsername == true){
-            Alert.alert(
-            "Warning","This username is already used!!!",
-                { text: "OK", onPress: () => this.setState({username:""})} 
+            Alert.alert([
+            "Error","This username is already used!!!",
+                { text: "OK", onPress: () => console.log("OK Pressed")}],
+            { cancelable: false }
             )
           }
         }

@@ -9,7 +9,6 @@ import {
   Dimensions,
   ScrollView,
   ImageBackground,
-  ScrollView
 } from 'react-native';
 import colors from '../assets/colors/colors';
 import {Button, Searchbar} from 'react-native-paper';
