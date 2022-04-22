@@ -20,7 +20,7 @@ import FadeInView from '../components/fadeInView';
 import axios from 'axios';
 
 //import { CircularCard } from "react-native-circular-card-view";
-const baseUrl = 'http://localhost:3000';
+const baseUrl = 'http://192.168.1.44:3000';
 export default MyPlant = ({navigation}) => {
   // console.log(sensor2);
   const [isNewBox, setIsNewBox] = React.useState(true);
@@ -90,7 +90,7 @@ export default MyPlant = ({navigation}) => {
     try {
       const config = {
         method: 'POST',
-        url: 'http://localhost:3000/planterbox/settings',
+        url: 'http://192.168.1.44:3000/planterbox/settings',
         data: {
           id: id,
         },

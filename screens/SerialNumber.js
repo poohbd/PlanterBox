@@ -13,7 +13,7 @@ const deviceHeight = Dimensions.get('screen').height;
 export default SerialNumber = ({navigation}) => {
     const [serialNumber,setSerialNumber] = React.useState();
     const addBox = async () =>{
-      const response = await fetch("http://localhost:3000/user/addbox/1",{
+      const response = await fetch("http://192.168.1.44:3000/user/addbox/1",{
           method:"POST",
           headers : { 
               'Content-Type': 'application/json',
@@ -30,9 +30,11 @@ export default SerialNumber = ({navigation}) => {
       }else {
           console.log("Box is already registered!")
           Alert.alert(
-              "Box is already registered!",
-              { text: "OK"}
-          )
+              "Error","Box is already registered!",
+              [{ text: "OK", onPress: () => console.log("OK Pressed")}
+              ],
+              { cancelable: true }
+            )
       }
   }
 

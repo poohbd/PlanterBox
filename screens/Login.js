@@ -9,7 +9,7 @@ export default Login = ({navigation}) => {
     const [email,setEmail] = React.useState("");
     const [password,setPassword] = React.useState("");
     const validateLogin = async () =>{
-        const response = await fetch("http://localhost:3000/user/login",{
+        const response = await fetch("http://192.168.1.44:3000/user/login",{
             method:"POST",
             headers : { 
                 'Content-Type': 'application/json',
@@ -31,8 +31,10 @@ export default Login = ({navigation}) => {
             console.log(password);
             console.log(json.error);
             Alert.alert(
-                "Warning","Incorrect Password!!!",
-                { text: "OK", onPress: () => this.setState({email:""})}
+                "Error","Incorrect Password!!!",
+                [{ text: "OK", onPress: () => console.log("OK Pressed")}
+                ],
+                { cancelable: true }
             )
             // return (setModalVisible(true));
         }
