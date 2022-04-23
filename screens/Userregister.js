@@ -64,23 +64,23 @@ export default Userregister = ({navigation}) => {
         console.log(userresult);
 
         if (userresult.error == false) {
-          console.log(json.error);
+          console.log(userresult.error);
           return navigation.navigate('UserProfile', {"UserID":userresult.description.UserID});
         } else {
           if (userresult.description.existedEmail == true) {
             Alert.alert([
-            "Error","This email is already used!!!",
+            'Error',"This email is already used!!!",
                 { text: "OK", onPress: () => console.log("OK Pressed")}],
             { cancelable: false }
             )
           }else if (userresult.description.existedUsername == true){
             Alert.alert([
-            "Error","This username is already used!!!",
+            'Error',"This username is already used!!!",
                 { text: "OK", onPress: () => console.log("OK Pressed")}],
             { cancelable: false }
             )
           }
-        }
+        } 
       } catch (error){
         alert(error.message);
       }
