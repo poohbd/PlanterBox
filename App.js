@@ -253,7 +253,7 @@ function App() {
   return (
     <GlobalState>
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Welcome">
+      <Stack.Navigator initialRouteName="Menu">
         <Stack.Screen
           name="Example"
           component={Example}
