@@ -28,7 +28,7 @@ export default Login = ({navigation}) => {
 
         if (json.error == false) {
             console.log(json.error);
-            return navigation.navigate("Register");
+            return navigation.navigate("Register", {"UserID":json.description.UID.UserID});
         }else {
             console.log("Incorrect password")
             console.log(email);
@@ -60,9 +60,8 @@ export default Login = ({navigation}) => {
                 {/* <FlatButton text="LOGIN" onPress={() => navigation.navigate('Register')} /> */}
                 <FlatButton text="LOGIN" onPress={() =>{
                     validateLogin(); 
-                    //context.replaceNewUser(UserID); 
+                    //context.replaceNewUser(99); 
                     //console.log(context.UserID);
-                    console.log('Motherfucker')
                 }} />
                 <Text style={styles.baseText} >DON'T HAVE AN ACCOUNT?
                     <Text style={styles.signup} onPress={() => navigation.navigate('Signup')}> SIGN UP</Text>

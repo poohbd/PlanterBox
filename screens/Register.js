@@ -3,12 +3,18 @@ import { View, Text, StyleSheet, Image,TouchableOpacity,Dimensions } from 'react
 import { Card } from 'react-native-paper';
 import colors from '../assets/colors/colors';
 import FlatButtonReg from '../components/buttonReg';
+import Context from '../Context/context';
 
 const deviceWidth = Dimensions.get('screen').width;
 const deviceHeight = Dimensions.get('screen').height;
 
-export default Register= ({navigation}) => {
+export default Register= ({route, navigation}) => {
+    const UU = route.params;
+    const UserID = UU.UserID;
+    console.log(UserID);
     return (
+      <Context.Consumer>
+      {context => (
         <View style={styles.container}>
             <View style={{ flex: 1, alignItems: 'center' }}>
                 <Text style={styles.header} >PLANT REGISTER{'\n'}</Text>
@@ -22,7 +28,10 @@ export default Register= ({navigation}) => {
                         <Text style={styles.buttonText}>YES</Text>
                       </View>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.buttonContainer2} onPress={() => navigation.navigate('Menu')}>
+                    <TouchableOpacity style={styles.buttonContainer2} onPress={() => {
+                        navigation.navigate('Menu');
+                        context.replaceNewUser(UserID);
+                    }}>
                       <View>
                         <Text style={styles.buttonText}>NO</Text>
                       </View>
@@ -30,6 +39,8 @@ export default Register= ({navigation}) => {
                 </View>
             </View>
         </View>
+        )}
+        </Context.Consumer>
     )
 }
 

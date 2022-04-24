@@ -21,7 +21,9 @@ import axios from 'axios';
 
 const a ={};
 
-export default UserChangeName = ({navigation}) => {
+export default UserChangeName = ({route, navigation}) => {
+    const UU = route.params;
+    const UserID = UU.UserID;
     const loginValidateSchema = yup.object().shape({
     email: yup.string().email('         Email Address is required')
     .matches(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,'         Invalid Email Address'),
@@ -47,10 +49,10 @@ export default UserChangeName = ({navigation}) => {
         const {email,username,password} = values;
         const config = {
           method: 'PATCH',
-          url: 'http://192.168.1.44:3000/user/1',
+          url: 'http://192.168.1.44:3000/user/'+UserID,
           data: {
             email: email,
-            userName: username,
+            username: username,
             password: password,
           },
         };

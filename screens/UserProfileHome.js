@@ -9,10 +9,13 @@ const deviceWidth = Dimensions.get('screen').width;
 const deviceHeight = Dimensions.get('screen').height;
 
 export default UserProfileHome = ({route, navigation}) => {
+    const UU = route.params;
+    const UserID = UU.UserID[0];
+    //console.log(UserID);
     const [user,setUser] = React.useState("");
     const getUserFromApi = async () => {
         try{
-            const response = await axios.get('http://192.168.1.44:3000/user/getuser/1');
+            const response = await axios.get('http://192.168.1.44:3000/user/getuser/'+UserID);
             setUser(response.data);
         } catch (error){
             console.error(error);
@@ -36,7 +39,7 @@ export default UserProfileHome = ({route, navigation}) => {
             <Text style={styles.infoname2}>{user.Email}</Text>
             <View style={styles.space} /><View style={styles.space} />
             <View style={styles.space} /><View style={styles.space} />
-            <FlatButton text="Change USERNAME/EMAIL" onPress={() => navigation.navigate('UserChangeName')} /> 
+            <FlatButton text="Change USERNAME/EMAIL" onPress={() => navigation.navigate('UserChangeName', {"UserID":UserID})} /> 
         </View>
         
     )

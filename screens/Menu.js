@@ -6,6 +6,7 @@ import FlatButtonReg from '../components/buttonReg';
 import { createAppContainer } from 'react-navigation';
 import Wiki from './Wiki';
 //import { createDrawerNavigator, DrawerItems } from 'react-navigation-drawer';
+import Context from '../Context/context';
 
 
 
@@ -42,6 +43,8 @@ const deviceHeight = Dimensions.get('screen').height;
 
 export default Menu= ({navigation}) => {
   return (
+    <Context.Consumer>
+    {context => (
     <View style={styles.container}>
       <View style={styles.inline}>
         <TouchableOpacity style={styles.buttonNoti} onPress={() => navigation.navigate('Tabs_Forum')}>
@@ -52,7 +55,8 @@ export default Menu= ({navigation}) => {
             <Text style={{fontFamily: 'Mitr-Regular', color: colors.newGreen2}} >Michael</Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.buttonGray} onPress={() => navigation.navigate('UserProfileHome')}>
+        <TouchableOpacity style={styles.buttonGray} onPress={() => navigation.navigate('UserProfileHome'
+            , {"UserID":context.UserID})}>
           <View>
             <Image style={styles.image_gray} source = {require("../assets/images/graycircle.png")}/>
           </View>
@@ -91,6 +95,8 @@ export default Menu= ({navigation}) => {
       </View>
       
     </View>
+    )}
+    </Context.Consumer>
     
 
   )}
