@@ -27,6 +27,7 @@ import Userregister from './screens/Userregister';
 import UserProfile from './screens/UserProfile';
 import UserProfileHome from './screens/UserProfileHome';
 import UserChangeName from './screens/UserChangeName';
+import GlobalState from './Context/GlobalState';
 
 const Tab = createBottomTabNavigator();
 
@@ -250,8 +251,9 @@ function Tabs_Settings() {
 
 function App() {
   return (
+    <GlobalState>
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Welcome">
+      <Stack.Navigator initialRouteName="Login">
         <Stack.Screen
           name="Example"
           component={Example}
@@ -387,6 +389,7 @@ function App() {
         />
       </Stack.Navigator>
     </NavigationContainer>
+    </GlobalState>
   );
 }
 
