@@ -21,7 +21,7 @@ import axios from 'axios';
 import Context from '../Context/context';
 
 //import { CircularCard } from "react-native-circular-card-view";
-const baseUrl = 'http://localhost:3000';
+const baseUrl = 'http://192.168.1.44:3000';
 export default MyPlant = ({navigation}) => {
   // console.log(sensor2);
   const [isNewBox, setIsNewBox] = React.useState(true);

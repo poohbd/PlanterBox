@@ -5,15 +5,15 @@ import colors from '../assets/colors/colors';
 import TranspInput from '../components/accountinput';
 import FlatButton from '../components/button';
 import { Card } from 'react-native-paper';
-
+import Context from '../Context/context';
 
 const deviceWidth = Dimensions.get('screen').width;
 const deviceHeight = Dimensions.get('screen').height;
 
 export default SerialNumber = ({navigation}) => {
     const [serialNumber,setSerialNumber] = React.useState();
-    const addBox = async () =>{
-      const response = await fetch("http://192.168.1.44:3000/user/addbox/1",{
+    const addBox = async (UserID) =>{
+      const response = await fetch("http://192.168.1.44:3000/user/addbox/"+UserID,{
           method:"POST",
           headers : { 
               'Content-Type': 'application/json',
@@ -39,6 +39,8 @@ export default SerialNumber = ({navigation}) => {
   }
 
     return (
+        <Context.Consumer>
+        {context => (
         <View style={styles.container}>
             <View style={{ flex: 1, alignItems: 'center' }}>
                 <Text style={styles.header} >PLANT REGISTER{'\n'}</Text>
@@ -54,7 +56,7 @@ export default SerialNumber = ({navigation}) => {
                             <TextInput onChangeText={(serialNumber) => setSerialNumber(parseInt(serialNumber))} placeholder ='SERIAL NUMBER'/>
                         </View>
                 </View>
-                <TouchableOpacity style={styles.buttonContainer2} onPress={addBox}>
+                <TouchableOpacity style={styles.buttonContainer2} onPress={addBox(context.UserID)}>
                       <View>
                         <Text style={styles.buttonText}>NEXT</Text>
                       </View>
@@ -64,7 +66,8 @@ export default SerialNumber = ({navigation}) => {
             </Text>
            </View> 
         </View>
-        
+        )}
+        </Context.Consumer>
     )
 }
 
