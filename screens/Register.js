@@ -11,7 +11,8 @@ const deviceHeight = Dimensions.get('screen').height;
 export default Register= ({route, navigation}) => {
     const UU = route.params;
     const UserID = UU.UserID;
-    console.log(UserID);
+    const UserName = UU.UserName;
+    
     return (
       <Context.Consumer>
       {context => (
@@ -26,6 +27,7 @@ export default Register= ({route, navigation}) => {
                     <TouchableOpacity style={styles.buttonContainer1} onPress={() => {
                         navigation.navigate('SerialNumber');
                         context.replaceNewUser(UserID);
+                        context.replaceUserName(UserName);
                     }}>
                       <View>
                         <Text style={styles.buttonText}>YES</Text>
@@ -34,6 +36,7 @@ export default Register= ({route, navigation}) => {
                     <TouchableOpacity style={styles.buttonContainer2} onPress={() => {
                         navigation.navigate('Menu');
                         context.replaceNewUser(UserID);
+                        context.replaceUserName(UserName);
                     }}>
                       <View>
                         <Text style={styles.buttonText}>NO</Text>

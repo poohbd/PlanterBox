@@ -13,6 +13,7 @@ export default UserProfile = ({route, navigation}) => {
     const [user,setUser] = React.useState("");
     const UU = route.params;
     const UserID = UU.UserID;
+    const UserName = UU.UserName;
 
     const getUserFromApi = async () => {
         try{
@@ -42,6 +43,7 @@ export default UserProfile = ({route, navigation}) => {
             <TouchableOpacity style={styles.button} onPress={() => {
                 navigation.navigate('Register');
                 context.replaceNewUser(UserID);
+                context.replaceUserName(UserName);
             }}>
                 <View>
                     <Text style={styles.buttonText}>NEXT</Text>

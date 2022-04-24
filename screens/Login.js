@@ -9,7 +9,6 @@ import Context from '../Context/context';
 export default Login = ({navigation}) => {
     const [email,setEmail] = React.useState("");
     const [password,setPassword] = React.useState("");
-    const [UserID,setUserID] = React.useState("");
     const validateLogin = async () =>{
         const response = await fetch("http://192.168.1.44:3000/user/login",{
             method:"POST",
@@ -24,11 +23,11 @@ export default Login = ({navigation}) => {
         });
         const json = await response.json()
         console.log(json)
-        setUserID(json.description.UID.UserID);
+        //console.log(json.description.UID.UserName)
 
         if (json.error == false) {
             console.log(json.error);
-            return navigation.navigate("Register", {"UserID":json.description.UID.UserID});
+            return navigation.navigate("Register", {"UserID":json.description.UID.UserID,"UserName":json.description.UID.UserName});
         }else {
             console.log("Incorrect password")
             console.log(email);

@@ -2,5 +2,7 @@ import React from 'react';
 
 export default React.createContext({
     UserID: [],
-    replaceNewUser : (userid) => {}
+    UserName: [],
+    replaceNewUser : (userid) => {},
+    replaceUserName : (username) => {}
 });

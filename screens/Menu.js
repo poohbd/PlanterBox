@@ -52,7 +52,7 @@ export default Menu= ({navigation}) => {
         </TouchableOpacity>
         <TouchableOpacity style={styles.buttonName} onPress={() => navigation.navigate('Tabs_Wiki')}>
           <View>
-            <Text style={{fontFamily: 'Mitr-Regular', color: colors.newGreen2}} >Michael</Text>
+            <Text style={{fontFamily: 'Mitr-Regular', color: colors.newGreen2}} >{context.UserName}</Text>
           </View>
         </TouchableOpacity>
         <TouchableOpacity style={styles.buttonGray} onPress={() => navigation.navigate('UserProfileHome'

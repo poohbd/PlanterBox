@@ -65,7 +65,7 @@ export default Userregister = ({navigation}) => {
 
         if (userresult.error == false) {
           console.log(userresult.error);
-          return navigation.navigate('UserProfile', {"UserID":userresult.description.UserID});
+          return navigation.navigate('UserProfile', {"UserID":userresult.description.UserID, "UserName":userresult.description.UserName});
         } else {
           if (userresult.description.existedEmail == true) {
             Alert.alert([
