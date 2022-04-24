@@ -77,7 +77,7 @@ export default MyPlant = ({navigation}) => {
   function closeModal() {
     setModalVisible(false);
   }
-  pathImage = type => {
+  const pathImage = type => {
     switch (type) {
       case 'Sunflower':
         return require('../assets/images/Sunflower.png');
@@ -188,6 +188,8 @@ export default MyPlant = ({navigation}) => {
       console.log(err);
     });
   return (
+    <Context.Consumer>
+    {context => (
     <ScrollView style={styles.container}>
       {/* <Text>{settings.wateringMode}</Text> */}
       <View style={styles.inline}>
@@ -198,16 +200,16 @@ export default MyPlant = ({navigation}) => {
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.buttonName}
-          onPress={() => navigation.navigate('Tabs_Wiki')}>
+          onPress={() => navigation.navigate('UserProfileHome', {"UserID":context.UserID})}>
           <View>
             <Text style={{fontFamily: 'Mitr-Regular', color: colors.newGreen2}}>
-              Michael
+              {context.UserName}
             </Text>
           </View>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.buttonGray}
-          onPress={() => navigation.navigate('Tabs_MyPlant')}>
+          onPress={() => navigation.navigate('UserProfileHome', {"UserID":context.UserID})}>
           <View>
             <Image
               style={styles.image_gray}
@@ -498,6 +500,8 @@ export default MyPlant = ({navigation}) => {
       </View>
       <CustomizeModal modalVisible={modalVisible} closeModal={closeModal} />
     </ScrollView>
+    )}
+    </Context.Consumer>
   );
 };
 
