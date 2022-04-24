@@ -23,6 +23,11 @@ import Settings from './screens/Settings';
 import Test from './screens/ChooseCard';
 import ChooseCard from './screens/ChooseCard';
 import TestMQTT from './screens/TestMQTT';
+import Userregister from './screens/Userregister';
+import UserProfile from './screens/UserProfile';
+import UserProfileHome from './screens/UserProfileHome';
+import UserChangeName from './screens/UserChangeName';
+
 const Tab = createBottomTabNavigator();
 
 const Stack = createNativeStackNavigator();
@@ -246,7 +251,7 @@ function Tabs_Settings() {
 function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Menu">
+      <Stack.Navigator initialRouteName="Welcome">
         <Stack.Screen
           name="Example"
           component={Example}
@@ -350,6 +355,34 @@ function App() {
           component={TestMQTT}
           options={{
             headerShown: false,
+          }}
+        />
+        <Stack.Screen 
+          name="Userregister" 
+          component={Userregister} 
+          options={{
+          headerShown : false
+          }}
+        />
+        <Stack.Screen 
+          name="UserProfile" 
+          component={UserProfile} 
+          options={{
+          headerShown : false
+          }}
+        />
+        <Stack.Screen 
+          name="UserProfileHome" 
+          component={UserProfileHome} 
+          options={{
+          headerShown : false
+          }}
+        />
+        <Stack.Screen 
+          name="UserChangeName" 
+          component={UserChangeName} 
+          options={{
+          headerShown : false
           }}
         />
       </Stack.Navigator>

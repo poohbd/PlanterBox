@@ -52,7 +52,7 @@ export default Menu= ({navigation}) => {
             <Text style={{fontFamily: 'Mitr-Regular', color: colors.newGreen2}} >Michael</Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.buttonGray} onPress={() => navigation.navigate('Tabs_MyPlant')}>
+        <TouchableOpacity style={styles.buttonGray} onPress={() => navigation.navigate('UserProfileHome')}>
           <View>
             <Image style={styles.image_gray} source = {require("../assets/images/graycircle.png")}/>
           </View>
