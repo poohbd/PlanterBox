@@ -23,7 +23,10 @@ export default Register= ({route, navigation}) => {
                 <View style={styles.cardContent}>
                     <Text style={styles.cardContent}>DO YOU WANT TO </Text>
                     <Text style={styles.cardContent}>REGISTER THE PLANT{'\n'}</Text>
-                    <TouchableOpacity style={styles.buttonContainer1} onPress={() => navigation.navigate('SerialNumber')}>
+                    <TouchableOpacity style={styles.buttonContainer1} onPress={() => {
+                        navigation.navigate('SerialNumber');
+                        context.replaceNewUser(UserID);
+                    }}>
                       <View>
                         <Text style={styles.buttonText}>YES</Text>
                       </View>

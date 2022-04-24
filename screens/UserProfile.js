@@ -4,6 +4,7 @@ import { View, Text, StyleSheet, Image,TouchableOpacity,TextInput,Button,Modal,A
 import colors from '../assets/colors/colors';
 import FlatButton from '../components/button';
 import axios from 'axios';
+import Context from '../Context/context';
 
 const deviceWidth = Dimensions.get('screen').width;
 const deviceHeight = Dimensions.get('screen').height;
@@ -24,6 +25,8 @@ export default UserProfile = ({route, navigation}) => {
     getUserFromApi()
     
     return (
+        <Context.Consumer>
+        {context => (
         <View style={styles.container}>
             <View style={styles.space}/><View style={styles.space}/>
             <Text style={styles.header}>FARM-O-MATIC</Text>
@@ -36,12 +39,17 @@ export default UserProfile = ({route, navigation}) => {
             <View style={styles.space} /><View style={styles.space} />
             
             {/* <FlatButton text="LOGIN" onPress={() => navigation.navigate('Register')} /> */}
-            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Register')}>
+            <TouchableOpacity style={styles.button} onPress={() => {
+                navigation.navigate('Register');
+                context.replaceNewUser(UserID);
+            }}>
                 <View>
                     <Text style={styles.buttonText}>NEXT</Text>
                 </View>
             </TouchableOpacity>
         </View>
+        )}
+        </Context.Consumer>
         
     )
 }
