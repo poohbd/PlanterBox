@@ -49,12 +49,12 @@ export default Menu= ({navigation}) => {
         <TouchableOpacity style={styles.buttonNoti} onPress={() => navigation.navigate('Tabs_Forum')}>
             <Image source = {require("../assets/images/noti.png")}/>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.buttonName} onPress={() => {navigation.navigate('Tabs_Wiki', {"UserID":context.UserID})}}>
+        <TouchableOpacity style={styles.buttonName} onPress={() => {navigation.navigate('UserProfileHome', {"UserID":context.UserID})}}>
           <View>
             <Text style={{fontFamily: 'Mitr-Regular', color: colors.newGreen2}} >{context.UserName}</Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.buttonGray} onPress={() => navigation.navigate('Tabs_MyPlant')}>
+        <TouchableOpacity style={styles.buttonGray} onPress={() => navigation.navigate('UserProfileHome', {"UserID":context.UserID})}>
           <View>
             <Image style={styles.image_gray} source = {require("../assets/images/graycircle.png")}/>
           </View>
