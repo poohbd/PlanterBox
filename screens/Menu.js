@@ -6,6 +6,7 @@ import FlatButtonReg from '../components/buttonReg';
 import { createAppContainer } from 'react-navigation';
 import Wiki from './Wiki';
 //import { createDrawerNavigator, DrawerItems } from 'react-navigation-drawer';
+import Context from '../Context/context';
 
 
 
@@ -40,19 +41,32 @@ const deviceHeight = Dimensions.get('screen').height;
     )
 }*/
 
-export default Menu= ({navigation}) => {
+export default Menu= ({route,navigation}) => {
+  const UU = route.params;
+  const UserID = UU.UserID;
+  const UserName = UU.UserName;
   return (
+    <Context.Consumer>
+    {context => (
     <View style={styles.container}>
       <View style={styles.inline}>
         <TouchableOpacity style={styles.buttonNoti} onPress={() => navigation.navigate('Tabs_Forum')}>
             <Image source = {require("../assets/images/noti.png")}/>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.buttonName} onPress={() => navigation.navigate('Tabs_Wiki')}>
+        <TouchableOpacity style={styles.buttonName} onPress={() => {
+          navigation.navigate('UserProfileHome', {"UserID":UserID});
+          context.replaceNewUser(UserID);
+          context.replaceUserName(UserName);
+        }}>
           <View>
-            <Text style={{fontFamily: 'Mitr-Regular', color: colors.newGreen2}} >Michael</Text>
+            <Text style={{fontFamily: 'Mitr-Regular', color: colors.newGreen2}} >{UserName}</Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.buttonGray} onPress={() => navigation.navigate('Tabs_MyPlant')}>
+        <TouchableOpacity style={styles.buttonGray} onPress={() => {
+          navigation.navigate('UserProfileHome', {"UserID":UserID});
+          context.replaceNewUser(UserID);
+          context.replaceUserName(UserName);
+        }}>
           <View>
             <Image style={styles.image_gray} source = {require("../assets/images/graycircle.png")}/>
           </View>
@@ -62,7 +76,11 @@ export default Menu= ({navigation}) => {
                 <Text style={styles.header} >HOME{'\n'}</Text>
         </View>
       <View style={styles.inline}>
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Tabs_MyPlant')}>
+        <TouchableOpacity style={styles.button} onPress={() => {
+          navigation.navigate('Tabs_MyPlant', {"UserID":UserID});
+          context.replaceNewUser(UserID);
+          context.replaceUserName(UserName);
+        }}>
           <View>
             <Image style={styles.image_myplant} source = {require("../assets/images/plant-pot.png")}/>
             <Text style={styles.buttonText}>My Plants</Text>
@@ -88,10 +106,17 @@ export default Menu= ({navigation}) => {
             <Text style={styles.buttonText}>Settings</Text>
           </View>
         </TouchableOpacity>
+        {/* <TouchableOpacity style={styles.lowerbutton} onPress={() => console.log(context)}>
+          <View>
+            <Image style={styles.image_settings} source = {require("../assets/images/carbon_settings.png")}/>
+            <Text style={styles.buttonText}>Console</Text>
+          </View>
+        </TouchableOpacity> */}
       </View>
       
     </View>
-    
+    )}
+    </Context.Consumer>
 
   )}
 

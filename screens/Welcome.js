@@ -20,7 +20,7 @@ export default Welcome = ({navigation}) => {
         <FlatButton text="LOGIN" onPress={() => navigation.navigate('Login')} />
         <FlatButton
           text="SIGN UP"
-          onPress={() => navigation.navigate('Signup')}
+          onPress={() => navigation.navigate('Userregister')}
         />
       </View>
       <View style={{position: 'absolute', top: 500, right: 0}}>

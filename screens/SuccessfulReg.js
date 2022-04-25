@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Image,TouchableOpacity,Dimensions } from 'react
 import { Card } from 'react-native-paper';
 import colors from '../assets/colors/colors';
 import FlatButtonReg from '../components/buttonReg';
+import Context from '../Context/context';
 
 
 const deviceWidth = Dimensions.get('screen').width;
@@ -11,6 +12,8 @@ const deviceHeight = Dimensions.get('screen').height;
 
 export default SuccesfulReg= ({navigation}) => {
     return (
+      <Context.Consumer>
+        {context => (
         <View style={styles.container}>
             <View style={{ flex: 1, alignItems: 'center' }}>
                 <Text style={styles.header} >PLANT REGISTER{'\n'}</Text>
@@ -21,7 +24,7 @@ export default SuccesfulReg= ({navigation}) => {
                     <Image style={styles.image} source = {require("../assets/images/Tick.png")}/>
                     <Text style={styles.cardContent}>YOU HAVE SUCCESSFULLY</Text>
                     <Text style={styles.cardContent}>REGISTERED YOUR PLANT.{'\n'}</Text>
-                    <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Menu')}>
+                    <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Menu',{"UserID":context.UserID,"UserName":context.UserName} )}>
                       <View>
                         <Text style={styles.buttonText}>NEXT</Text>
                       </View>
@@ -29,6 +32,8 @@ export default SuccesfulReg= ({navigation}) => {
                 </View>
             </View>
         </View>
+        )}
+        </Context.Consumer>
     )
 }
 

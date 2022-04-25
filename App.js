@@ -22,17 +22,26 @@ import Wiki from './screens/Wiki';
 import Settings from './screens/Settings';
 import Test from './screens/ChooseCard';
 import ChooseCard from './screens/ChooseCard';
+import TestMQTT from './screens/TestMQTT';
+import Userregister from './screens/Userregister';
+import UserProfile from './screens/UserProfile';
+import UserProfileHome from './screens/UserProfileHome';
+import UserChangeName from './screens/UserChangeName';
+import GlobalState from './Context/GlobalState';
 
 const Tab = createBottomTabNavigator();
 
 const Stack = createNativeStackNavigator();
 
-function Tabs_MyPlant() {
+function Tabs_MyPlant({route}) {
+  const {UserID} = route.params;
+  console.log("THis is mother fucker: "+UserID);
   return (
     <Tab.Navigator initialRouteName="MyPlant">
       <Tab.Screen
         name="MyPlant"
         component={MyPlant}
+        initialParams={{UserID: UserID}}
         options={{
           headerShown: false,
           tabBarIcon: ({size, focused, color}) => {
@@ -245,8 +254,9 @@ function Tabs_Settings() {
 
 function App() {
   return (
+    <GlobalState>
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Menu">
+      <Stack.Navigator initialRouteName="Welcome">
         <Stack.Screen
           name="Example"
           component={Example}
@@ -345,8 +355,44 @@ function App() {
             headerShown: false,
           }}
         />
+        <Stack.Screen
+          name="TestMQTT"
+          component={TestMQTT}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen 
+          name="Userregister" 
+          component={Userregister} 
+          options={{
+          headerShown : false
+          }}
+        />
+        <Stack.Screen 
+          name="UserProfile" 
+          component={UserProfile} 
+          options={{
+          headerShown : false
+          }}
+        />
+        <Stack.Screen 
+          name="UserProfileHome" 
+          component={UserProfileHome} 
+          options={{
+          headerShown : false
+          }}
+        />
+        <Stack.Screen 
+          name="UserChangeName" 
+          component={UserChangeName} 
+          options={{
+          headerShown : false
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
+    </GlobalState>
   );
 }
 

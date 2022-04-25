@@ -3,12 +3,19 @@ import { View, Text, StyleSheet, Image,TouchableOpacity,Dimensions } from 'react
 import { Card } from 'react-native-paper';
 import colors from '../assets/colors/colors';
 import FlatButtonReg from '../components/buttonReg';
+import Context from '../Context/context';
 
 const deviceWidth = Dimensions.get('screen').width;
 const deviceHeight = Dimensions.get('screen').height;
 
-export default Register= ({navigation}) => {
+export default Register= ({route, navigation}) => {
+    const UU = route.params;
+    const UserID = UU.UserID;
+    const UserName = UU.UserName;
+    console.log("ID:"+UserID+" Username: "+UserName);
     return (
+      <Context.Consumer>
+      {context => (
         <View style={styles.container}>
             <View style={{ flex: 1, alignItems: 'center' }}>
                 <Text style={styles.header} >PLANT REGISTER{'\n'}</Text>
@@ -17,12 +24,22 @@ export default Register= ({navigation}) => {
                 <View style={styles.cardContent}>
                     <Text style={styles.cardContent}>DO YOU WANT TO </Text>
                     <Text style={styles.cardContent}>REGISTER THE PLANT{'\n'}</Text>
-                    <TouchableOpacity style={styles.buttonContainer1} onPress={() => navigation.navigate('SerialNumber')}>
+                    <TouchableOpacity style={styles.buttonContainer1} onPress={() => {
+                        navigation.navigate('SerialNumber');
+                        context.replaceNewUser(UserID);
+                        context.replaceUserName(UserName);
+                        // console.log(context);
+                    }}>
                       <View>
                         <Text style={styles.buttonText}>YES</Text>
                       </View>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.buttonContainer2} onPress={() => navigation.navigate('Menu')}>
+                    <TouchableOpacity style={styles.buttonContainer2} onPress={() => {
+                        navigation.navigate('Menu',{"UserID":UserID,"UserName":UserName});
+                        context.replaceNewUser(UserID);
+                        context.replaceUserName(UserName);
+                        // console.log(context);
+                    }}>
                       <View>
                         <Text style={styles.buttonText}>NO</Text>
                       </View>
@@ -30,6 +47,8 @@ export default Register= ({navigation}) => {
                 </View>
             </View>
         </View>
+        )}
+        </Context.Consumer>
     )
 }
 
