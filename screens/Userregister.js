@@ -51,7 +51,7 @@ export default Userregister = ({navigation}) => {
         const {email,username,password} = values;
         const config = {
           method: 'POST',
-          url: 'http://localhost:3000/user/register',
+          url: 'http://192.168.1.44:3000/user/register',
           data: {
             email: email,
             username: username,

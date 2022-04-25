@@ -31,7 +31,7 @@ export default function LightFormAuto ({data}){
     //     getJson();
     //   }, []);
     const addMinMax = async () =>{
-        const response = await fetch("http://localhost:3000/planterbox/settings/updateBoxSettings",{
+        const response = await fetch("http://192.168.1.44:3000/planterbox/settings/updateBoxSettings",{
           method:"PUT",
           headers : { 
               'Content-Type': 'application/json',

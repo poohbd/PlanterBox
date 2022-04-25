@@ -21,7 +21,7 @@ import axios from 'axios';
 import Context from '../Context/context';
 
 //import { CircularCard } from "react-native-circular-card-view";
-const baseUrl = 'http://localhost:3000';
+const baseUrl = 'http://192.168.1.44:3000';
 export default MyPlant = ({route,navigation}) => {
   /*const UserID = navigation.getParent().getParent();
   console.log("UserID:"+UserID);*/
@@ -99,7 +99,7 @@ export default MyPlant = ({route,navigation}) => {
     try {
       const config = {
         method: 'POST',
-        url: 'http://localhost:3000/planterbox/settings',
+        url: 'http://192.168.1.44:3000/planterbox/settings',
         data: {
           id: id,
         },

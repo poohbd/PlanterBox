@@ -43,7 +43,7 @@ export default ChooseCard = ({route, navigation}) => {
     try {
       const config = {
         method: 'POST',
-        url: 'http://localhost:3000/planterbox/settings',
+        url: 'http://192.168.1.44:3000/planterbox/settings',
         data: {
           id: id,
         },
