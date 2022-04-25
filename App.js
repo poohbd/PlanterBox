@@ -33,12 +33,15 @@ const Tab = createBottomTabNavigator();
 
 const Stack = createNativeStackNavigator();
 
-function Tabs_MyPlant() {
+function Tabs_MyPlant({route}) {
+  const {UserID} = route.params;
+  console.log("THis is mother fucker: "+UserID);
   return (
     <Tab.Navigator initialRouteName="MyPlant">
       <Tab.Screen
         name="MyPlant"
         component={MyPlant}
+        initialParams={{UserID: UserID}}
         options={{
           headerShown: false,
           tabBarIcon: ({size, focused, color}) => {

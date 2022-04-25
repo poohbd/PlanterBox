@@ -12,7 +12,7 @@ export default Register= ({route, navigation}) => {
     const UU = route.params;
     const UserID = UU.UserID;
     const UserName = UU.UserName;
-    
+    console.log("ID:"+UserID+" Username: "+UserName);
     return (
       <Context.Consumer>
       {context => (
@@ -28,15 +28,17 @@ export default Register= ({route, navigation}) => {
                         navigation.navigate('SerialNumber');
                         context.replaceNewUser(UserID);
                         context.replaceUserName(UserName);
+                        // console.log(context);
                     }}>
                       <View>
                         <Text style={styles.buttonText}>YES</Text>
                       </View>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.buttonContainer2} onPress={() => {
-                        navigation.navigate('Menu');
+                        navigation.navigate('Menu',{"UserID":UserID,"UserName":UserName});
                         context.replaceNewUser(UserID);
                         context.replaceUserName(UserName);
+                        // console.log(context);
                     }}>
                       <View>
                         <Text style={styles.buttonText}>NO</Text>

@@ -41,7 +41,7 @@ export default UserProfile = ({route, navigation}) => {
             
             {/* <FlatButton text="LOGIN" onPress={() => navigation.navigate('Register')} /> */}
             <TouchableOpacity style={styles.button} onPress={() => {
-                navigation.navigate('Register');
+                navigation.navigate('Register',{"UserID":UserID,"UserName":UserName});
                 context.replaceNewUser(UserID);
                 context.replaceUserName(UserName);
             }}>

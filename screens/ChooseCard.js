@@ -19,6 +19,7 @@ import DropDownTime from '../components/dropdowntime';
 import TimeFormAuto from '../components/timeformAuto';
 import LightFormAuto from '../components/lightformAuto';
 import axios from 'axios';
+import Context from '../Context/context';
 
 const deviceWidth = Dimensions.get('screen').width;
 const deviceHeight = Dimensions.get('screen').height;
@@ -63,6 +64,8 @@ export default ChooseCard = ({route, navigation}) => {
     getSetting();
   }, []);
   return (
+    <Context.Consumer>
+    {context => (
     <SafeAreaView style={styles.container}>
       {isLoading ? (
         <ActivityIndicator size="large" color={colors.newGreen2} />
@@ -81,17 +84,17 @@ export default ChooseCard = ({route, navigation}) => {
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.buttonName}
-              onPress={() => navigation.navigate('Tabs_Wiki')}>
+              onPress={() => navigation.navigate('UserProfileHome', {"UserID":context.UserID})}>
               <View>
                 <Text
                   style={{fontFamily: 'Mitr-Regular', color: colors.newGreen2}}>
-                  Michael
+                  {context.UserName}
                 </Text>
               </View>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.buttonGray}
-              onPress={() => navigation.navigate('Tabs_MyPlant')}>
+              onPress={() => navigation.navigate('UserProfileHome', {"UserID":context.UserID})}>
               <View>
                 <Image source={require('../assets/images/graycircle.png')} />
               </View>
@@ -120,6 +123,8 @@ export default ChooseCard = ({route, navigation}) => {
         </ScrollView>
       )}
     </SafeAreaView>
+    )}
+    </Context.Consumer>
   );
 };
 

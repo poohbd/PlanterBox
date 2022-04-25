@@ -22,9 +22,14 @@ import Context from '../Context/context';
 
 //import { CircularCard } from "react-native-circular-card-view";
 const baseUrl = 'http://localhost:3000';
-export default MyPlant = ({navigation}) => {
+export default MyPlant = ({route,navigation}) => {
+  /*const UserID = navigation.getParent().getParent();
+  console.log("UserID:"+UserID);*/
+  const UU = route.params;
+  const UserID = UU.UserID;
+  console.log("This is father fucker :"+UserID)
   // console.log(sensor2);
-  const [isNewBox, setIsNewBox] = React.useState(true);
+  const [isNewBox, setIsNewBox] = React.useState(false);
   const [isSun, setIsSun] = React.useState(false);
   const [isBasil, setIsBasil] = React.useState(false);
   const [notSelected, setNotSelected] = React.useState(true);
@@ -40,14 +45,16 @@ export default MyPlant = ({navigation}) => {
     setIsBasil(true);
     setNotSelected(false);
   }
+  const [sid,setSID] = React.useState(0);
   const [items, setItems] = React.useState([
     {
       label: (
         <Text
           style={{fontFamily: 'Mitr-Regular', color: colors.newGreen2}}
-          onPress={() => {
+          onPress={(setting) => {
             sunSelected();
             setValuePreset('Sunflower');
+            setSID(1);
           }}>
           Sunflower
         </Text>
@@ -61,6 +68,7 @@ export default MyPlant = ({navigation}) => {
           onPress={() => {
             basilSelected();
             setValuePreset('Basil');
+            setSID(2);
           }}>
           Basil
         </Text>
@@ -110,13 +118,34 @@ export default MyPlant = ({navigation}) => {
   const [data, setData] = useState([]);
   const [boxid, setBoxId] = useState([]);
   const [settings, setSettings] = useState([]);
+  const postPreset = async(sID,bID,uid,usn) => {
+    try{
+      console.log("SID: "+sID+"BoxID: "+bID);
+      const config = {
+        method: 'POST',
+        url: `${baseUrl}/planterbox/selectPreset`,
+        data: {
+          settingsID: sID,
+          boxID: bID
+        },
+      };
+      const response = await axios.request(config)
+      navigation.navigate('Menu',{"UserID":uid,"UserName":usn} );
+    }catch (error) {
+      console.error(error);
+    }
+
+  };
   const getBoxList = async () => {
     const source = axios.CancelToken.source();
-    const url = `${baseUrl}/user/1/planterboxes`;
+    const url = `${baseUrl}/user/${UserID}/planterboxes`;
     try {
       const response = await axios.get(url, {cancelToken: source.token});
       if (response.status === 200) {
         // response.data.map((box)=>fetchBoxSetting(box.boxID,settings));
+        response.data.forEach(element => {
+          console.log("This is data : "+element);
+        });
         setSettings(response.data);
         // response.data.map((box)=>console.log(fetchBoxSetting(box.boxID)));
         setIsLoading(false);
@@ -148,45 +177,45 @@ export default MyPlant = ({navigation}) => {
   }, []);
   const [sensor1, setSensor1] = useState('');
   const [sensor2, setSensor2] = useState('');
-  let mqttClient = null;
-  MQTT.createClient({
-    uri: 'mqtts://66d6b91771ff4fc7bb664c04cc3e7fbb.s2.eu.hivemq.cloud:8883',
-    clientId: 'clientId-YKICzmBta3',
-    user: 'ICERUS',
-    pass: 'Projectyear3',
-    auth: true,
-  })
-    .then(function (client) {
-      client.on('closed', function () {
-        console.log('mqtt.event.closed');
-      });
+  // let mqttClient = null;
+  // MQTT.createClient({
+  //   uri: 'mqtts://66d6b91771ff4fc7bb664c04cc3e7fbb.s2.eu.hivemq.cloud:8883',
+  //   clientId: 'clientId-YKICzmBta3',
+  //   user: 'ICERUS',
+  //   pass: 'Projectyear3',
+  //   auth: true,
+  // })
+  //   .then(function (client) {
+  //     client.on('closed', function () {
+  //       console.log('mqtt.event.closed');
+  //     });
 
-      client.on('error', function (msg) {
-        console.log('mqtt.event.error', msg);
-      });
+  //     client.on('error', function (msg) {
+  //       console.log('mqtt.event.error', msg);
+  //     });
 
-      client.on('message', function (msg) {
-        console.log('mqtt.event.message', msg);
-        if(msg.topic==='sensor/light'){
-          setSensor1(msg.data);
-        }
-        if(msg.topic==='sensor/water'){
-          setSensor2(msg.data);
-        }
-      });
+  //     client.on('message', function (msg) {
+  //       console.log('mqtt.event.message', msg);
+  //       if(msg.topic==='sensor/light'){
+  //         setSensor1(msg.data);
+  //       }
+  //       if(msg.topic==='sensor/water'){
+  //         setSensor2(msg.data);
+  //       }
+  //     });
 
-      client.on('connect', function () {
-        console.log('connected');
-        client.subscribe('sensor/+', 2);
-        mqttClient = client;
-        // client.publish('sensor2', 'planterbox', 2, false);
-      });
+  //     client.on('connect', function () {
+  //       console.log('connected');
+  //       client.subscribe('sensor/+', 2);
+  //       mqttClient = client;
+  //       // client.publish('sensor2', 'planterbox', 2, false);
+  //     });
 
-      client.connect();
-    })
-    .catch(function (err) {
-      console.log(err);
-    });
+  //     client.connect();
+  //   })
+  //   .catch(function (err) {
+  //     console.log(err);
+  //   });
   return (
     <Context.Consumer>
     {context => (
@@ -229,7 +258,151 @@ export default MyPlant = ({navigation}) => {
         inputStyle={{color: '#FFFFFF'}}
       />
       <View>
+        
         {settings.map(setting => (
+        <View>
+          <View>
+          {setting.SettingsID === 0 && !valuepreset ? (
+              <View style={styles.cardContent}>
+                <DropDownPicker
+                  open={openpreset}
+                  value={valuepreset}
+                  items={items}
+                  setOpen={setOpenPreset}
+                  setValue={setValuePreset}
+                  setItems={setItems}
+                  style={styles.dropdownpreset}
+                  dropDownContainerStyle={{
+                    borderColor: colors.newGreen2,
+                    width: 200,
+                    alignSelf: 'center',
+                  }}
+                  placeholder="SELECT PRESET"
+                  placeholderStyle={{
+                    color: colors.newGreen2,
+                    fontSize: 14,
+                    fontFamily: 'Mitr-Regular',
+                    textAlign: 'center',
+                    justifyContent: 'space-between',
+                  }}
+                  listItemLabelStyle={{
+                    color: colors.newGreen2,
+                    textAlign: 'center',
+                  }}
+                  zIndex={99}
+                />
+                <TouchableOpacity
+                  style={styles.dropdowncustom}
+                  onPress={() => setModalVisible(true)}>
+                  <Text
+                    style={{
+                      color: colors.newGreen2,
+                      textAlign: 'center',
+                      fontFamily: 'Mitr-Regular',
+                    }}>
+                    CUSTOMIZE
+                  </Text>
+                </TouchableOpacity>
+              </View>
+          ):null}</View>
+          <View>
+          {setting.SettingsID === 0 && valuepreset ?(
+            <FadeInView>
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate('ChooseCard', {
+                    valuepreset: {valuepreset},
+                  })
+                }>
+                <View style={styles.cardContentDone}>
+                  <Text
+                    style={{
+                      color: colors.newGreen2,
+                      fontSize: 15,
+                      textAlign: 'right',
+                      fontFamily: 'Mitr-Regular',
+                      alignSelf: 'flex-start',
+                      paddingLeft: 10,
+                      marginTop: 0,
+                    }}>
+                    {valuepreset}
+                  </Text>
+                  <Image
+                    style={styles.imageSun}
+                    source={pathImage(valuepreset)}
+                  />
+                  <View style={styles.cardContentCircle}>
+                    <Text
+                      style={{
+                        color: '#DBB907',
+                        textAlign: 'center',
+                        fontSize: 20,
+                        fontFamily: 'Mitr-Regular',
+                        alignSelf: 'center',
+                        paddingTop: 38,
+                      }}>
+                      46%
+                    </Text>
+                    <Text
+                      style={{
+                        color: colors.newGreen2,
+                        textAlign: 'center',
+                        fontSize: 13,
+                        fontFamily: 'Mitr-Regular',
+                        paddingTop: 20,
+                      }}>
+                      Light
+                    </Text>
+                  </View>
+
+                  <View style={styles.cardContentCircle2}>
+                    <Text
+                      style={{
+                        color: '#DBB907',
+                        textAlign: 'center',
+                        fontSize: 20,
+                        fontFamily: 'Mitr-Regular',
+                        alignSelf: 'center',
+                        paddingTop: 18,
+                      }}>
+                      30%
+                    </Text>
+                    <Text
+                      style={{
+                        color: colors.newGreen2,
+                        textAlign: 'center',
+                        fontSize: 13,
+                        alignSelf: 'baseline',
+                        fontFamily: 'Mitr-Regular',
+                        marginTop: 10,
+                      }}>
+                      Soil Moisture
+                    </Text>
+                  </View>
+                  <Text
+                    style={{
+                      color: colors.newGreen2,
+                      fontSize: 22,
+                      fontFamily: 'Mitr-Regular',
+                      alignSelf: 'center',
+                      paddingLeft: 150,
+                      marginTop: 40,
+                    }}>
+                    34°C
+                  </Text>
+                </View>
+              </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.buttonAdd}
+          onPress={() => postPreset(sid,setting.boxID,context.UserID,context.UserName)}>
+          <View>
+            <Text style={styles.buttonAddText}>+ SAVE PRESET</Text>
+          </View>
+        </TouchableOpacity>
+            </FadeInView>
+            
+          ):null}</View>
+          {setting.SettingsID !== 0 ? (
           <View>
             <TouchableOpacity
               onPress={() =>
@@ -321,7 +494,7 @@ export default MyPlant = ({navigation}) => {
                 </Text>
               </View>
             </TouchableOpacity>
-          </View>
+          </View>):null}</View>
         ))}
         {sensor1 === '1' ?(
         <TouchableOpacity style={{backgroundColor:"blue",width:100,height:50,alignSelf:'flex-start'}} onPress={()=>mqttClient.publish('sensor/light', '0', 2, true)}>

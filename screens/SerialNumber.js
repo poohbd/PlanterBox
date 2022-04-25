@@ -56,7 +56,7 @@ export default SerialNumber = ({navigation}) => {
                             <TextInput onChangeText={(serialNumber) => setSerialNumber(parseInt(serialNumber))} placeholder ='SERIAL NUMBER'/>
                         </View>
                 </View>
-                <TouchableOpacity style={styles.buttonContainer2} onPress={addBox(context.UserID)}>
+                <TouchableOpacity style={styles.buttonContainer2} onPress={()=>addBox(context.UserID)}>
                       <View>
                         <Text style={styles.buttonText}>NEXT</Text>
                       </View>

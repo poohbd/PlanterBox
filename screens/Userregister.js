@@ -62,21 +62,23 @@ export default Userregister = ({navigation}) => {
           .request(config)
           .then(res => setUserresult(res.data));
         console.log(userresult);
+        console.log(userresult.description.existedEmail)
 
         if (userresult.error == false) {
           console.log(userresult.error);
           return navigation.navigate('UserProfile', {"UserID":userresult.description.UserID, "UserName":userresult.description.UserName});
-        } else {
-          if (userresult.description.existedEmail == true) {
-            Alert.alert([
+        } else if(userresult.error == true) {
+          if (userresult.description.existedEmail === true) {
+            Alert.alert(
             'Error',"This email is already used!!!",
-                { text: "OK", onPress: () => console.log("OK Pressed")}],
+                { text: "OK", onPress: () => console.log("OK Pressed")},
             { cancelable: false }
             )
-          }else if (userresult.description.existedUsername == true){
-            Alert.alert([
+            
+          }else if (userresult.description.existedUsername === true){
+            Alert.alert(
             'Error',"This username is already used!!!",
-                { text: "OK", onPress: () => console.log("OK Pressed")}],
+                { text: "OK", onPress: () => console.log("OK Pressed")},
             { cancelable: false }
             )
           }
@@ -118,7 +120,7 @@ export default Userregister = ({navigation}) => {
             onBlur={handleBlur('email')}
             value={values.email}
           />
-          {errors.email && touched.email ? <Text>{errors.email}</Text> : null}
+          {errors.email && touched.email ? <Text style={styles.errors}>{errors.email}</Text> : null}
           <Text style={styles.infoname}>PASSWORD</Text>
           <TranspInput
             onChangeText={handleChange('password')}
@@ -199,9 +201,9 @@ const styles = StyleSheet.create({
   },
   errors: {
     fontFamily: 'Mitr-Regular',
-    fontSize: 10,
-    color: colors.red,
-    marginTop: 5,
+    fontSize: 12,
+    color: "#ff4d4d",
+    marginTop:-15,
   },
   signupContainer:{
     color: colors.newGreen2,

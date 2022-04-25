@@ -25,16 +25,16 @@ export default Login = ({navigation}) => {
         console.log(json)
         //console.log(json.description.UID.UserName)
 
-        if (json.error == false) {
+        if (json.error === false) {
             console.log(json.error);
-            return navigation.navigate("Register", {"UserID":json.description.UID.UserID,"UserName":json.description.UID.UserName});
+            return navigation.navigate("Menu", {"UserID":json.description.UID.UserID,"UserName":json.description.UID.UserName});
         }else {
-            console.log("Incorrect password")
+            console.log("Incorrect email or password")
             console.log(email);
             console.log(password);
             console.log(json.error);
             Alert.alert(
-                "Error","Incorrect Password!!!",
+                "Error","Incorrect email or Password!!!",
                 [{ text: "OK", onPress: () => console.log("OK Pressed")}
                 ],
                 { cancelable: true }
@@ -63,7 +63,7 @@ export default Login = ({navigation}) => {
                     //console.log(context.UserID);
                 }} />
                 <Text style={styles.baseText} >DON'T HAVE AN ACCOUNT?
-                    <Text style={styles.signup} onPress={() => navigation.navigate('Signup')}> SIGN UP</Text>
+                    <Text style={styles.signup} onPress={() => navigation.navigate('Userregister')}> SIGN UP</Text>
                 </Text>
                 <Text style={{color:colors.newGreen2,fontSize:20,textAlign:'center'}} onPress={() => navigation.navigate('QRscan')}>{'\n'} QR SCAN PAGE</Text>
             </View>
