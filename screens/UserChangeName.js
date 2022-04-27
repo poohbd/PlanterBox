@@ -24,6 +24,7 @@ const a ={};
 export default UserChangeName = ({route, navigation}) => {
     const UU = route.params;
     const UserID = UU.UserID;
+    //console.log("UCN :"+UserID);
     const loginValidateSchema = yup.object().shape({
     email: yup.string().email('         Email Address is required')
     .matches(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,'         Invalid Email Address'),

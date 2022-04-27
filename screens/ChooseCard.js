@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import MQTT from 'sp-react-native-mqtt';
 import {
   View,
   Text,
@@ -57,6 +58,20 @@ export default ChooseCard = ({route, navigation}) => {
     } finally {
       setLoading(false);
       // console.log(data);
+    }
+  };
+  const deleteBox = async () => {
+    try {
+      const config = {
+        method: 'POST',
+        url: 'http://192.168.1.44:3000/planterbox/delete',
+        data: {
+          id: id,
+        },
+      };
+      const setting = await axios
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -119,7 +134,28 @@ export default ChooseCard = ({route, navigation}) => {
               {/* <DropDownTime type="FERTILIZER" />
             <DropDownTime type="PESTICIDE" /> */}
             </View>
-          </View>
+              <TouchableOpacity
+                style={styles.watermanual}
+                onPress={()=>mqttClient.publish('sensor/watering', 'off', 0, true)}>
+                <View>  
+                  <Image source={require('../assets/images/watermanual.png')} />
+                </View>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.lightmanual}
+                onPress={() => navigation.navigate('SerialNumber')}>
+                <View>
+                  <Image source={require('../assets/images/lightmanual.png')} />
+                </View>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.buttonAdd}
+                onPress={() => navigation.navigate('SerialNumber')}>
+                <View>
+                  <Image source={require('../assets/images/deletebox.png')} />
+                </View>
+              </TouchableOpacity>
+            </View>
         </ScrollView>
       )}
     </SafeAreaView>
@@ -145,6 +181,15 @@ const styles = StyleSheet.create({
     // flex: 1,
     backgroundColor: '#FFFFFF',
     // justifyContent: 'center',
+  },
+  buttonAdd: {
+    paddingVertical: 8,
+    width: 150,
+    backgroundColor: colors.newGreen2,
+    borderRadius: 20,
+    marginTop: deviceHeight * 0.03,
+    //marginLeft: deviceWidth*0.4,
+    alignSelf: 'center',
   },
   containerNew: {
     display: 'flex',
@@ -193,6 +238,32 @@ const styles = StyleSheet.create({
     marginTop: deviceHeight * 0.087,
     marginLeft: deviceWidth * 0.05,
     backgroundColor: 'transparent',
+  },
+  watermanual: {
+    //paddingVertical: 8,
+    width: 40,
+    height: 40,
+    padding: 0,
+    backgroundColor: colors.newGreen2,
+    marginTop: deviceHeight * 0.03,
+    //marginLeft: deviceWidth*0.4,
+    marginLeft: deviceWidth * 0.3,
+    backgroundColor: 'transparent',
+  },
+  lightmanual: {
+    width: 40,
+    height: 40,
+    padding: 0,
+    backgroundColor: colors.newGreen2,
+    marginTop: deviceHeight * 0.03,
+    marginLeft: deviceWidth * 0.5,
+    backgroundColor: 'transparent',
+  },
+  buttonAddText: {
+    color: '#FAFAFA',
+    textAlign: 'center',
+    fontFamily: 'Mitr-Regular',
+    fontSize: 13,
   },
   buttonGray: {
     //borderRadius: 20,

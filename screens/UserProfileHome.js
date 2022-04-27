@@ -10,12 +10,12 @@ const deviceHeight = Dimensions.get('screen').height;
 
 export default UserProfileHome = ({route, navigation}) => {
     const UU = route.params;
-    const UserID = UU.UserID[0];
+    const UserID = UU.UserID;
     //console.log(UserID);
     const [user,setUser] = React.useState("");
     const getUserFromApi = async () => {
         try{
-            const response = await axios.get('http://192.168.1.44:3000/user/getuser/'+UserID);
+            const response = await axios.get('http://192.168.1.44:3000/user/getuser/'+parseInt(UserID));
             setUser(response.data);
         } catch (error){
             console.error(error);
