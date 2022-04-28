@@ -26,7 +26,7 @@ const deviceWidth = Dimensions.get('screen').width;
 const deviceHeight = Dimensions.get('screen').height;
 
 export default ChooseCard = ({route, navigation}) => {
-  const {valuepreset,id} = route.params;
+  const {valuepreset,id,UserID,UserName} = route.params;
   const plantName = valuepreset;
   pathImage = type => {
     switch (type) {
@@ -69,7 +69,8 @@ export default ChooseCard = ({route, navigation}) => {
           id: id,
         },
       };
-      const setting = await axios
+      const setting = await axios.request(config);
+      return navigation.navigate("Menu", {"UserID":UserID,"UserName":UserName});
     } catch (error) {
       console.error(error);
     }
@@ -150,7 +151,7 @@ export default ChooseCard = ({route, navigation}) => {
               </TouchableOpacity>
               <TouchableOpacity
                 style={styles.buttonAdd}
-                onPress={() => navigation.navigate('SerialNumber')}>
+                onPress={() => deleteBox()}>
                 <View>
                   <Image source={require('../assets/images/deletebox.png')} />
                 </View>

@@ -409,6 +409,8 @@ export default MyPlant = ({route,navigation}) => {
                 navigation.navigate('ChooseCard', {
                   valuepreset: setting.planterboxsettings.SettingName,
                   id: setting.boxID,
+                  UserID: context.UserID,
+                  UserName: context.UserName,
                 })
               }>
               <View style={styles.cardContentDone}>

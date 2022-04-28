@@ -71,7 +71,25 @@ export default Wiki= ({route,navigation}) => {
             inputStyle={{color: '#FFFFFF'}}
           />
           <View style={styles.space} />
-          <View style={styles.inline}>
+          <View style={styles.inlineLeft}>
+            <TouchableOpacity style={styles.button} onPress={() => {
+              navigation.navigate('Wikicontent');
+              }}>
+              <View>
+                <Text style={styles.buttonText}>Sunflower</Text>
+                <Image style={styles.image_myplant} source = {require("../assets/images/Sunflower.png")}/>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.button} onPress={() => {
+              navigation.navigate('Wikicontent');
+              }}>
+              <View>
+                <Text style={styles.buttonText}>Basil</Text>
+                <Image style={styles.image_myplant} source = {require("../assets/images/Basil.png")}/>
+              </View>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.inlineRight}>
             <TouchableOpacity style={styles.button} onPress={() => {
               navigation.navigate('Wikicontent');
               }}>
@@ -120,6 +138,18 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     flexDirection: 'row',
     justifyContent: 'space-around',
+},
+inlineLeft: {
+  backgroundColor: '#FFFFFF',
+  flexDirection: 'column',
+  justifyContent: 'space-around',
+},
+inlineRight: {
+  backgroundColor: '#FFFFFF',
+  flexDirection: 'column',
+  justifyContent: 'space-around',
+  marginLeft: deviceWidth*0.5,
+  marginTop: deviceHeight*-0.3,
 },
   buttonNoti: {
     //borderRadius: 20,
@@ -233,7 +263,7 @@ const styles = StyleSheet.create({
     padding: 60,
     width: "46%",
     height: 150,
-    //marginTop:deviceHeight*-0.00000001
+    marginTop:deviceHeight*0.02,
 },
   image_myplant : {
     marginTop: 5,
