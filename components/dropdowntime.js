@@ -12,6 +12,8 @@ import {
 import DropDownPicker from 'react-native-dropdown-picker';
 import colors from '../assets/colors/colors';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import PushNotificationIOS from "@react-native-community/push-notification-ios";
+import PushNotification from "react-native-push-notification";
 
 // calling example:
 //     <DropDownTime type='FERTILIZER'/>
@@ -65,14 +67,30 @@ export default function DropDownTime({type}) {
         return styles.pesticideBell;
     }
   };
+  const testpush2 = () =>{
+    PushNotification.localNotificationSchedule({
+      //... You can use all the options from localNotifications
+      channelId: "testpush2",
+      title: type,
+      message: "My Notification Message", // (required)
+      date: new Date(date.toLocaleString()), // in 60 secs
+      });
+  }
   return (
     <View style={defineType(type + 'BIGCARD')}>
       <View style={styles.cardHeader}>
         <Text style={defineType(type + '_TITLE')}>{type}</Text>
-        <Image
-          style={defineType(type + '_BELL')}
-          source={require('../assets/images/notificationbell.png')}
-        />
+        <TouchableOpacity onPress={() => {
+          console.log(new Date(date.toLocaleString()));
+          testpush2();
+        }}>
+          <View>
+            <Image
+              style={defineType(type + '_BELL')}
+              source={require('../assets/images/notificationbell.png')}
+            />
+          </View>
+        </TouchableOpacity>
       </View>
       <View style={defineType(type + 'CARD')}>
         <DropDownPicker
@@ -132,12 +150,12 @@ export default function DropDownTime({type}) {
         <DateTimePicker
           testID="dateTimePicker"
           value={date}
-          display="compact"
+          display= 'clock'
           mode="time"
           is24Hour={false}
           onChange={onChange}
-          accentColor={colors.newGreen2}
-          style={{marginRight: 100, marginTop: -70}}
+          //accentColor={colors.newGreen2}
+          //style={{marginRight: 100, marginTop: -70}}
         />
       )}
     </View>

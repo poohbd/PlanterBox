@@ -1,5 +1,6 @@
 apply plugin: "com.android.application"
 
+
 import com.android.build.OutputFile
 
 /**
@@ -196,7 +197,15 @@ dependencies {
 
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
 
-    implementation project(':sp-react-native-mqtt')
+    //implementation project(':sp-react-native-mqtt')
+
+    implementation ':sp-react-native-mqtt'
+
+    implementation project(':react-native-push-notification')
+
+    implementation 'com.google.firebase:firebase-analytics:17.3.0'
+
+    implementation 'com.google.firebase:firebase-core:9.6.1'
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
         exclude group:'com.facebook.fbjni'
@@ -228,3 +237,4 @@ task copyDownloadableDepsToLibs(type: Copy) {
 }
 
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
+apply plugin: 'com.google.gms.google-services'

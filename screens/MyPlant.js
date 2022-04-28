@@ -182,10 +182,11 @@ export default MyPlant = ({route,navigation}) => {
   let mqttClient = null;
   MQTT.createClient({
     uri: 'mqtts://66d6b91771ff4fc7bb664c04cc3e7fbb.s2.eu.hivemq.cloud:8883',
-    clientId: 'clientId-YKICzmBta3',
+    clientId: 'clientId'+ Math.random().toString(16).substr(2, 8),
     user: 'ICERUS',
     pass: 'Projectyear3',
     auth: true,
+    //keepalive:60,
   })
     .then(function (client) {
       client.on('closed', function () {
@@ -507,10 +508,10 @@ export default MyPlant = ({route,navigation}) => {
           </View>):null}</View>
         ))}
         {sensorWaterBool === 'on' ?(
-        <TouchableOpacity style={{backgroundColor:"blue",width:100,height:50,alignSelf:'flex-start'}} onPress={()=>mqttClient.publish('sensor/watering', 'off', 0, true)}>
+        <TouchableOpacity style={{backgroundColor:"blue",width:100,height:50,alignSelf:'flex-start'}} onPress={()=>mqttClient.publish('sensor/watering', 'off', 1, true)}>
           <Text>Test Water</Text>
         </TouchableOpacity>) :( 
-        <TouchableOpacity style={{backgroundColor:"grey",width:100,height:50,alignSelf:'flex-start'}} onPress={()=>mqttClient.publish('sensor/watering', 'on', 0, true)}>
+        <TouchableOpacity style={{backgroundColor:"grey",width:100,height:50,alignSelf:'flex-start'}} onPress={()=>mqttClient.publish('sensor/watering', 'on', 1, true)}>
         <Text>Test Water</Text>
         </TouchableOpacity>)}
         {/* {sensor2 === '1' ?(

@@ -52,7 +52,7 @@ export default ChooseCard = ({route, navigation}) => {
       const setting = await axios
         .request(config)
         .then(res => setData(res.data));
-      console.log(data);
+      //console.log(data);
     } catch (error) {
       console.error(error);
     } finally {
@@ -62,15 +62,16 @@ export default ChooseCard = ({route, navigation}) => {
   };
   const deleteBox = async () => {
     try {
+      console.log("boxidchoosecard :"+id);
       const config = {
-        method: 'POST',
+        method: 'DELETE',
         url: 'http://192.168.1.44:3000/planterbox/delete',
         data: {
           id: id,
         },
       };
       const setting = await axios.request(config);
-      return navigation.navigate("Menu", {"UserID":UserID,"UserName":UserName});
+      return navigation.navigate('Tabs_MyPlant', {"UserID":UserID});
     } catch (error) {
       console.error(error);
     }
