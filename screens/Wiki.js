@@ -19,6 +19,31 @@ import Context from '../Context/context';
 export default Wiki= ({route,navigation}) => {
   const [searchQuery, setSearchQuery] = React.useState('');
   const onChangeSearch = query => setSearchQuery(query);
+  const [wiki, setWiki] = useState([]);
+  const getWikiList = async () => {
+    const source = axios.CancelToken.source();
+    const url = "http://localhost:3000/wiki/listposts";
+    try {
+      const response = await axios.get(url, {cancelToken: source.token});
+      if (response.status === 200) {
+        // response.data.map((box)=>fetchBoxSetting(box.boxID,settings));
+        response.data.forEach(element => {
+          console.log("This is data : "+element);
+        });
+        setWiki(response.data);
+        // response.data.map((box)=>console.log(fetchBoxSetting(box.boxID)));
+        return;
+      } else {
+        throw new Error('Failed to Get Wiki List');
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  // useEffect(() => {
+  //   getWikiList();
+  // }, []);
+
   return (
     <Context.Consumer>
     {context => (
@@ -71,7 +96,9 @@ export default Wiki= ({route,navigation}) => {
             inputStyle={{color: '#FFFFFF'}}
           />
           <View style={styles.space} />
-          <View style={styles.inline}>
+          
+          <View style={styles.inlineLeftContainer}>
+          <View style={styles.inlineLeft}>
             <TouchableOpacity style={styles.button} onPress={() => {
               navigation.navigate('Wikicontent');
               }}>
@@ -88,6 +115,15 @@ export default Wiki= ({route,navigation}) => {
                 <Image style={styles.image_myplant} source = {require("../assets/images/Basil.png")}/>
               </View>
             </TouchableOpacity>
+            <TouchableOpacity style={styles.button} onPress={() => {
+              navigation.navigate('Wikicontent');
+              }}>
+              <View>
+                <Text style={styles.buttonText}>Basil</Text>
+                <Image style={styles.image_myplant} source = {require("../assets/images/Basil.png")}/>
+              </View>
+            </TouchableOpacity>
+            </View>
           </View>
         </ScrollView>
       </SafeAreaView>
@@ -118,18 +154,28 @@ const styles = StyleSheet.create({
 },
   inline: {
     backgroundColor: '#FFFFFF',
-    flexDirection: 'column',
+    flexDirection: 'row',
     justifyContent: 'space-around',
+},
+inlineLeftContainer: {
+  backgroundColor: '#FFFFFF',
+  flex: 1,
+  alignItems: 'center'
 },
 inlineLeft: {
   backgroundColor: '#FFFFFF',
-  flexDirection: 'row',
-  justifyContent: 'space-around',
+  flex: 1,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    width: '90%',
 },
 inlineRight: {
   backgroundColor: '#FFFFFF',
   flexDirection: 'row',
   justifyContent: 'space-around',
+  marginLeft: deviceWidth * 0.2,
 },
   buttonNoti: {
     //borderRadius: 20,
@@ -243,6 +289,8 @@ inlineRight: {
     padding: 60,
     width: "46%",
     height: 150,
+    marginHorizontal: '2%',
+    marginVertical:'2%',
     //marginTop:deviceHeight*-0.00000001
 },
   image_myplant : {
