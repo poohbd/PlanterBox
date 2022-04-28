@@ -97,14 +97,23 @@ export default Wiki= ({route,navigation}) => {
           />
           <View style={styles.space} />
           
-          <View style={styles.inlineLeftContainer}>
-          <View style={styles.inlineLeft}>
-            <TouchableOpacity style={styles.button} onPress={() => {
+          {/* {wiki.map(wiki => ( */}
+            <View style={styles.inlineLeftContainer}>
+            <View style={styles.inlineLeft}>
+              <TouchableOpacity style={styles.button} onPress={() => {
+                navigation.navigate('Wikicontent');
+                }}>
+                <View>
+                  <Text style={styles.buttonText}>Sunflower</Text>
+                  <Image style={styles.image_myplant} source = {require("../assets/images/Sunflower.png")}/>
+                </View>
+              </TouchableOpacity>
+             <TouchableOpacity style={styles.button} onPress={() => {
               navigation.navigate('Wikicontent');
               }}>
               <View>
-                <Text style={styles.buttonText}>Sunflower</Text>
-                <Image style={styles.image_myplant} source = {require("../assets/images/Sunflower.png")}/>
+                <Text style={styles.buttonText}>Basil</Text>
+                <Image style={styles.image_myplant} source = {require("../assets/images/Basil.png")}/>
               </View>
             </TouchableOpacity>
             <TouchableOpacity style={styles.button} onPress={() => {
@@ -115,16 +124,9 @@ export default Wiki= ({route,navigation}) => {
                 <Image style={styles.image_myplant} source = {require("../assets/images/Basil.png")}/>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.button} onPress={() => {
-              navigation.navigate('Wikicontent');
-              }}>
-              <View>
-                <Text style={styles.buttonText}>Basil</Text>
-                <Image style={styles.image_myplant} source = {require("../assets/images/Basil.png")}/>
               </View>
-            </TouchableOpacity>
             </View>
-          </View>
+          {/* ))} */}
         </ScrollView>
       </SafeAreaView>
     )}
