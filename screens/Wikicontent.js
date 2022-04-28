@@ -12,89 +12,60 @@ import {
   SafeAreaView,
 } from 'react-native';
 import colors from '../assets/colors/colors';
-import {Button, Searchbar} from 'react-native-paper';
 import axios from 'axios';
 import Context from '../Context/context';
 
-export default Wiki= ({route,navigation}) => {
-  const [searchQuery, setSearchQuery] = React.useState('');
-  const onChangeSearch = query => setSearchQuery(query);
-  return (
-    <Context.Consumer>
-    {context => (
-      <SafeAreaView style={styles.container}>
-        <ScrollView style={styles.container}>
-          <View style={styles.inline}>
-            <TouchableOpacity
-              style={styles.buttonBack}
-              onPress={() => navigation.navigate('Menu',{"UserID":context.UserID,"UserName":context.UserName})}>
-              <Image source={require('../assets/images/back.png')} />
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.buttonNoti}
-              onPress={() => navigation.navigate('Tabs_Forum')}>
-              <Image source={require('../assets/images/noti.png')} />
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.buttonName}
-              onPress={() => navigation.navigate('UserProfileHome', {"UserID":context.UserID})}>
-              <View>
-                <Text style={{fontFamily: 'Mitr-Regular', color: colors.newGreen2}}>
-                  {context.UserName}
+export default Wikicontent= ({route,navigation}) => {
+
+    return (
+        <Context.Consumer>
+        {context => (
+            <SafeAreaView style={styles.container}>
+            <ScrollView style={styles.container}>
+                <View style={styles.inline}>
+                <TouchableOpacity
+                    style={styles.buttonBack}
+                    onPress={() => navigation.navigate('Wiki')}>
+                    <Image source={require('../assets/images/back.png')} />
+                </TouchableOpacity>
+                <TouchableOpacity
+                    style={styles.buttonNoti}
+                    onPress={() => navigation.navigate('Tabs_Forum')}>
+                    <Image source={require('../assets/images/noti.png')} />
+                </TouchableOpacity>
+                <TouchableOpacity
+                    style={styles.buttonName}
+                    onPress={() => navigation.navigate('UserProfileHome', {"UserID":context.UserID})}>
+                    <View>
+                    <Text style={{fontFamily: 'Mitr-Regular', color: colors.newGreen2}}>
+                        {context.UserName}
+                    </Text>
+                    </View>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    style={styles.buttonGray}
+                    onPress={() => navigation.navigate('UserProfileHome', {"UserID":context.UserID})}>
+                    <View>
+                    <Image
+                        style={styles.image_gray}
+                        source={require('../assets/images/graycircle.png')}
+                    />
+                    </View>
+                </TouchableOpacity>
+                </View>
+                <View style={styles.containerNew}>
+                <Text style={styles.header}>
+                    WIKI Content
+                    {'\n'}
                 </Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.buttonGray}
-              onPress={() => navigation.navigate('UserProfileHome', {"UserID":context.UserID})}>
-              <View>
-                <Image
-                  style={styles.image_gray}
-                  source={require('../assets/images/graycircle.png')}
-                />
-              </View>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.containerNew}>
-            <Text style={styles.header}>
-              WIKI
-              {'\n'}
-            </Text>
-          </View>
-          <Searchbar
-            placeholder="Search"
-            icon={require('../assets/images/search.png')}
-            clearIcon={require('../assets/images/delete.png')}
-            onChangeText={onChangeSearch}
-            value={searchQuery}
-            style={styles.search}
-            inputStyle={{color: '#FFFFFF'}}
-          />
-          <View style={styles.space} />
-          <View style={styles.inline}>
-            <TouchableOpacity style={styles.button} onPress={() => {
-              navigation.navigate('Wikicontent');
-              }}>
-              <View>
-                <Text style={styles.buttonText}>Sunflower</Text>
-                <Image style={styles.image_myplant} source = {require("../assets/images/Sunflower.png")}/>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.button} onPress={() => {
-              navigation.navigate('Menu',{"UserID":context.UserID,"UserName":context.UserName});
-              }}>
-              <View>
-                <Text style={styles.buttonText}>Basil</Text>
-                <Image style={styles.image_myplant} source = {require("../assets/images/Basil.png")}/>
-              </View>
-            </TouchableOpacity>
-          </View>
-        </ScrollView>
-      </SafeAreaView>
-    )}
-    </Context.Consumer>
+                </View>
+            </ScrollView>
+            </SafeAreaView>
+        )}
+        </Context.Consumer>
   )
 }
+
 const deviceWidth = Dimensions.get('screen').width;
 const deviceHeight = Dimensions.get('screen').height;
 

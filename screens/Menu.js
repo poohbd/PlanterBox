@@ -86,7 +86,11 @@ export default Menu= ({route,navigation}) => {
             <Text style={styles.buttonText}>My Plants</Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Tabs_Forum')}>
+        <TouchableOpacity style={styles.button} onPress={() => {
+          navigation.navigate('Tabs_Forum', {"UserID":UserID});
+          context.replaceNewUser(UserID);
+          context.replaceUserName(UserName);
+        }}>
           <View>
           <Image style={styles.image_forum} source = {require("../assets/images/Vector.png")}/>
           <Text style={styles.buttonText}>Forum</Text>
@@ -94,7 +98,11 @@ export default Menu= ({route,navigation}) => {
         </TouchableOpacity>
       </View>
       <View style={styles.inline}>
-        <TouchableOpacity style={styles.lowerbutton} onPress={() => navigation.navigate('Tabs_Wiki')}>
+        <TouchableOpacity style={styles.lowerbutton} onPress={() => {
+          navigation.navigate('Tabs_Wiki', {"UserID":UserID});
+          context.replaceNewUser(UserID);
+          context.replaceUserName(UserName);
+        }}>
           <View>
             <Image style={styles.image_forum} source = {require("../assets/images/cib_wikipedia.png")}/>
             <Text style={styles.buttonText}>Wiki</Text>

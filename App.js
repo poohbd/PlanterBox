@@ -28,6 +28,7 @@ import UserProfile from './screens/UserProfile';
 import UserProfileHome from './screens/UserProfileHome';
 import UserChangeName from './screens/UserChangeName';
 import GlobalState from './Context/GlobalState';
+import Wikicontent from './screens/Wikicontent';
 
 const Tab = createBottomTabNavigator();
 
@@ -143,7 +144,8 @@ function Tabs_Forum() {
   );
 }
 
-function Tabs_Wiki() {
+function Tabs_Wiki({route}) {
+  const {UserID} = route.params;
   return (
     <Tab.Navigator initialRouteName="Wiki">
       <Tab.Screen
@@ -169,6 +171,7 @@ function Tabs_Wiki() {
       <Tab.Screen
         name="Wiki"
         component={Wiki}
+        initialParams={{UserID: UserID}}
         options={{
           headerShown: false,
           tabBarIcon: ({size, focused, color}) => {
@@ -386,6 +389,13 @@ function App() {
         <Stack.Screen 
           name="UserChangeName" 
           component={UserChangeName} 
+          options={{
+          headerShown : false
+          }}
+        />
+        <Stack.Screen 
+          name="Wikicontent" 
+          component={Wikicontent} 
           options={{
           headerShown : false
           }}
