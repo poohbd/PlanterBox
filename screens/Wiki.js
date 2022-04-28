@@ -81,7 +81,7 @@ export default Wiki= ({route,navigation}) => {
               </View>
             </TouchableOpacity>
             <TouchableOpacity style={styles.button} onPress={() => {
-              navigation.navigate('Menu',{"UserID":context.UserID,"UserName":context.UserName});
+              navigation.navigate('Wikicontent');
               }}>
               <View>
                 <Text style={styles.buttonText}>Basil</Text>

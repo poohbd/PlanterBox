@@ -54,10 +54,12 @@ export default Wikicontent= ({route,navigation}) => {
                 </TouchableOpacity>
                 </View>
                 <View style={styles.containerNew}>
-                <Text style={styles.header}>
-                    WIKI Content
-                    {'\n'}
-                </Text>
+                  <Text style={styles.header}>
+                      WIKI Content
+                      {'\n'}
+                  </Text>
+                  
+                  <Image style={styles.imagesuperSun} source={require("../assets/images/Sunflower.png")} />
                 </View>
             </ScrollView>
             </SafeAreaView>
@@ -224,5 +226,16 @@ const styles = StyleSheet.create({
   space: {
       width: 20,
       height: 30,
-  }
+},
+  imagesuperSun: {
+    //opacity:0.5,
+    alignSelf: 'flex-end',
+    marginLeft: -40,
+    //alignSelf:'center',
+    // marginTop:deviceHeight*0.005,
+    // marginLeft:deviceWidth*0.1,
+    // marginBottom: deviceHeight*0.1,
+    height: 250,
+    width: 250,
+}
 })

@@ -91,7 +91,7 @@ export default function TimeForm({data}) {
         <View style={styles.smallCard}>
           <TouchableOpacity onPress={showEndTimePicker}>
             <Text style={styles.textTime}>
-              {dateend.toLocaleTimeString([], {
+              {dateend.updateBoxSettings([], {
                 hour: '2-digit',
                 minute: '2-digit',
                 hour12: true,
