@@ -118,8 +118,18 @@ const styles = StyleSheet.create({
 },
   inline: {
     backgroundColor: '#FFFFFF',
-    flexDirection: 'row',
+    flexDirection: 'column',
     justifyContent: 'space-around',
+},
+inlineLeft: {
+  backgroundColor: '#FFFFFF',
+  flexDirection: 'row',
+  justifyContent: 'space-around',
+},
+inlineRight: {
+  backgroundColor: '#FFFFFF',
+  flexDirection: 'row',
+  justifyContent: 'space-around',
 },
   buttonNoti: {
     //borderRadius: 20,

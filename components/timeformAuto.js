@@ -30,7 +30,7 @@ export default function TimeFormAuto ({data}){
     //     getJson();
     //   }, []);
     const addMinMax = async () =>{
-      const response = await fetch("http://192.168.1.44:3000/planterbox/settings/3/updateBoxSettings",{
+      const response = await fetch("http://localhost:3000/planterbox/settings/3/updateBoxSettings",{
         method:"PUT",
         headers : { 
             'Content-Type': 'application/json',
