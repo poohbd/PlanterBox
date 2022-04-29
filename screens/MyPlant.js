@@ -175,56 +175,56 @@ export default MyPlant = ({route,navigation}) => {
   useEffect(() => {
     getBoxList();
   }, []);
-  const [sensor1, setSensor1] = useState('');
-  const [sensor2, setSensor2] = useState('');
-  const [sensor3, setSensor3] = useState('');
-  const [sensorWaterBool, setSensorWaterBool] = useState('');
-  let mqttClient = null;
-  MQTT.createClient({
-    uri: 'mqtts://66d6b91771ff4fc7bb664c04cc3e7fbb.s2.eu.hivemq.cloud:8883',
-    clientId: 'clientId'+ Math.random().toString(16).substr(2, 8),
-    user: 'ICERUS',
-    pass: 'Projectyear3',
-    auth: true,
-    //keepalive:60,
-  })
-    .then(function (client) {
-      client.on('closed', function () {
-        console.log('mqtt.event.closed');
-      });
+  // const [sensor1, setSensor1] = useState('');
+  // const [sensor2, setSensor2] = useState('');
+  // const [sensor3, setSensor3] = useState('');
+  // const [sensorWaterBool, setSensorWaterBool] = useState('');
+  // let mqttClient = null;
+  // MQTT.createClient({
+  //   uri: 'mqtts://66d6b91771ff4fc7bb664c04cc3e7fbb.s2.eu.hivemq.cloud:8883',
+  //   clientId: 'clientId'+ Math.random().toString(16).substr(2, 8),
+  //   user: 'ICERUS',
+  //   pass: 'Projectyear3',
+  //   auth: true,
+  //   //keepalive:60,
+  // })
+  //   .then(function (client) {
+  //     client.on('closed', function () {
+  //       console.log('mqtt.event.closed');
+  //     });
 
-      client.on('error', function (msg) {
-        console.log('mqtt.event.error', msg);
-      });
+  //     client.on('error', function (msg) {
+  //       console.log('mqtt.event.error', msg);
+  //     });
 
-      client.on('message', function (msg) {
-        console.log('mqtt.event.message', msg);
-        if(msg.topic==='sensor/light'){
-          setSensor1(msg.data);
-        }
-        if(msg.topic==='sensor/rh'){
-          setSensor2(msg.data);
-        }
-        if(msg.topic==='sensor/temp'){
-          setSensor3(msg.data);
-        }
-        if(msg.topic==='sensor/watering'){
-          setSensorWaterBool(msg.data);
-        }
-      });
+  //     client.on('message', function (msg) {
+  //       console.log('mqtt.event.message', msg);
+  //       if(msg.topic==='sensor/light'){
+  //         setSensor1(msg.data);
+  //       }
+  //       if(msg.topic==='sensor/rh'){
+  //         setSensor2(msg.data);
+  //       }
+  //       if(msg.topic==='sensor/temp'){
+  //         setSensor3(msg.data);
+  //       }
+  //       if(msg.topic==='sensor/watering'){
+  //         setSensorWaterBool(msg.data);
+  //       }
+  //     });
 
-      client.on('connect', function () {
-        console.log('connected');
-        client.subscribe('sensor/+', 2);
-        mqttClient = client;
-        // client.publish('sensor2', 'planterbox', 2, false);
-      });
+  //     client.on('connect', function () {
+  //       console.log('connected');
+  //       client.subscribe('sensor/+', 2);
+  //       mqttClient = client;
+  //       // client.publish('sensor2', 'planterbox', 2, false);
+  //     });
 
-      client.connect();
-    })
-    .catch(function (err) {
-      console.log(err);
-    });
+  //     client.connect();
+  //   })
+  //   .catch(function (err) {
+  //     console.log(err);
+  //   });
   return (
     <Context.Consumer>
     {context => (
@@ -435,10 +435,10 @@ export default MyPlant = ({route,navigation}) => {
                   }}>
                   {setting.planterboxsettings.SettingName}
                 </Text>
-                <Text
+                {/* <Text
                   style={{fontFamily: 'Mitr-Regular', color: colors.newGreen2}}>
                   sensorLight:{sensor1} sensorRH:{sensor2} sensorTemp:{sensor3}
-                </Text>
+                </Text> */}
                 <Image
                   style={styles.imageSun}
                   source={pathImage(setting.planterboxsettings.SettingName)}
@@ -507,13 +507,13 @@ export default MyPlant = ({route,navigation}) => {
             </TouchableOpacity>
           </View>):null}</View>
         ))}
-        {sensorWaterBool === 'on' ?(
+        {/* {sensorWaterBool === 'on' ?(
         <TouchableOpacity style={{backgroundColor:"blue",width:100,height:50,alignSelf:'flex-start'}} onPress={()=>mqttClient.publish('sensor/watering', 'off', 1, true)}>
           <Text>Test Water</Text>
         </TouchableOpacity>) :( 
         <TouchableOpacity style={{backgroundColor:"grey",width:100,height:50,alignSelf:'flex-start'}} onPress={()=>mqttClient.publish('sensor/watering', 'on', 1, true)}>
         <Text>Test Water</Text>
-        </TouchableOpacity>)}
+        </TouchableOpacity>)} */}
         {/* {sensor2 === '1' ?(
         <TouchableOpacity style={{backgroundColor:"blue",width:100,height:50,alignSelf:'flex-end'}} onPress={()=>mqttClient.publish('sensor/water', '0', 2, true)}>
         

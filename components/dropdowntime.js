@@ -37,6 +37,21 @@ export default function DropDownTime({type}) {
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate;
     setIsPickerShow(false);
+    // try {
+    //   //console.log("boxidchoosecard :"+id);
+    //   const config = {
+    //     method: 'POST',
+    //     url: 'http://192.168.1.44:3000/planterbox/settings/addFertilizerSchedule',
+    //     data: {
+    //       id: id,
+    //       time: currentDate,
+    //       Interval: Interval
+    //     },
+    //   };
+    //   const setting = await axios.request(config);
+    // } catch (error) {
+    //   console.error(error);
+    // }
     setDate(currentDate);
   };
   defineType = type => {
@@ -72,7 +87,7 @@ export default function DropDownTime({type}) {
       //... You can use all the options from localNotifications
       channelId: "testpush2",
       title: type,
-      message: "My Notification Message", // (required)
+      message: "Don't forget!!", // (required)
       date: new Date(date.toLocaleString()), // in 60 secs
       });
   }

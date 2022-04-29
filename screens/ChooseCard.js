@@ -62,7 +62,7 @@ export default ChooseCard = ({route, navigation}) => {
   };
   const deleteBox = async () => {
     try {
-      console.log("boxidchoosecard :"+id);
+      //console.log("boxidchoosecard :"+id);
       const config = {
         method: 'DELETE',
         url: 'http://192.168.1.44:3000/planterbox/delete',
@@ -80,6 +80,61 @@ export default ChooseCard = ({route, navigation}) => {
   useEffect(() => {
     getSetting();
   }, []);
+  const [sensor1, setSensor1] = useState('');
+  const [sensor2, setSensor2] = useState('');
+  const [sensor3, setSensor3] = useState('');
+  const [sensorWaterBool, setSensorWaterBool] = useState('');
+  const [sensorLightBool, setSensorLightBool] = useState('');
+  let mqttClient = null;
+  MQTT.createClient({
+    uri: 'mqtts://66d6b91771ff4fc7bb664c04cc3e7fbb.s2.eu.hivemq.cloud:8883',
+    clientId: 'clientId'+ Math.random().toString(16).substr(2, 8),
+    user: 'ICERUS',
+    pass: 'Projectyear3',
+    auth: true,
+    //keepalive:60,
+  })
+    .then(function (client) {
+      client.on('closed', function () {
+        console.log('mqtt.event.closed');
+      });
+
+      client.on('error', function (msg) {
+        console.log('mqtt.event.error', msg);
+      });
+
+      client.on('message', function (msg) {
+        console.log('mqtt.event.message', msg);
+        if(msg.topic==='sensor/light'){
+          setSensor1(msg.data);
+        }
+        if(msg.topic==='sensor/rh'){
+          setSensor2(msg.data);
+        }
+        if(msg.topic==='sensor/temp'){
+          setSensor3(msg.data);
+        }
+        if(msg.topic==='sensor/watering'){
+          setSensorWaterBool(msg.data);
+        }
+        if(msg.topic==='sensor/lighting'){
+          setSensorLightBool(msg.data);
+        }
+      });
+
+      client.on('connect', function () {
+        console.log('connected');
+        client.subscribe('sensor/+', 2);
+        mqttClient = client;
+        // client.publish('sensor2', 'planterbox', 2, false);
+      });
+
+      client.connect();
+    })
+    .catch(function (err) {
+      console.log(err);
+    });
+  
   return (
     <Context.Consumer>
     {context => (
@@ -136,20 +191,38 @@ export default ChooseCard = ({route, navigation}) => {
               {/* <DropDownTime type="FERTILIZER" />
             <DropDownTime type="PESTICIDE" /> */}
             </View>
-              <TouchableOpacity
-                style={styles.watermanual}
-                onPress={()=>mqttClient.publish('sensor/watering', 'off', 0, true)}>
-                <View>  
-                  <Image source={require('../assets/images/watermanual.png')} />
-                </View>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.lightmanual}
-                onPress={() => navigation.navigate('SerialNumber')}>
-                <View>
-                  <Image source={require('../assets/images/lightmanual.png')} />
-                </View>
-              </TouchableOpacity>
+              {sensorWaterBool === 'on' ?(
+                  <TouchableOpacity
+                    style={styles.watermanual}
+                    onPress={()=>mqttClient.publish('sensor/watering', 'off', 1, true)}>
+                    <View>  
+                      <Image source={require('../assets/images/wateroff.png')} />
+                    </View>
+                  </TouchableOpacity>) :(
+                  <TouchableOpacity
+                  style={styles.watermanual}
+                  onPress={()=>mqttClient.publish('sensor/watering', 'on', 1, true)}>
+                  <View>  
+                    <Image source={require('../assets/images/wateron.png')} />
+                  </View>
+                  </TouchableOpacity>)}
+              {sensorLightBool === 'on' ?(
+                  <TouchableOpacity
+                    style={styles.lightmanual}
+                    onPress={() => mqttClient.publish('sensor/lighting', 'off', 1, true)}>
+                    <View>
+                      <Image source={require('../assets/images/lightoff.png')} />
+                    </View>
+                  </TouchableOpacity>) : (
+                  <TouchableOpacity
+                    style={styles.lightmanual}
+                    onPress={() => mqttClient.publish('sensor/lighting', 'on', 1, true)}>
+                    <View>
+                      <Image source={require('../assets/images/lighton.png')} />
+                    </View>
+                  </TouchableOpacity>
+              )}
+                
               <TouchableOpacity
                 style={styles.buttonAdd}
                 onPress={() => deleteBox()}>
@@ -248,8 +321,7 @@ const styles = StyleSheet.create({
     padding: 0,
     backgroundColor: colors.newGreen2,
     marginTop: deviceHeight * 0.03,
-    //marginLeft: deviceWidth*0.4,
-    marginLeft: deviceWidth * 0.3,
+    marginLeft: deviceWidth*0.4,
     backgroundColor: 'transparent',
   },
   lightmanual: {
@@ -258,7 +330,7 @@ const styles = StyleSheet.create({
     padding: 0,
     backgroundColor: colors.newGreen2,
     marginTop: deviceHeight * 0.03,
-    marginLeft: deviceWidth * 0.5,
+    marginLeft: deviceWidth*0.6,
     backgroundColor: 'transparent',
   },
   buttonAddText: {
