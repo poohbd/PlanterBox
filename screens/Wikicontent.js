@@ -16,6 +16,37 @@ import axios from 'axios';
 import Context from '../Context/context';
 
 export default Wikicontent= ({route,navigation}) => {
+    const {plantname} = route.params;
+    const [swiki, setSwiki] = useState([]);
+    
+    const searchWiki = async () => {
+      try {
+        const config = {
+          method: 'POST',
+          url: 'http://192.168.1.44:3000/wiki/search',
+          data: {
+            plantname: plantname,
+          },
+        };
+        const setting = await axios
+          .request(config)
+          .then(res => setSwiki(res.data));
+      } catch (error){
+        alert(error.message);
+      }
+    };
+    const pathImage = type => {
+      switch (type) {
+        case 'Coriander':
+          return require('../assets/images/Sunflower.png');
+        case 'Holy Basil':
+          return require('../assets/images/Basil.png');
+      }
+    };
+
+    useEffect(() => {
+      searchWiki();
+    }, []);
 
     return (
         <Context.Consumer>
@@ -55,11 +86,82 @@ export default Wikicontent= ({route,navigation}) => {
                 </View>
                 <View style={styles.containerNew}>
                   <Text style={styles.header}>
-                      WIKI Content
+                      {swiki.plantname}
                       {'\n'}
                   </Text>
-                  
-                  <Image style={styles.imagesuperSun} source={require("../assets/images/Sunflower.png")} />
+                  <Image style={styles.imagesuperSun} source={pathImage(swiki.plantname)} />
+                
+                </View>
+                <View style={styles.trick}>
+                  <Text style={styles.tipText}>TIPS AND TRICKS</Text>
+                </View>
+                <View style={styles.tipContainer}>
+                    <View style={styles.tip1}>
+                      <Text style={styles.tipText}>{swiki.plantdesc}</Text>
+                    </View>
+                </View>
+                <View style={styles.tipContainer}>
+                    <View style={styles.tip2}>
+                      <Text style={styles.tipText}>{swiki.climate}</Text>
+                    </View>
+                </View>
+                <View style={styles.tipContainer}>
+                    <View style={styles.tip3}>
+                      <Text style={styles.tipText}>{swiki.tips}</Text>
+                    </View>
+                </View>
+                <View style={styles.inlineLeftContainer}>
+                  <View style={styles.inlineLeft}>
+                    <View style={styles.twoBlock}>
+                      <Text style={styles.boxText}>WATERING</Text>
+                      <Text style={styles.tipText}>{swiki.amountofwater}</Text>
+                        <View style={styles.insideBox}>
+                          <Text style={styles.tipText}>EVERYDAY</Text>
+                        </View>
+                    </View>
+                    <View style={styles.twoBlock}>
+                      <Text style={styles.boxText}>LIGHT</Text>
+                        <Text style={styles.tipText}>{swiki.lightexposure}</Text>
+                        <View style={styles.insideBoxLight}>
+                          <Text style={styles.tipText}>50 - 150</Text>
+                        </View>
+                        <View style={styles.insideBoxLight}>
+                          <Text style={styles.tipText}>6-8 HRS</Text>
+                        </View>
+                    </View>
+                  </View>
+                </View>
+                <View style={styles.tipContainer}>
+                    <View style={styles.tip}>
+                    <Text style={styles.boxText}>SOIL - FERTILIZER MIXTURE</Text>
+                      <Text style={styles.tipText}>{swiki.fertilizer}</Text>
+                    </View>
+                </View>
+                <View style={styles.tipContainer}>
+                    <View style={styles.tip}>
+                    <Text style={styles.boxText}>PESTICIDE</Text>
+                      <Text style={styles.tipText}>{swiki.pesticide}</Text>
+                        <View style={styles.insideBoxPes}>
+                          <Text style={styles.tipText}>TWICE A WEEK</Text>
+                        </View>
+                    </View>
+                </View>
+                <View style={styles.inlineLeftContainer}>
+                  <View style={styles.inlineLeft}>
+                    <View style={styles.twoBlock}>
+                      <Text style={styles.boxText}>GROWING TIME</Text>
+                        <Text style={styles.tipText}>{swiki.growingtime}</Text>
+                        <View style={styles.insideBox}>
+                          <Text style={styles.tipText}>3 WEEKS</Text>
+                        </View>
+                    </View>
+                    <View style={styles.twoBlock}>
+                      <Text style={styles.boxText}>WEATHER</Text>
+                        <View style={styles.insideBox}>
+                          <Text style={styles.tipText}>SUNNY</Text>
+                        </View>
+                    </View>
+                  </View>
                 </View>
             </ScrollView>
             </SafeAreaView>
@@ -227,6 +329,120 @@ const styles = StyleSheet.create({
       width: 20,
       height: 30,
 },
+trick: {
+  width: 250,
+  height: 40,
+  borderRadius: 20,
+  backgroundColor: '#CAD0D0',
+  marginLeft:-70,
+  marginVertical: 5,
+  padding: 5,
+  paddingRight:0,
+  paddingLeft: 90,
+  marginBottom:20,
+},
+tip: {
+  width: '86%',
+  // height: 100,
+  borderRadius: 20,
+  backgroundColor: '#CAD0D0',
+  marginHorizontal: '7%',
+  marginVertical: 5,
+  padding: 10,
+},
+tip1: {
+  width: '86%',
+  // height: 100,
+  borderRadius: 20,
+  backgroundColor: '#FDEBD9',
+  marginHorizontal: '7%',
+  marginVertical: 5,
+  padding: 10,
+},
+tip2: {
+  width: '86%',
+  // height: 100,
+  borderRadius: 20,
+  backgroundColor: '#DEEDEE',
+  marginHorizontal: '7%',
+  marginVertical: 5,
+  padding: 10,
+},
+tip3: {
+  width: '86%',
+  // height: 100,
+  borderRadius: 20,
+  backgroundColor: '#FFF3B7',
+  marginHorizontal: '7%',
+  marginVertical: 5,
+  padding: 10,
+},
+tipContainer: {
+  flexDirection: 'column'
+},
+tipText: {
+  textAlign: 'center',
+  fontFamily: 'Mitr-Regular',
+  fontSize: 16,
+  lineHeight: 30,
+  color: colors.newGreen2,
+},
+boxText: {
+  textAlign: 'center',
+  fontFamily: 'Mitr-Regular',
+  fontSize: 16,
+  lineHeight: 30,
+  color: 'green',
+},
+insideBox:{
+    borderRadius: 20,
+    backgroundColor: '#FDEBD9',
+    padding: 5,
+    // width: "46%",
+    height: 40,
+    marginTop:25,
+},
+insideBoxLight:{
+  borderRadius: 20,
+  backgroundColor: '#FDEBD9',
+  padding: 5,
+  // width: "46%",
+  height: 40,
+  marginTop:10,
+},
+insideBoxPes:{
+  borderRadius: 20,
+  backgroundColor: '#FDEBD9',
+  padding: 5,
+  width: 150,
+  height: 40,
+  marginTop:10,
+},
+inlineLeftContainer: {
+  backgroundColor: '#FFFFFF',
+  flex: 1,
+  alignItems: 'center'
+},
+inlineLeft: {
+  backgroundColor: '#FFFFFF',
+  flex: 1,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    width: '90%',
+},
+twoBlock: {
+  borderRadius: 20,
+  backgroundColor: '#CAD0D0',
+  padding: 60,
+  width: "46%",
+  //height: 150,
+  marginHorizontal: '2%',
+  marginVertical:'2%',
+  padding: 10
+  //marginTop:deviceHeight*-0.00000001
+},
   imagesuperSun: {
     //opacity:0.5,
     alignSelf: 'flex-end',
@@ -237,5 +453,5 @@ const styles = StyleSheet.create({
     // marginBottom: deviceHeight*0.1,
     height: 250,
     width: 250,
-}
+},
 })
