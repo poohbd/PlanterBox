@@ -26,7 +26,7 @@ const deviceWidth = Dimensions.get('screen').width;
 const deviceHeight = Dimensions.get('screen').height;
 
 export default ChooseCard = ({route, navigation}) => {
-  const {valuepreset,id,UserID,UserName} = route.params;
+  const {valuepreset,id,settingsid,UserID,UserName} = route.params;
   const plantName = valuepreset;
   pathImage = type => {
     switch (type) {
@@ -39,6 +39,7 @@ export default ChooseCard = ({route, navigation}) => {
     }
   };
   const [isLoading, setLoading] = useState(true);
+  
   const [data, setData] = useState();
   const getSetting = async () => {
     try {
@@ -60,6 +61,7 @@ export default ChooseCard = ({route, navigation}) => {
       // console.log(data);
     }
   };
+  
   const deleteBox = async () => {
     try {
       //console.log("boxidchoosecard :"+id);
@@ -183,14 +185,15 @@ export default ChooseCard = ({route, navigation}) => {
             <View style={styles.cardContent}>
               <TimeForm data={data} />
               <LightForm data={data} />
-              <DropDownTime type="FERTILIZER" />
-              <DropDownTime type="PESTICIDE" />
+              <DropDownTime type="FERTILIZER" sid={settingsid}  />
+              <DropDownTime type="PESTICIDE" sid={settingsid} />
               <View style={styles.view} />
               <View style={styles.view} />
               <View style={styles.view} />
               {/* <DropDownTime type="FERTILIZER" />
             <DropDownTime type="PESTICIDE" /> */}
             </View>
+            <View style={styles.inline2}>
               {sensorWaterBool === 'on' ?(
                   <TouchableOpacity
                     style={styles.watermanual}
@@ -222,7 +225,8 @@ export default ChooseCard = ({route, navigation}) => {
                     </View>
                   </TouchableOpacity>
               )}
-                
+            </View>
+            <View style={styles.space} />
               <TouchableOpacity
                 style={styles.buttonDelete}
                 onPress={() => deleteBox()}>
@@ -328,18 +332,23 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     padding: 0,
-    backgroundColor: colors.newGreen2,
-    marginTop: deviceHeight * 0.03,
-    marginLeft: deviceWidth*0.4,
+    backgroundColor: colors.red,
+    // marginTop: deviceHeight * 0.03,
+    //marginRight: deviceWidth*0.1,
     backgroundColor: 'transparent',
+  },
+  inline2: {
+    display:'flex',
+    flexDirection:'row',
+    justifyContent:'space-around'
   },
   lightmanual: {
     width: 40,
     height: 40,
     padding: 0,
-    backgroundColor: colors.newGreen2,
-    marginTop: deviceHeight * 0.03,
-    marginLeft: deviceWidth*0.6,
+    backgroundColor: colors.brown,
+    // marginTop: deviceHeight * 0.03,
+    //marginLeft: deviceWidth*0.1,
     backgroundColor: 'transparent',
   },
   buttonAddText: {

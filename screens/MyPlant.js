@@ -16,6 +16,7 @@ import {Button, Searchbar} from 'react-native-paper';
 import DropDownPicker from 'react-native-dropdown-picker';
 import TranspInput from '../components/accountinput';
 import CustomizeModal from '../components/customizemodal';
+import Notification from '../components/notification';
 import FadeInView from '../components/fadeInView';
 import axios from 'axios';
 import Context from '../Context/context';
@@ -81,9 +82,13 @@ export default MyPlant = ({route,navigation}) => {
   const [searchQuery, setSearchQuery] = React.useState('');
   const onChangeSearch = query => setSearchQuery(query);
   const [modalVisible, setModalVisible] = React.useState(false);
+  const [notiVisible, setNotiVisible] = React.useState(false);
   var array = [];
   function closeModal() {
     setModalVisible(false);
+  }
+  function closeNoti() {
+    setNotiVisible(false);
   }
   const pathImage = type => {
     switch (type) {
@@ -233,7 +238,7 @@ export default MyPlant = ({route,navigation}) => {
       <View style={styles.inline}>
         <TouchableOpacity
           style={styles.buttonNoti}
-          onPress={() => navigation.navigate('Tabs_Forum')}>
+          onPress={() => setNotiVisible(true)}>
           <Image source={require('../assets/images/noti.png')} />
         </TouchableOpacity>
         <TouchableOpacity
@@ -418,6 +423,7 @@ export default MyPlant = ({route,navigation}) => {
                 navigation.navigate('ChooseCard', {
                   valuepreset: setting.planterboxsettings.SettingName,
                   id: setting.boxID,
+                  settingsid: setting.SettingsID,
                   UserID: context.UserID,
                   UserName: context.UserName,
                 })
@@ -683,6 +689,7 @@ export default MyPlant = ({route,navigation}) => {
         </TouchableOpacity>
       </View>
       <CustomizeModal modalVisible={modalVisible} closeModal={closeModal} />
+      <Notification notiVisible={notiVisible} closeNoti={closeNoti} /> 
     </ScrollView>
     )}
     </Context.Consumer>

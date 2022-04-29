@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -14,46 +15,162 @@ import colors from '../assets/colors/colors';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import PushNotificationIOS from "@react-native-community/push-notification-ios";
 import PushNotification from "react-native-push-notification";
+import axios from 'axios';
 
 // calling example:
 //     <DropDownTime type='FERTILIZER'/>
 //     <DropDownTime type='PESTICIDE'/>
 
-export default function DropDownTime({type}) {
+export default function DropDownTime({type,sid}) {
   const [openplan, setOpenplan] = React.useState(false);
   const [valueplan, setValuePlan] = React.useState('SCHEDULE');
+  const [fernoti, setFernoti] = React.useState('');
+  const [pesnoti, setPesnoti] = React.useState('');
   const [items, setItems] = React.useState([
-    {label: 'EVERY DAY', value: 'oneday'},
-    {label: 'EVERY 2 DAYS', value: 'twoday'},
-    {label: 'EVERY 3 DAYS', value: 'threeday'},
-    {label: 'EVERY 4 DAYS', value: 'fourday'},
+    {label: 'EVERY DAY', value: '1'},
+    {label: 'EVERY 2 DAYS', value: '2'},
+    {label: 'EVERY 3 DAYS', value: '3'},
+    {label: 'EVERY 4 DAYS', value: '4'},
   ]);
 
+  //const [test, setTest] = Osche.fertilizerschedule.length === 0 ? React.useState('New schedhule') : React.useState('Old Schedule');
   const [isPickerShow, setIsPickerShow] = React.useState(false);
   const [date, setDate] = React.useState(new Date(Date.now()));
   const showTimePicker = () => {
     setIsPickerShow(true);
   };
+  
+  const postFer = async () => {
+    try {
+      const config = {
+        method: 'POST',
+        url: 'http://192.168.1.44:3000/planterbox/settings/addFertilizerSchedule',
+        data: {
+          id: sid,
+          time: date,
+          Interval: parseInt(valueplan),
+        },
+      };
+      const setting = await axios
+        .request(config)
+        .then(res => setFernoti(res.data));
+    } catch (error){
+      alert(error.message);
+    }
+  };
+
+  const putFer = async () => {
+    try {
+      const config = {
+        method: 'PUT',
+        url: 'http://192.168.1.44:3000/planterbox/settings/updateFertilizerSchedule',
+        data: {
+          sid: sche.fertilizerschedule[0].FSID,
+          time: date,
+          Interval: parseInt(valueplan),
+        },
+      };
+      const setting = await axios
+        .request(config)
+        .then(res => setFernoti(res.data));
+    } catch (error){
+      alert(error.message);
+    }
+  };
+
+  const putPes = async () => {
+    try {
+      const config = {
+        method: 'PUT',
+        url: 'http://192.168.1.44:3000/planterbox/settings/updatePesticideSchedule',
+        data: {
+          sid: pesnoti.PSID,
+          time: date,
+          Interval: parseInt(valueplan),
+        },
+      };
+      const setting = await axios
+        .request(config)
+        .then(res => setPesnoti(res.data));
+    } catch (error){
+      alert(error.message);
+    }
+  };
+
+  const postPes = async () => {
+    try {
+      const config = {
+        method: 'POST',
+        url: 'http://192.168.1.44:3000/planterbox/settings/addPesticideSchedule',
+        data: {
+          id: sid,
+          time: date,
+          Interval: parseInt(valueplan),
+        },
+      };
+      const setting = await axios
+        .request(config)
+        .then(res => setPesnoti(res.data));
+    } catch (error){
+      alert(error.message);
+    }
+  };
+  const [sche, setSche] = useState([]);
+  const getSchedule = async (sid) => {
+    const source = axios.CancelToken.source();
+    const url = "http://192.168.1.42:3000/pbsetting/"+sid+"/schedules";
+    try {
+      const response = await axios.get(url, {cancelToken: source.token});
+      if (response.status === 200) {
+        // response.data.map((box)=>fetchBoxSetting(box.boxID,settings));
+        // response.data.forEach(element => {
+        //   console.log("This is data : "+element);
+        // });
+        setSche(response.data);
+        // response.data.map((box)=>console.log(fetchBoxSetting(box.boxID)));
+        return;
+      } else {
+        throw new Error('Failed to Get schedule List');
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  
+  
+  //getSchedule(sid);
+   
+
+  const scase = (type) =>{
+    switch (type) {
+      case "FERTILIZER":
+        if (sche.fertilizerschedule.length === 1) {
+          putFer();
+          console.log('This is fertime :'+fernoti.time);
+        } else if (sche.fertilizerschedule.length === 0){
+          postFer();
+          console.log('This is fertime :'+fernoti.time);
+        }
+        return
+      case "PESTICIDE":
+        if (sche.pesticideschedule.length === 1) {
+          putPes();
+          console.log('This is fertime :'+fernoti.time);
+        } else if(sche.pesticideschedule.length === 0){
+          postPes();
+          console.log('This is pestime :'+pesnoti.time);
+        }
+        return
+    }
+  }
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate;
     setIsPickerShow(false);
-    // try {
-    //   //console.log("boxidchoosecard :"+id);
-    //   const config = {
-    //     method: 'POST',
-    //     url: 'http://192.168.1.44:3000/planterbox/settings/addFertilizerSchedule',
-    //     data: {
-    //       id: id,
-    //       time: currentDate,
-    //       Interval: Interval
-    //     },
-    //   };
-    //   const setting = await axios.request(config);
-    // } catch (error) {
-    //   console.error(error);
-    // }
     setDate(currentDate);
+    getSchedule(sid);
+    setTest();
   };
+
   defineType = type => {
     switch (type) {
       case 'FERTILIZERBIGCARD':
@@ -98,6 +215,10 @@ export default function DropDownTime({type}) {
         <TouchableOpacity onPress={() => {
           console.log(new Date(date.toLocaleString()));
           testpush2();
+          //console.log(sche.fertilizerschedule[0].FSID);
+          console.log(sche.fertilizerschedule.length);
+          console.log(sche.pesticideschedule.length);
+          scase(type);
         }}>
           <View>
             <Image
