@@ -105,10 +105,10 @@ export default MyPlant = ({route,navigation}) => {
         },
       };
       const setting = await axios.request(config).then(res => res.data);
-      console.log(array.push(setting));
+      //console.log(array.push(setting));
       const updatedSettings = [...settings, setting];
       setSettings(updatedSettings);
-      console.log(setting);
+      //console.log(setting);
       return setting;
     } catch (error) {
       console.error(error);
@@ -144,7 +144,7 @@ export default MyPlant = ({route,navigation}) => {
       if (response.status === 200) {
         // response.data.map((box)=>fetchBoxSetting(box.boxID,settings));
         response.data.forEach(element => {
-          console.log("This is data : "+element);
+          //console.log("This is data : "+element);
         });
         setSettings(response.data);
         // response.data.map((box)=>console.log(fetchBoxSetting(box.boxID)));

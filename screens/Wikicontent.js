@@ -114,20 +114,20 @@ export default Wikicontent= ({route,navigation}) => {
                   <View style={styles.inlineLeft}>
                     <View style={styles.twoBlock}>
                       <Text style={styles.boxText}>WATERING</Text>
-                      <Text style={styles.tipText}>{swiki.amountofwater}</Text>
+                      <Text style={styles.tipText}>{swiki.waterAmount}</Text>
                         <View style={styles.insideBox}>
-                          <Text style={styles.tipText}>EVERYDAY</Text>
+                          <Text style={styles.tipText}>{swiki.waterFreq}</Text>
                         </View>
                     </View>
                     <View style={styles.twoBlock}>
                       <Text style={styles.boxText}>LIGHT</Text>
-                        <Text style={styles.tipText}>{swiki.lightexposure}</Text>
+                        {/* <Text style={styles.tipText}>{swiki.lightexposure}</Text> */}
                         <View style={styles.insideBoxLight}>
-                          <Text style={styles.tipText}>50 - 150</Text>
+                          <Text style={styles.tipText}>{swiki.lightexposure}</Text>
                         </View>
-                        <View style={styles.insideBoxLight}>
+                        {/* <View style={styles.insideBoxLight}>
                           <Text style={styles.tipText}>6-8 HRS</Text>
-                        </View>
+                        </View> */}
                     </View>
                   </View>
                 </View>
@@ -142,7 +142,7 @@ export default Wikicontent= ({route,navigation}) => {
                     <Text style={styles.boxText}>PESTICIDE</Text>
                       <Text style={styles.tipText}>{swiki.pesticide}</Text>
                         <View style={styles.insideBoxPes}>
-                          <Text style={styles.tipText}>TWICE A WEEK</Text>
+                          <Text style={styles.tipText}>{swiki.pesticideFreq}</Text>
                         </View>
                     </View>
                 </View>
@@ -150,15 +150,15 @@ export default Wikicontent= ({route,navigation}) => {
                   <View style={styles.inlineLeft}>
                     <View style={styles.twoBlock}>
                       <Text style={styles.boxText}>GROWING TIME</Text>
-                        <Text style={styles.tipText}>{swiki.growingtime}</Text>
+                        {/* <Text style={styles.tipText}>{swiki.growingtime}</Text> */}
                         <View style={styles.insideBox}>
-                          <Text style={styles.tipText}>3 WEEKS</Text>
+                          <Text style={styles.tipText}>{swiki.growingtime}</Text>
                         </View>
                     </View>
                     <View style={styles.twoBlock}>
                       <Text style={styles.boxText}>WEATHER</Text>
                         <View style={styles.insideBox}>
-                          <Text style={styles.tipText}>SUNNY</Text>
+                          <Text style={styles.tipText}>{swiki.weather}</Text>
                         </View>
                     </View>
                   </View>
@@ -399,7 +399,7 @@ insideBox:{
     backgroundColor: '#FDEBD9',
     padding: 5,
     // width: "46%",
-    height: 40,
+    //height: 40,
     marginTop:25,
 },
 insideBoxLight:{
@@ -407,7 +407,7 @@ insideBoxLight:{
   backgroundColor: '#FDEBD9',
   padding: 5,
   // width: "46%",
-  height: 40,
+  //height: 40,
   marginTop:10,
 },
 insideBoxPes:{
@@ -415,7 +415,7 @@ insideBoxPes:{
   backgroundColor: '#FDEBD9',
   padding: 5,
   width: 150,
-  height: 40,
+  //height: 40,
   marginTop:10,
 },
 inlineLeftContainer: {

@@ -71,7 +71,7 @@ export default ChooseCard = ({route, navigation}) => {
         },
       };
       const setting = await axios.request(config);
-      return navigation.navigate('Tabs_MyPlant', {"UserID":UserID});
+      return navigation.navigate('Menu', {"UserID":UserID,"UserName":UserName});
     } catch (error) {
       console.error(error);
     }
@@ -104,7 +104,7 @@ export default ChooseCard = ({route, navigation}) => {
       });
 
       client.on('message', function (msg) {
-        console.log('mqtt.event.message', msg);
+        //console.log('mqtt.event.message', msg);
         if(msg.topic==='sensor/light'){
           setSensor1(msg.data);
         }
@@ -224,10 +224,10 @@ export default ChooseCard = ({route, navigation}) => {
               )}
                 
               <TouchableOpacity
-                style={styles.buttonAdd}
+                style={styles.buttonDelete}
                 onPress={() => deleteBox()}>
                 <View>
-                  <Image source={require('../assets/images/deletebox.png')} />
+                <Text style={styles.buttonAddText}>DELETE BOX</Text>
                 </View>
               </TouchableOpacity>
             </View>
@@ -261,6 +261,15 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     width: 150,
     backgroundColor: colors.newGreen2,
+    borderRadius: 20,
+    marginTop: deviceHeight * 0.03,
+    //marginLeft: deviceWidth*0.4,
+    alignSelf: 'center',
+  },
+  buttonDelete: {
+    paddingVertical: 8,
+    width: 150,
+    backgroundColor: colors.red,
     borderRadius: 20,
     marginTop: deviceHeight * 0.03,
     //marginLeft: deviceWidth*0.4,
