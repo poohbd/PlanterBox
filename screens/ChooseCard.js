@@ -199,32 +199,49 @@ export default ChooseCard = ({route, navigation}) => {
                     style={styles.watermanual}
                     onPress={()=>mqttClient.publish('sensor/watering', 'off', 1, true)}>
                     <View>  
-                      <Image source={require('../assets/images/wateroff.png')} />
+                      <Image source={require('../assets/images/wateron.png')} />
                     </View>
                   </TouchableOpacity>) :(
                   <TouchableOpacity
                   style={styles.watermanual}
                   onPress={()=>mqttClient.publish('sensor/watering', 'on', 1, true)}>
                   <View>  
-                    <Image source={require('../assets/images/wateron.png')} />
+                    <Image source={require('../assets/images/wateroff.png')} />
                   </View>
                   </TouchableOpacity>)}
-              {sensorLightBool === 'on' ?(
+              {sensorLightBool === 'off' ?(
                   <TouchableOpacity
                     style={styles.lightmanual}
-                    onPress={() => mqttClient.publish('sensor/lighting', 'off', 1, true)}>
+                    onPress={() => mqttClient.publish('sensor/lighting', 'low', 1, true)}>
                     <View>
                       <Image source={require('../assets/images/lightoff.png')} />
                     </View>
-                  </TouchableOpacity>) : (
+                  </TouchableOpacity>) : (null)}
+              {sensorLightBool === 'low' ?(
                   <TouchableOpacity
                     style={styles.lightmanual}
-                    onPress={() => mqttClient.publish('sensor/lighting', 'on', 1, true)}>
+                    onPress={() => mqttClient.publish('sensor/lighting', 'med', 1, true)}>
                     <View>
-                      <Image source={require('../assets/images/lighton.png')} />
+                      <Image source={require('../assets/images/lightlow.png')} />
                     </View>
-                  </TouchableOpacity>
-              )}
+                  </TouchableOpacity>) : (null)}
+              {sensorLightBool === 'med' ?(
+                  <TouchableOpacity
+                  style={styles.lightmanual}
+                  onPress={() => mqttClient.publish('sensor/lighting', 'high', 1, true)}>
+                  <View>
+                    <Image source={require('../assets/images/lightmed.png')} />
+                  </View>
+                </TouchableOpacity>) : (null)}
+              {sensorLightBool === 'high' ?(
+                  <TouchableOpacity
+                  style={styles.lightmanual}
+                  onPress={() => mqttClient.publish('sensor/lighting', 'off', 1, true)}>
+                  <View>
+                    <Image source={require('../assets/images/lighton.png')} />
+                  </View>
+                </TouchableOpacity>) : (null)}
+              
             </View>
             <View style={styles.space} />
               <TouchableOpacity

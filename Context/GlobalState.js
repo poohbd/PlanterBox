@@ -4,6 +4,7 @@ export default class GlobalState extends React.Component{
 state = {
   UserID: [],
   UserName: [],
+  Schedules: [],
 }
 
 replaceNewUser = (userid) => {
