@@ -318,9 +318,10 @@ export default MyPlant = ({route,navigation}) => {
             <FadeInView>
               <TouchableOpacity
                 onPress={() =>
-                  navigation.navigate('ChooseCard', {
-                    valuepreset: {valuepreset},
-                  })
+                  // navigation.navigate('ChooseCard', {
+                  //   valuepreset: {valuepreset},
+                  // })
+                  console.log(valuepreset)
                 }>
                 <View style={styles.cardContentDone}>
                   <Text
@@ -417,6 +418,7 @@ export default MyPlant = ({route,navigation}) => {
                 navigation.navigate('ChooseCard', {
                   valuepreset: setting.planterboxsettings.SettingName,
                   id: setting.boxID,
+                  sid : setting.SettingsID,
                 })
               }>
               <View style={styles.cardContentDone}>

@@ -16,11 +16,18 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import OffWatering from './offwatering';
 import TimeFormAuto from './timeformAuto';
 
-export default function TimeForm({data}) {
+export default function TimeForm({data,allsche}) {
+  console.log("TestAllsche");
+  console.log(allsche);
+  // const {wateringschedule} = allsche;
   const [isPickerFirstShow, setIsPickerFirstShow] = React.useState(false);
   const [isPickerEndShow, setIsPickerEndShow] = React.useState(false);
   const [datefirst, setDateFirst] = React.useState(new Date(Date.now()));
   const [dateend, setDateEnd] = React.useState(new Date(Date.now()));
+  // const [duration, setDuration] = React.useState(wateringschedule[0].duration);
+  // console.log("Test Duration");
+  // console.log(duration);
+  const id = data.SettingsID;
   const showFirstTimePicker = () => {
     setIsPickerFirstShow(true);
   };
@@ -31,18 +38,37 @@ export default function TimeForm({data}) {
     const currentDate = selectedDate;
     setIsPickerFirstShow(false);
     setDateFirst(currentDate);
+    console.log('This is duration: '+duration)
   };
   const onChangeEnd = (event, selectedDate) => {
     const currentDate = selectedDate;
     setIsPickerEndShow(false);
     setDateEnd(currentDate);
   };
+  const changeMode = async (valueplan) =>{
+    const response = await fetch("http://localhost:3000/planterbox/settings/updateBoxSettings",{
+      method:"PUT",
+      headers : { 
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+      },
+      body:JSON.stringify({
+          id: id,
+          "wateringMode":valueplan,
+          })
+    }); 
+  }
   const [openplan, setOpenplan] = React.useState(false);
   const [valueplan, setValuePlan] = React.useState(data.wateringMode.toUpperCase());
   const [items, setItems] = React.useState([
     {
       label: (
-        <Text style={{fontFamily: 'Mitr-Regular', color: colors.newGreen2}}>
+        <Text style={{fontFamily: 'Mitr-Regular', color: colors.newGreen2}}
+        onPress={() => {
+          changeMode('Schedule');
+          setValuePlan('SCHEDULE');
+          setOpenplan(false);
+        }}>
           SCHEDULE
         </Text>
       ),
@@ -50,7 +76,12 @@ export default function TimeForm({data}) {
     },
     {
       label: (
-        <Text style={{fontFamily: 'Mitr-Regular', color: colors.newGreen2}}>
+        <Text style={{fontFamily: 'Mitr-Regular', color: colors.newGreen2}}
+        onPress={() => {
+          changeMode('Auto');
+          setValuePlan('AUTO');
+          setOpenplan(false);
+        }}>
           AUTO
         </Text>
       ),
@@ -58,7 +89,12 @@ export default function TimeForm({data}) {
     },
     {
       label: (
-        <Text style={{fontFamily: 'Mitr-Regular', color: colors.newGreen2}}>
+        <Text style={{fontFamily: 'Mitr-Regular', color: colors.newGreen2}}
+        onPress={() => {
+          changeMode('Manual');
+          setValuePlan('MANUAL');
+          setOpenplan(false);
+        }}>
           OFF
         </Text>
       ),
@@ -67,7 +103,10 @@ export default function TimeForm({data}) {
   ]);
   console.log(valueplan);
   return (
+    
     <View style={styles.bigCard}>
+      {allsche.map(schedule=>(
+        <View>
       <View style={styles.circleCard}>
         <Text style={styles.circleCardText}>46%</Text>
       </View>
@@ -76,8 +115,12 @@ export default function TimeForm({data}) {
       {valueplan ==='SCHEDULE' &&(
       <View style={styles.mediumCard}>
         <Text style={styles.cardContent}> FROM </Text>
+        <Text style={styles.cardContent}> {schedule.duration}</Text>
         <View style={styles.smallCard}>
-          <TouchableOpacity onPress={showFirstTimePicker}>
+          {/* <View>
+            <TextInput style={styles.textTime} onChangeText={(duration) => setDuration(parseInt(duration))} defaultValue={allsche.wateringschedule[0].duration}/>
+          </View> */}
+          {/* <TouchableOpacity onPress={showFirstTimePicker}>
             <Text style={styles.textTime}>
               {datefirst.toLocaleTimeString([], {
                 hour: '2-digit',
@@ -85,7 +128,7 @@ export default function TimeForm({data}) {
                 hour12: true,
               })}
             </Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
         <Text style={styles.cardContent}> TO </Text>
         <View style={styles.smallCard}>
@@ -136,6 +179,8 @@ export default function TimeForm({data}) {
           style={{marginRight: 30, marginTop: 45}}
         />
       )}
+      </View>
+      ))}
     </View>
   );
 }

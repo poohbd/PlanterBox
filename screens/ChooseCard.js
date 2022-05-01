@@ -25,8 +25,9 @@ const deviceWidth = Dimensions.get('screen').width;
 const deviceHeight = Dimensions.get('screen').height;
 
 export default ChooseCard = ({route, navigation}) => {
-  const {valuepreset,id} = route.params;
+  const {valuepreset,id,sid} = route.params;
   const plantName = valuepreset;
+  const [allsche, setAllsche] = useState({});
   pathImage = type => {
     switch (type) {
       case 'Sunflower':
@@ -36,6 +37,38 @@ export default ChooseCard = ({route, navigation}) => {
       case 'Cucumber':
         return require('../assets/images/Cucumber.png');
     }
+  };
+  const getWaterschedule = async () => {
+    const source = axios.CancelToken.source();
+    const url = "http://localhost:3000/pbsetting/"+sid+"/schedules";
+    try {
+      const response = await axios.get(url, {cancelToken: source.token});
+      if (response.status === 200) {
+        // response.data.map((box)=>fetchBoxSetting(box.boxID,settings));
+        // response.data.forEach(element => {
+        //   console.log("This is data : "+element);
+        // });
+        // console.log(response.data);
+        setAllsche(response.data);
+        // response.data.map((box)=>console.log(fetchBoxSetting(box.boxID)));
+        return;
+      } else {
+        throw new Error('Failed to Get Watering schedule');
+      }
+      // await setBoxId(data.map((box=>parseInt(box.boxID))));
+      // console.log(temp);
+      // console.log(getBoxid);
+      // console.log(typeof(getBoxid[0]));
+
+      // const BoxList = await getBoxid.map(id=>fetchBoxSetting(id));
+      //const BoxList = getBoxid.map()
+      // console.log(BoxList);
+      // console.log(settings);
+    } catch (error) {
+      console.error(error);
+    }
+    // getSettingList(boxid);
+    // console.log(data);
   };
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState();
@@ -59,9 +92,10 @@ export default ChooseCard = ({route, navigation}) => {
       // console.log(data);
     }
   };
-
+  
   useEffect(() => {
     getSetting();
+    getWaterschedule();
   }, []);
   return (
     <Context.Consumer>
@@ -109,10 +143,19 @@ export default ChooseCard = ({route, navigation}) => {
           </View>
           <View style={styles.card}>
             <View style={styles.cardContent}>
-              <TimeForm data={data} />
+              <TimeForm data={data} allsche={allsche.wateringschedule}/>
               <LightForm data={data} />
               <DropDownTime type="FERTILIZER" />
               <DropDownTime type="PESTICIDE" />
+            <TouchableOpacity
+              style={styles.buttonGray}
+              onPress={() => console.log(allsche.wateringschedule[0])}>
+              <Text
+                  style={{fontFamily: 'Mitr-Regular', color: colors.newGreen2}}>
+                  Console Log AllSChe
+                </Text>
+            </TouchableOpacity>
+              
               <View style={styles.view} />
               <View style={styles.view} />
               <View style={styles.view} />
