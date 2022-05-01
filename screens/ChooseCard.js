@@ -28,6 +28,7 @@ const deviceHeight = Dimensions.get('screen').height;
 export default ChooseCard = ({route, navigation}) => {
   const {valuepreset,id,settingsid,UserID,UserName} = route.params;
   const plantName = valuepreset;
+  const ssid = settingsid;
   pathImage = type => {
     switch (type) {
       case 'Sunflower':
@@ -45,7 +46,7 @@ export default ChooseCard = ({route, navigation}) => {
     try {
       const config = {
         method: 'POST',
-        url: 'http://192.168.1.44:3000/planterbox/settings',
+        url: 'http://192.168.1.42:3000/planterbox/settings',
         data: {
           id: id,
         },
@@ -67,7 +68,7 @@ export default ChooseCard = ({route, navigation}) => {
       //console.log("boxidchoosecard :"+id);
       const config = {
         method: 'DELETE',
-        url: 'http://192.168.1.44:3000/planterbox/delete',
+        url: 'http://192.168.1.42:3000/planterbox/delete',
         data: {
           id: id,
         },
@@ -78,9 +79,31 @@ export default ChooseCard = ({route, navigation}) => {
       console.error(error);
     }
   };
+  const [sched, setSched] = useState([]);
+  const getSchedule = async (ssid) => {
+    const source = axios.CancelToken.source();
+    const url = "http://192.168.1.42:3000/pbsetting/"+ssid+"/schedules";
+    try {
+      const response = await axios.get(url, {cancelToken: source.token});
+      if (response.status === 200) {
+        // response.data.map((box)=>fetchBoxSetting(box.boxID,settings));
+        // response.data.forEach(element => {
+        //   console.log("This is data : "+element);
+        // });
+        setSched(response.data);
+        // response.data.map((box)=>console.log(fetchBoxSetting(box.boxID)));
+        return;
+      } else {
+        throw new Error('Failed to Get schedule List');
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   useEffect(() => {
     getSetting();
+    getSchedule(ssid);
   }, []);
   const [sensor1, setSensor1] = useState('');
   const [sensor2, setSensor2] = useState('');
@@ -185,7 +208,7 @@ export default ChooseCard = ({route, navigation}) => {
             <View style={styles.cardContent}>
               <TimeForm data={data} />
               <LightForm data={data} />
-              <DropDownTime type="FERTILIZER" sid={settingsid}  />
+              <DropDownTime type="FERTILIZER" sid={settingsid} sched99={sched} />
               <DropDownTime type="PESTICIDE" sid={settingsid} />
               <View style={styles.view} />
               <View style={styles.view} />

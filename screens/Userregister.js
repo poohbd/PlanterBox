@@ -48,10 +48,10 @@ export default Userregister = ({navigation}) => {
 
      const validateRegister = async (values) => {
       try {
-        const {email,username,password} = values;
+        const {email,password,username} = values;
         const config = {
           method: 'POST',
-          url: 'http://192.168.1.44:3000/user/register',
+          url: 'http://192.168.1.42:3000/user/register',
           data: {
             email: email,
             username: username,
@@ -98,7 +98,11 @@ export default Userregister = ({navigation}) => {
         confirmPassword: '',
       }}
       validationSchema={loginValidateSchema}
-      onSubmit={values => {validateRegister(values)}
+      onSubmit={values => {
+        validateRegister(values);
+        console.log("Already press signup");
+        console.log(values);
+      }
     }
      >
       {({handleChange, handleBlur, handleSubmit, values, errors, touched}) => (
