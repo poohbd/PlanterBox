@@ -21,7 +21,7 @@ import axios from 'axios';
 //     <DropDownTime type='FERTILIZER'/>
 //     <DropDownTime type='PESTICIDE'/>
 
-export default function DropDownTime({type,sid,sched99}) {
+export default function DropDownTime({type,sid,sched99,pname}) {
   const schedson = sched99;
   const [openplan, setOpenplan] = React.useState(false);
   const [valueplan, setValuePlan] = React.useState('SCHEDULE');
@@ -165,6 +165,7 @@ export default function DropDownTime({type,sid,sched99}) {
         return
     }
   }
+
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate;
     setIsPickerShow(false);
@@ -200,12 +201,22 @@ export default function DropDownTime({type,sid,sched99}) {
         return styles.pesticideBell;
     }
   };
+
+  // pathMessage = tt => {
+  //   switch (tt) {
+  //     case "FERTILIZER":
+  //       return "Don't forget to add fertilizer to your "+pname ;
+  //     case "PESTICIDE":
+  //       return "Don't forget to add pesticide to your "+pname;
+  //   }
+  // };
+
   const testpush2 = () =>{
     PushNotification.localNotificationSchedule({
       //... You can use all the options from localNotifications
       channelId: "testpush2",
-      title: type,
-      message: "Don't forget!!", // (required)
+      title: type + " time!!",
+      message: "Don't forget to add "+type+" to your "+pname+"!", // (required)
       date: new Date(date.toLocaleString()), // in 60 secs
       });
   }

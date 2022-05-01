@@ -208,7 +208,7 @@ export default ChooseCard = ({route, navigation}) => {
             <View style={styles.cardContent}>
               <TimeForm data={data} />
               <LightForm data={data} />
-              <DropDownTime type="FERTILIZER" sid={settingsid} sched99={sched} />
+              <DropDownTime type="FERTILIZER" sid={settingsid} sched99={sched} pname={plantName} />
               <DropDownTime type="PESTICIDE" sid={settingsid} />
               <View style={styles.view} />
               <View style={styles.view} />
