@@ -42,25 +42,6 @@ export default function DropDownTime({type,sid,sched99,pname}) {
     setIsPickerShow(true);
   };
   
-  // const postFer = async () => {
-  //   try {
-  //     const config = {
-  //       method: 'POST',
-  //       url: 'http://192.168.1.42:3000/planterbox/settings/addFertilizerSchedule',
-  //       data: {
-  //         id: sid,
-  //         time: date,
-  //         Interval: parseInt(valueplan),
-  //       },
-  //     };
-  //     const setting = await axios
-  //       .request(config)
-  //       .then(res => setFernoti(res.data));
-  //   } catch (error){
-  //     alert(error.message);
-  //   }
-  // };
-
   const putFer = async () => {
     try {
       const config = {
@@ -99,70 +80,15 @@ export default function DropDownTime({type,sid,sched99,pname}) {
     }
   };
 
-  // const postPes = async () => {
-  //   try {
-  //     const config = {
-  //       method: 'POST',
-  //       url: 'http://192.168.1.42:3000/planterbox/settings/addPesticideSchedule',
-  //       data: {
-  //         id: sid,
-  //         time: date,
-  //         Interval: parseInt(valueplan),
-  //       },
-  //     };
-  //     const setting = await axios
-  //       .request(config)
-  //       .then(res => setPesnoti(res.data));
-  //   } catch (error){
-  //     alert(error.message);
-  //   }
-  // };
-  // const [sche, setSche] = useState([]);
-  // const getSchedule = async (sid) => {
-  //   const source = axios.CancelToken.source();
-  //   const url = "http://192.168.1.42:3000/pbsetting/"+sid+"/schedules";
-  //   try {
-  //     const response = await axios.get(url, {cancelToken: source.token});
-  //     if (response.status === 200) {
-  //       // response.data.map((box)=>fetchBoxSetting(box.boxID,settings));
-  //       // response.data.forEach(element => {
-  //       //   console.log("This is data : "+element);
-  //       // });
-  //       setSche(response.data);
-  //       // response.data.map((box)=>console.log(fetchBoxSetting(box.boxID)));
-  //       return;
-  //     } else {
-  //       throw new Error('Failed to Get schedule List');
-  //     }
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // }
-  
-  
-  //getSchedule(sid);
    
 
   const scase = (type) =>{
     switch (type) {
       case "FERTILIZER":
-        // if (sche.fertilizerschedule.length === 1) {
-          putFer();
-        //   console.log('This is fertime :'+fernoti.time);
-        // } else if (sche.fertilizerschedule.length === 0){
-        //   postFer();
-        //   console.log('This is fertime :'+fernoti.time);
-        // }
+        putFer();
         return
       case "PESTICIDE":
         putPes();
-        // if (sche.pesticideschedule.length === 1) {
-          // putPes();
-        //   console.log('This is fertime :'+fernoti.time);
-        // } else if(sche.pesticideschedule.length === 0){
-        //   postPes();
-        //   console.log('This is pestime :'+pesnoti.time);
-        // }
         return
     }
   }
