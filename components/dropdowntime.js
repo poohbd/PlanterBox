@@ -23,7 +23,7 @@ import axios from 'axios';
 
 export default function DropDownTime({type,sid,sched99,pname}) {
   const schedson = sched99;
-  const [haha, setHaha] = React.useState(sched99.pesticideschedule);
+  const [haha, setHaha] = React.useState(sched99);
   const [openplan, setOpenplan] = React.useState(false);
   const [valueplan, setValuePlan] = React.useState('SCHEDULE');
   // const [fernoti, setFernoti] = React.useState('');
@@ -65,7 +65,7 @@ export default function DropDownTime({type,sid,sched99,pname}) {
     try {
       const config = {
         method: 'PUT',
-        url: 'http://192.168.1.42:3000/planterbox/settings/updateFertilizerSchedule',
+        url: 'http://localhost:3000/planterbox/settings/updateFertilizerSchedule',
         data: {
           sid: schedson.fertilizerschedule.FSID,
           time: date,
@@ -84,7 +84,7 @@ export default function DropDownTime({type,sid,sched99,pname}) {
     try {
       const config = {
         method: 'PUT',
-        url: 'http://192.168.1.42:3000/planterbox/settings/updatePesticideSchedule',
+        url: 'http://localhost:3000/planterbox/settings/updatePesticideSchedule',
         data: {
           sid: schedson.pesticideschedule.PSID,
           time: date,
