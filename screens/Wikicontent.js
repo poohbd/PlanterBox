@@ -38,7 +38,7 @@ export default Wikicontent= ({route,navigation}) => {
     const pathImage = type => {
       switch (type) {
         case 'Coriander':
-          return require('../assets/images/Sunflower.png');
+          return require('../assets/images/Coriander.png');
         case 'Holy Basil':
           return require('../assets/images/Basil.png');
       }
