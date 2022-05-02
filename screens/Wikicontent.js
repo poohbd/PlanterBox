@@ -23,7 +23,7 @@ export default Wikicontent= ({route,navigation}) => {
       try {
         const config = {
           method: 'POST',
-          url: 'http://localhost:3000/wiki/search',
+          url: 'http://192.168.1.42:3000/wiki/search',
           data: {
             plantname: plantname,
           },

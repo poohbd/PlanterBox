@@ -46,7 +46,7 @@ export default function DropDownTime({type,sid,sched99,pname}) {
     try {
       const config = {
         method: 'PUT',
-        url: 'http://localhost:3000/planterbox/settings/updateFertilizerSchedule',
+        url: 'http://192.168.1.42:3000/planterbox/settings/updateFertilizerSchedule',
         data: {
           sid: schedson.fertilizerschedule.FSID,
           time: date,
@@ -65,7 +65,7 @@ export default function DropDownTime({type,sid,sched99,pname}) {
     try {
       const config = {
         method: 'PUT',
-        url: 'http://localhost:3000/planterbox/settings/updatePesticideSchedule',
+        url: 'http://192.168.1.42:3000/planterbox/settings/updatePesticideSchedule',
         data: {
           sid: schedson.pesticideschedule.PSID,
           time: date,
@@ -157,7 +157,9 @@ export default function DropDownTime({type,sid,sched99,pname}) {
           console.log(schedson);
           scase(type);
           console.log('Test haha');
-          console.log(haha);
+          setTimeout(() => {
+            console.log(haha);
+          }, 2000);
         }}>
           <View>
             <Image

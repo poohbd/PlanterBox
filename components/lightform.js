@@ -42,7 +42,7 @@ export default function LightForm({data}) {
   };
 
   const changeMode = async (valueplan) =>{
-    const response = await fetch("http://localhost:3000/planterbox/settings/updateBoxSettings",{
+    const response = await fetch("http://192.168.1.42:3000/planterbox/settings/updateBoxSettings",{
       method:"PUT",
       headers : { 
           'Content-Type': 'application/json',
@@ -55,7 +55,7 @@ export default function LightForm({data}) {
   }); 
 }
 const changeTime = async () =>{
-  const response = await fetch("http://localhost:3000/planterbox/settings/updateBoxSettings",{
+  const response = await fetch("http://192.168.1.42:3000/planterbox/settings/updateBoxSettings",{
     method:"PUT",
     headers : { 
         'Content-Type': 'application/json',
