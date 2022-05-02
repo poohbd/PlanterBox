@@ -36,7 +36,7 @@ export default ChooseCard = ({route, navigation}) => {
       case 'Holy Basil':
         return require('../assets/images/Basil.png');
       case 'Coriander':
-        return require('../assets/images/Cucumber.png');
+        return require('../assets/images/Coriander.png');
     }
   };
   const [isLoading, setLoading] = useState(true);
