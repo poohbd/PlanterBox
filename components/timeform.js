@@ -105,7 +105,6 @@ export default function TimeForm({data,allsche}) {
   return (
     
     <View style={styles.bigCard}>
-      {allsche.map(schedule=>(
         <View>
       <View style={styles.circleCard}>
         <Text style={styles.circleCardText}>46%</Text>
@@ -180,7 +179,6 @@ export default function TimeForm({data,allsche}) {
         />
       )}
       </View>
-      ))}
     </View>
   );
 }
