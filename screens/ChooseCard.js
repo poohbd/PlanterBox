@@ -29,6 +29,8 @@ export default ChooseCard = ({route, navigation}) => {
   const {valuepreset,id,settingsid,UserID,UserName} = route.params;
   const plantName = valuepreset;
   const ssid = settingsid;
+  // const {valuepreset,id,sid} = route.params;
+  const [allsche, setAllsche] = useState({});
   pathImage = type => {
     switch (type) {
       case 'Sunflower Sprout':
@@ -38,6 +40,38 @@ export default ChooseCard = ({route, navigation}) => {
       case 'Coriander':
         return require('../assets/images/Coriander.png');
     }
+  };
+  const getWaterschedule = async () => {
+    const source = axios.CancelToken.source();
+    const url = "http://localhost:3000/pbsetting/"+ssid+"/schedules";
+    try {
+      const response = await axios.get(url, {cancelToken: source.token});
+      if (response.status === 200) {
+        // response.data.map((box)=>fetchBoxSetting(box.boxID,settings));
+        // response.data.forEach(element => {
+        //   console.log("This is data : "+element);
+        // });
+        // console.log(response.data);
+        setAllsche(response.data);
+        // response.data.map((box)=>console.log(fetchBoxSetting(box.boxID)));
+        return;
+      } else {
+        throw new Error('Failed to Get Watering schedule');
+      }
+      // await setBoxId(data.map((box=>parseInt(box.boxID))));
+      // console.log(temp);
+      // console.log(getBoxid);
+      // console.log(typeof(getBoxid[0]));
+
+      // const BoxList = await getBoxid.map(id=>fetchBoxSetting(id));
+      //const BoxList = getBoxid.map()
+      // console.log(BoxList);
+      // console.log(settings);
+    } catch (error) {
+      console.error(error);
+    }
+    // getSettingList(boxid);
+    // console.log(data);
   };
   const [isLoading, setLoading] = useState(true);
   
@@ -104,7 +138,9 @@ export default ChooseCard = ({route, navigation}) => {
   useEffect(() => {
     getSetting();
     getSchedule(ssid);
+    getWaterschedule();
   }, []);
+    
   const [sensor1, setSensor1] = useState('');
   const [sensor2, setSensor2] = useState('');
   const [sensor3, setSensor3] = useState('');
@@ -206,10 +242,19 @@ export default ChooseCard = ({route, navigation}) => {
           </View>
           <View style={styles.card}>
             <View style={styles.cardContent}>
-              <TimeForm data={data} />
+              <TimeForm data={data} allsche={allsche.wateringschedule}/>
               <LightForm data={data} />
               <DropDownTime type="FERTILIZER" sid={settingsid} sched99={sched} pname={plantName} />
               <DropDownTime type="PESTICIDE" sid={settingsid} sched99={sched} pname={plantName}/>
+            <TouchableOpacity
+              style={styles.buttonGray}
+              onPress={() => console.log(allsche.wateringschedule[0])}>
+              <Text
+                  style={{fontFamily: 'Mitr-Regular', color: colors.newGreen2}}>
+                  Console Log AllSChe
+                </Text>
+            </TouchableOpacity>
+              
               <View style={styles.view} />
               <View style={styles.view} />
               <View style={styles.view} />

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -19,30 +19,66 @@ export default function LightForm({data}) {
   console.log(data);
   const [isPickerFirstShow, setIsPickerFirstShow] = React.useState(false);
   const [isPickerEndShow, setIsPickerEndShow] = React.useState(false);
-  const [datefirst, setDateFirst] = React.useState(new Date(Date.now()));
-  const [dateend, setDateEnd] = React.useState(new Date(Date.now()));
+  const [datefirst, setDateFirst] = React.useState(new Date(data.lightStartTime));
+  const [dateend, setDateEnd] = React.useState(new Date(data.lightStopTime));
+  const id = data.SettingsID;
+  const [openplan, setOpenplan] = React.useState(false);
+  const [valueplan, setValuePlan] = React.useState(data.lightingMode.toUpperCase());
   const showFirstTimePicker = () => {
     setIsPickerFirstShow(true);
   };
   const showEndTimePicker = () => {
     setIsPickerEndShow(true);
   };
-  const onChangeFirst = (event, selectedDate) => {
+  const onChangeFirst = (event, selectedDate,datefirst,dateend) => {
     const currentDate = selectedDate;
     setIsPickerFirstShow(false);
-    setDateFirst(currentDate);
+    setDateFirst(new Date(currentDate));
   };
-  const onChangeEnd = (event, selectedDate) => {
+  const onChangeEnd = (event, selectedDate,datefirst,dateend) => {
     const currentDate = selectedDate;
     setIsPickerEndShow(false);
-    setDateEnd(currentDate);
+    setDateEnd(new Date(currentDate));
   };
-  const [openplan, setOpenplan] = React.useState(false);
-  const [valueplan, setValuePlan] = React.useState(data.wateringMode.toUpperCase());
+
+  const changeMode = async (valueplan) =>{
+    const response = await fetch("http://localhost:3000/planterbox/settings/updateBoxSettings",{
+      method:"PUT",
+      headers : { 
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+      },
+      body:JSON.stringify({
+          id: id,
+          "lightingMode":valueplan,
+          })
+  }); 
+}
+const changeTime = async () =>{
+  const response = await fetch("http://localhost:3000/planterbox/settings/updateBoxSettings",{
+    method:"PUT",
+    headers : { 
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+    },
+    body:JSON.stringify({
+        id: id,
+        "lightStartTime":datefirst,
+        "lightStopTime":dateend,
+        })
+}); 
+}
+
+
   const [items, setItems] = React.useState([
     {
       label: (
-        <Text style={{fontFamily: 'Mitr-Regular', color: colors.newGreen2}}>
+        <Text style={{fontFamily: 'Mitr-Regular', color: colors.newGreen2}}
+        onPress={() => {
+          changeMode('Schedule');
+          setValuePlan('SCHEDULE');
+          setOpenplan(false);
+        }}>
           SCHEDULE
         </Text>
       ),
@@ -50,7 +86,12 @@ export default function LightForm({data}) {
     },
     {
       label: (
-        <Text style={{fontFamily: 'Mitr-Regular', color: colors.newGreen2}}>
+        <Text style={{fontFamily: 'Mitr-Regular', color: colors.newGreen2}}
+        onPress={() => {
+          changeMode('Auto');
+          setValuePlan('AUTO');
+          setOpenplan(false);
+        }}>
           AUTO
         </Text>
       ),
@@ -58,7 +99,12 @@ export default function LightForm({data}) {
     },
     {
       label: (
-        <Text style={{fontFamily: 'Mitr-Regular', color: colors.newGreen2}}>
+        <Text style={{fontFamily: 'Mitr-Regular', color: colors.newGreen2}}
+        onPress={() => {
+          changeMode('Manual');
+          setValuePlan('MANUAL');
+          setOpenplan(false);
+        }}>
           OFF
         </Text>
       ),
@@ -66,6 +112,10 @@ export default function LightForm({data}) {
     },
   ]);
   console.log(valueplan);
+  
+  // useEffect(() => {
+  //   changeMode();
+  // });
   return (
     <View style={styles.bigCard}>
       <View style={styles.circleCard}>
@@ -79,7 +129,7 @@ export default function LightForm({data}) {
         <View style={styles.smallCard}>
           <TouchableOpacity onPress={showFirstTimePicker}>
             <Text style={styles.textTime}>
-              {datefirst.toLocaleTimeString([], {
+              {datefirst.toLocaleTimeString('en-TH', {
                 hour: '2-digit',
                 minute: '2-digit',
                 hour12: true,
@@ -91,7 +141,7 @@ export default function LightForm({data}) {
         <View style={styles.smallCard}>
           <TouchableOpacity onPress={showEndTimePicker}>
             <Text style={styles.textTime}>
-              {dateend.toLocaleTimeString([], {
+              {dateend.toLocaleTimeString('en-TH', {
                 hour: '2-digit',
                 minute: '2-digit',
                 hour12: true,
@@ -99,6 +149,13 @@ export default function LightForm({data}) {
             </Text>
           </TouchableOpacity>
         </View>
+          <Text style={styles.cardContent}>  </Text>
+            <TouchableOpacity style={styles.saveButton} onPress={() => {console.log("datefirst: "+datefirst);console.log("dateend: "+dateend);changeTime();}}>
+              <View>
+                <Text style={styles.textTime}>SAVE</Text>
+              </View>
+            </TouchableOpacity>
+          <Text style={styles.cardContent}>  </Text>
       </View>
       )}
       {valueplan ==='AUTO'&&(
@@ -161,6 +218,17 @@ const deviceWidth = Dimensions.get('screen').width;
 const deviceHeight = Dimensions.get('screen').height;
 
 const styles = StyleSheet.create({
+  saveButton:{
+    width: 50,
+    height:20,
+    borderRadius: 30,
+    backgroundColor: 'white',
+    fontFamily: 'Mitr-Regular',
+    fontSize: 10,
+    paddingTop:-3,
+    paddingLeft:10,
+    zIndex : 1
+},
   bigCard: {
     width: 350,
     height: 150,
@@ -175,7 +243,7 @@ const styles = StyleSheet.create({
     zIndex: 101,
   },
   mediumCard: {
-    width: 200,
+    //width: 200,
     height: 40,
     borderRadius: 20,
     backgroundColor: '#C8A805',
