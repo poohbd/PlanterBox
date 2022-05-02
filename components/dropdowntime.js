@@ -17,13 +17,15 @@ import PushNotificationIOS from "@react-native-community/push-notification-ios";
 import PushNotification from "react-native-push-notification";
 import axios from 'axios';
 
-// calling example:
-//     <DropDownTime type='FERTILIZER'/>
-//     <DropDownTime type='PESTICIDE'/>
 
 export default function DropDownTime({type,sid,sched99,pname}) {
   const schedson = sched99;
+  useEffect(() => {
+    setHaha(sched99);
+  }, [sched99]);
   const [haha, setHaha] = React.useState(sched99);
+  console.log("Test Haha");
+  console.log(haha.fertilizerschedule.time);
   const [openplan, setOpenplan] = React.useState(false);
   const [valueplan, setValuePlan] = React.useState('SCHEDULE');
   // const [fernoti, setFernoti] = React.useState('');
@@ -153,13 +155,7 @@ export default function DropDownTime({type,sid,sched99,pname}) {
         <Text style={defineType(type + '_TITLE')}>{type}</Text>
         <TouchableOpacity onPress={() => {
           testpush2();
-          console.log("Test sched");
-          console.log(schedson);
           scase(type);
-          console.log('Test haha');
-          setTimeout(() => {
-            console.log(haha);
-          }, 2000);
         }}>
           <View>
             <Image

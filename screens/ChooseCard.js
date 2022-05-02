@@ -73,7 +73,8 @@ export default ChooseCard = ({route, navigation}) => {
     // getSettingList(boxid);
     // console.log(data);
   };
-  const [isLoading, setLoading] = useState(true);
+  const [isScheduleLoading, setScheduleLoading] = useState(true);
+  const [isSettingLoading, setSettingLoading] = useState(true);
   
   const [data, setData] = useState();
   const getSetting = async () => {
@@ -92,7 +93,7 @@ export default ChooseCard = ({route, navigation}) => {
     } catch (error) {
       console.error(error);
     } finally {
-      setLoading(false);
+      setSettingLoading(false);
       // console.log(data);
     }
   };
@@ -132,6 +133,9 @@ export default ChooseCard = ({route, navigation}) => {
       }
     } catch (error) {
       console.error(error);
+    } finally {
+      setScheduleLoading(false);
+      // console.log(data);
     }
   }
 
@@ -200,7 +204,7 @@ export default ChooseCard = ({route, navigation}) => {
     <Context.Consumer>
     {context => (
     <SafeAreaView style={styles.container}>
-      {isLoading ? (
+      {(isSettingLoading && isScheduleLoading) ? (
         <ActivityIndicator size="large" color={colors.newGreen2} />
       ) : (
         <ScrollView>
