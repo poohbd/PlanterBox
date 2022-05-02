@@ -36,7 +36,7 @@ export default function DropDownTime({type,sid,sched99,pname}) {
 
   //const [test, setTest] = Osche.fertilizerschedule.length === 0 ? React.useState('New schedhule') : React.useState('Old Schedule');
   const [isPickerShow, setIsPickerShow] = React.useState(false);
-  const [date, setDate] = React.useState(new Date(Date.now()));
+  const [date, setDate] = React.useState(new Date(sched99.fertilizerschedule.time));
   const showTimePicker = () => {
     setIsPickerShow(true);
   };
@@ -66,7 +66,7 @@ export default function DropDownTime({type,sid,sched99,pname}) {
         method: 'PUT',
         url: 'http://192.168.1.42:3000/planterbox/settings/updateFertilizerSchedule',
         data: {
-          sid: schedson.fertilizerschedule[0].FSID,
+          sid: schedson.fertilizerschedule.FSID,
           time: date,
           Interval: parseInt(valueplan),
         },
@@ -85,7 +85,7 @@ export default function DropDownTime({type,sid,sched99,pname}) {
         method: 'PUT',
         url: 'http://192.168.1.42:3000/planterbox/settings/updatePesticideSchedule',
         data: {
-          sid: schedson.pesticideschedule[0].PSID,
+          sid: schedson.pesticideschedule.PSID,
           time: date,
           Interval: parseInt(valueplan),
         },
@@ -154,7 +154,7 @@ export default function DropDownTime({type,sid,sched99,pname}) {
         // }
         return
       case "PESTICIDE":
-        console.log("Test putpest");
+        putPes();
         // if (sche.pesticideschedule.length === 1) {
           // putPes();
         //   console.log('This is fertime :'+fernoti.time);
