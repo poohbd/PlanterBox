@@ -135,7 +135,7 @@ export default function TimeForm({data, allsche, sensor2}) {
     <View style={styles.bigCard}>
       <View>
         <View style={styles.circleCard}>
-          <Text style={styles.circleCardText}>{sensor2+'%'}}</Text>
+          <Text style={styles.circleCardText}>{sensor2+'%'}</Text>
         </View>
         <Text style={styles.cardWatering}>WATERING</Text>
         <WateringDropdown
