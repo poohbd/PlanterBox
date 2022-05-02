@@ -15,70 +15,97 @@ import Slider from '@react-native-community/slider';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import OffLight from './offlight';
 import LightFormAuto from './lightformAuto';
-export default function LightForm({data}) {
+export default function LightForm({data, sensor1}) {
   console.log(data);
+  const [power, setPower] = React.useState(data.lightPower);
   const [isPickerFirstShow, setIsPickerFirstShow] = React.useState(false);
   const [isPickerEndShow, setIsPickerEndShow] = React.useState(false);
-  const [datefirst, setDateFirst] = React.useState(new Date(data.lightStartTime));
+  const [datefirst, setDateFirst] = React.useState(
+    new Date(data.lightStartTime),
+  );
   const [dateend, setDateEnd] = React.useState(new Date(data.lightStopTime));
   const id = data.SettingsID;
   const [openplan, setOpenplan] = React.useState(false);
-  const [valueplan, setValuePlan] = React.useState(data.lightingMode.toUpperCase());
+  const [valueplan, setValuePlan] = React.useState(
+    data.lightingMode.toUpperCase(),
+  );
   const showFirstTimePicker = () => {
     setIsPickerFirstShow(true);
   };
   const showEndTimePicker = () => {
     setIsPickerEndShow(true);
   };
-  const onChangeFirst = (event, selectedDate,datefirst,dateend) => {
+  const onChangeFirst = (event, selectedDate, datefirst, dateend) => {
     const currentDate = selectedDate;
     setIsPickerFirstShow(false);
     setDateFirst(new Date(currentDate));
   };
-  const onChangeEnd = (event, selectedDate,datefirst,dateend) => {
+  const onChangeEnd = (event, selectedDate, datefirst, dateend) => {
     const currentDate = selectedDate;
     setIsPickerEndShow(false);
     setDateEnd(new Date(currentDate));
   };
 
-  const changeMode = async (valueplan) =>{
-    const response = await fetch("http://localhost:3000/planterbox/settings/updateBoxSettings",{
-      method:"PUT",
-      headers : { 
+  const changeMode = async valueplan => {
+    const response = await fetch(
+      'http://localhost:3000/planterbox/settings/updateBoxSettings',
+      {
+        method: 'PUT',
+        headers: {
           'Content-Type': 'application/json',
-          'Accept': 'application/json'
-      },
-      body:JSON.stringify({
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
           id: id,
-          "lightingMode":valueplan,
-          })
-  }); 
-}
-const changeTime = async () =>{
-  const response = await fetch("http://localhost:3000/planterbox/settings/updateBoxSettings",{
-    method:"PUT",
-    headers : { 
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-    },
-    body:JSON.stringify({
-        id: id,
-        "lightStartTime":datefirst,
-        "lightStopTime":dateend,
-        })
-}); 
-}
-
+          lightingMode: valueplan,
+        }),
+      },
+    );
+  };
+  const changeTime = async () => {
+    const response = await fetch(
+      'http://localhost:3000/planterbox/settings/updateBoxSettings',
+      {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          id: id,
+          lightStartTime: datefirst,
+          lightStopTime: dateend,
+        }),
+      },
+    );
+  };
+  const changePower = async () => {
+    const response = await fetch(
+      'http://localhost:3000/planterbox/settings/updateBoxSettings',
+      {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          id: id,
+          lightPower: parseInt(power),
+        }),
+      },
+    );
+  };
 
   const [items, setItems] = React.useState([
     {
       label: (
-        <Text style={{fontFamily: 'Mitr-Regular', color: colors.newGreen2}}
-        onPress={() => {
-          changeMode('Schedule');
-          setValuePlan('SCHEDULE');
-          setOpenplan(false);
-        }}>
+        <Text
+          style={{fontFamily: 'Mitr-Regular', color: colors.newGreen2}}
+          onPress={() => {
+            changeMode('Schedule');
+            setValuePlan('SCHEDULE');
+            setOpenplan(false);
+          }}>
           SCHEDULE
         </Text>
       ),
@@ -86,12 +113,13 @@ const changeTime = async () =>{
     },
     {
       label: (
-        <Text style={{fontFamily: 'Mitr-Regular', color: colors.newGreen2}}
-        onPress={() => {
-          changeMode('Auto');
-          setValuePlan('AUTO');
-          setOpenplan(false);
-        }}>
+        <Text
+          style={{fontFamily: 'Mitr-Regular', color: colors.newGreen2}}
+          onPress={() => {
+            changeMode('Auto');
+            setValuePlan('AUTO');
+            setOpenplan(false);
+          }}>
           AUTO
         </Text>
       ),
@@ -99,12 +127,13 @@ const changeTime = async () =>{
     },
     {
       label: (
-        <Text style={{fontFamily: 'Mitr-Regular', color: colors.newGreen2}}
-        onPress={() => {
-          changeMode('Manual');
-          setValuePlan('MANUAL');
-          setOpenplan(false);
-        }}>
+        <Text
+          style={{fontFamily: 'Mitr-Regular', color: colors.newGreen2}}
+          onPress={() => {
+            changeMode('Manual');
+            setValuePlan('MANUAL');
+            setOpenplan(false);
+          }}>
           OFF
         </Text>
       ),
@@ -112,66 +141,77 @@ const changeTime = async () =>{
     },
   ]);
   console.log(valueplan);
-  
+
   // useEffect(() => {
   //   changeMode();
   // });
   return (
     <View style={styles.bigCard}>
       <View style={styles.circleCard}>
-        <Text style={styles.circleCardText}>48%</Text>
+        <Text style={styles.circleCardText}>{sensor1 + '%'}</Text>
       </View>
       <Text style={styles.cardWatering}>LIGHT EXPOSURE</Text>
-      <LightDropdown zIndex={300} openplan={openplan} setOpenplan={setOpenplan} valueplan={valueplan} setValuePlan={setValuePlan} items={items} setItems={setItems}/>
-      {valueplan ==='SCHEDULE'&&(
-      <View style={styles.mediumCard}>
-        <Text style={styles.cardContent}> FROM </Text>
-        <View style={styles.smallCard}>
-          <TouchableOpacity onPress={showFirstTimePicker}>
-            <Text style={styles.textTime}>
-              {datefirst.toLocaleTimeString('en-TH', {
-                hour: '2-digit',
-                minute: '2-digit',
-                hour12: true,
-              })}
-            </Text>
-          </TouchableOpacity>
-        </View>
-        <Text style={styles.cardContent}> TO </Text>
-        <View style={styles.smallCard}>
-          <TouchableOpacity onPress={showEndTimePicker}>
-            <Text style={styles.textTime}>
-              {dateend.toLocaleTimeString('en-TH', {
-                hour: '2-digit',
-                minute: '2-digit',
-                hour12: true,
-              })}
-            </Text>
-          </TouchableOpacity>
-        </View>
-          <Text style={styles.cardContent}>  </Text>
-            <TouchableOpacity style={styles.saveButton} onPress={() => {console.log("datefirst: "+datefirst);console.log("dateend: "+dateend);changeTime();}}>
-              <View>
-                <Text style={styles.textTime}>SAVE</Text>
-              </View>
+      <LightDropdown
+        zIndex={300}
+        openplan={openplan}
+        setOpenplan={setOpenplan}
+        valueplan={valueplan}
+        setValuePlan={setValuePlan}
+        items={items}
+        setItems={setItems}
+      />
+      {valueplan === 'SCHEDULE' && (
+        <View style={styles.mediumCard}>
+          <Text style={styles.cardContent}> FROM </Text>
+          <View style={styles.smallCard}>
+            <TouchableOpacity onPress={showFirstTimePicker}>
+              <Text style={styles.textTime}>
+                {datefirst.toLocaleTimeString('en-TH', {
+                  hour: '2-digit',
+                  minute: '2-digit',
+                  hour12: true,
+                })}
+              </Text>
             </TouchableOpacity>
-          <Text style={styles.cardContent}>  </Text>
-      </View>
+          </View>
+          <Text style={styles.cardContent}> TO </Text>
+          <View style={styles.smallCard}>
+            <TouchableOpacity onPress={showEndTimePicker}>
+              <Text style={styles.textTime}>
+                {dateend.toLocaleTimeString('en-TH', {
+                  hour: '2-digit',
+                  minute: '2-digit',
+                  hour12: true,
+                })}
+              </Text>
+            </TouchableOpacity>
+          </View>
+          <Text style={styles.cardContent}> </Text>
+          <TouchableOpacity
+            style={styles.saveButton}
+            onPress={() => {
+              console.log('datefirst: ' + datefirst);
+              console.log('dateend: ' + dateend);
+              changeTime();
+            }}>
+            <View>
+              <Text style={styles.textTime}>SAVE</Text>
+            </View>
+          </TouchableOpacity>
+          <Text style={styles.cardContent}> </Text>
+        </View>
       )}
-      {valueplan ==='AUTO'&&(
-        <LightFormAuto data={data}/>)}
-      {valueplan ==='MANUAL'&&(
-        <OffLight lightStatus={data.lightStatus} />
-      )}
+      {valueplan === 'AUTO' && <LightFormAuto data={data} />}
+      {valueplan === 'MANUAL' && <OffLight lightStatus={data.lightStatus} />}
 
       <Text style={styles.smText}>20,000 LUX</Text>
-      {data.lightStatus ==='ON' &&(
+      {data.lightStatus === 'ON' && (
         <Image
           style={styles.image}
           source={require('../assets/images/lightlogo.png')}
         />
       )}
-      {data.lightStatus === 'OFF' &&(
+      {data.lightStatus === 'OFF' && (
         <Image
           style={styles.image}
           source={require('../assets/images/light-off.png')}
@@ -180,10 +220,12 @@ const changeTime = async () =>{
       <Slider
         style={{width: 120, height: 40, zIndex: 99}}
         minimumValue={0}
-        maximumValue={1}
+        maximumValue={100}
         minimumTrackTintColor="#C8A805"
         maximumTrackTintColor="#000000"
-        value={0.8}
+        value={power}
+        onValueChange={setPower}
+        onSlidingComplete={changePower}
         marginTop={6}
         marginLeft={45}
       />
@@ -218,17 +260,17 @@ const deviceWidth = Dimensions.get('screen').width;
 const deviceHeight = Dimensions.get('screen').height;
 
 const styles = StyleSheet.create({
-  saveButton:{
+  saveButton: {
     width: 50,
-    height:20,
+    height: 20,
     borderRadius: 30,
     backgroundColor: 'white',
     fontFamily: 'Mitr-Regular',
     fontSize: 10,
-    paddingTop:-3,
-    paddingLeft:10,
-    zIndex : 1
-},
+    paddingTop: -3,
+    paddingLeft: 10,
+    zIndex: 1,
+  },
   bigCard: {
     width: 350,
     height: 150,

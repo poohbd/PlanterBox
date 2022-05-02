@@ -13,19 +13,40 @@ import {
 import DropDownPicker from 'react-native-dropdown-picker';
 import colors from '../assets/colors/colors';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import PushNotificationIOS from "@react-native-community/push-notification-ios";
-import PushNotification from "react-native-push-notification";
+import PushNotificationIOS from '@react-native-community/push-notification-ios';
+import PushNotification from 'react-native-push-notification';
 import axios from 'axios';
 
 // calling example:
 //     <DropDownTime type='FERTILIZER'/>
 //     <DropDownTime type='PESTICIDE'/>
 
-export default function DropDownTime({type,sid,sched99,pname}) {
+export default function DropDownTime({type, sid, sched99, pname}) {
   const schedson = sched99;
   const [haha, setHaha] = React.useState(sched99);
+  console.log('haha', haha);
+  defineInterv = interval => {
+    switch (interval) {
+      case 1:
+        console.log('Interval is EVERY DAY');
+        return 'EVERY DAY';
+      case 2:
+        console.log('Interval is EVERY 2 DAYS');
+        return 'EVERY 2 DAYS';
+      case 3:
+        console.log('Interval is EVERY 3 DAYS');
+        return 'EVERY 3 DAYS';
+      case 4:
+        console.log('Interval is EVERY 4 DAYS');
+        return 'EVERY 4 DAYS';
+    }
+  };
   const [openplan, setOpenplan] = React.useState(false);
-  const [valueplan, setValuePlan] = React.useState('SCHEDULE');
+  const [valueplan, setValuePlan] = React.useState(
+    type === 'FERTILIZER'
+      ? defineInterv(haha.fertilizerschedule.Interval)
+      : defineInterv(haha.pesticideschedule.Interval),
+  );
   // const [fernoti, setFernoti] = React.useState('');
   // const [pesnoti, setPesnoti] = React.useState('');
   const [items, setItems] = React.useState([
@@ -37,11 +58,37 @@ export default function DropDownTime({type,sid,sched99,pname}) {
 
   //const [test, setTest] = Osche.fertilizerschedule.length === 0 ? React.useState('New schedhule') : React.useState('Old Schedule');
   const [isPickerShow, setIsPickerShow] = React.useState(false);
-  const [date, setDate] = React.useState(new Date(Date.now()));
+  // const [date, setDate] = React.useState(
+  //   new Date(sched99.pesticideschedule.time),
+  // );
+  const [date, setDate] = React.useState(
+    type === 'FERTILIZER'
+      ? new Date(haha.fertilizerschedule.time)
+      : new Date(haha.pesticideschedule.time),
+  );
   const showTimePicker = () => {
     setIsPickerShow(true);
   };
-  
+
+  // const postFer = async () => {
+  //   try {
+  //     const config = {
+  //       method: 'POST',
+  //       url: 'http://localhost:3000/planterbox/settings/addFertilizerSchedule',
+  //       data: {
+  //         id: sid,
+  //         time: date,
+  //         Interval: parseInt(valueplan),
+  //       },
+  //     };
+  //     const setting = await axios
+  //       .request(config)
+  //       .then(res => setFernoti(res.data));
+  //   } catch (error){
+  //     alert(error.message);
+  //   }
+  // };
+
   const putFer = async () => {
     try {
       const config = {
@@ -53,10 +100,9 @@ export default function DropDownTime({type,sid,sched99,pname}) {
           Interval: parseInt(valueplan),
         },
       };
-      const setting = await axios
-        .request(config)
-        // .then(res => setFernoti(res.data));
-    } catch (error){
+      const setting = await axios.request(config);
+      // .then(res => setFernoti(res.data));
+    } catch (error) {
       alert(error.message);
     }
   };
@@ -72,32 +118,71 @@ export default function DropDownTime({type,sid,sched99,pname}) {
           Interval: parseInt(valueplan),
         },
       };
-      const setting = await axios
-        .request(config)
-        // .then(res => setPesnoti(res.data));
-    } catch (error){
+      const setting = await axios.request(config);
+      // .then(res => setPesnoti(res.data));
+    } catch (error) {
       alert(error.message);
     }
   };
 
-   
+  // const postPes = async () => {
+  //   try {
+  //     const config = {
+  //       method: 'POST',
+  //       url: 'http://localhost:3000/planterbox/settings/addPesticideSchedule',
+  //       data: {
+  //         id: sid,
+  //         time: date,
+  //         Interval: parseInt(valueplan),
+  //       },
+  //     };
+  //     const setting = await axios
+  //       .request(config)
+  //       .then(res => setPesnoti(res.data));
+  //   } catch (error){
+  //     alert(error.message);
+  //   }
+  // };
+  // const [sche, setSche] = useState([]);
+  // const getSchedule = async (sid) => {
+  //   const source = axios.CancelToken.source();
+  //   const url = "http://localhost:3000/pbsetting/"+sid+"/schedules";
+  //   try {
+  //     const response = await axios.get(url, {cancelToken: source.token});
+  //     if (response.status === 200) {
+  //       // response.data.map((box)=>fetchBoxSetting(box.boxID,settings));
+  //       // response.data.forEach(element => {
+  //       //   console.log("This is data : "+element);
+  //       // });
+  //       setSche(response.data);
+  //       // response.data.map((box)=>console.log(fetchBoxSetting(box.boxID)));
+  //       return;
+  //     } else {
+  //       throw new Error('Failed to Get schedule List');
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // }
 
-  const scase = (type) =>{
+  //getSchedule(sid);
+
+  const scase = type => {
     switch (type) {
-      case "FERTILIZER":
+      case 'FERTILIZER':
         putFer();
-        return
-      case "PESTICIDE":
+        return;
+      case 'PESTICIDE':
         putPes();
-        return
+        return;
     }
-  }
+  };
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate;
     setIsPickerShow(false);
     setDate(currentDate);
-    getSchedule(sid);
+    // getSchedule(sid);
   };
 
   defineType = type => {
@@ -138,27 +223,35 @@ export default function DropDownTime({type,sid,sched99,pname}) {
   //   }
   // };
 
-  const testpush2 = () =>{
-    PushNotification.localNotificationSchedule({
+  const testpush2 = () => {
+    console.log('This is test push2');
+    console.log(date);
+    PushNotification.localNotification({
       //... You can use all the options from localNotifications
-      channelId: "testpush2",
-      title: type + " time!!",
-      message: "Don't forget to add "+type+" to your "+pname+"!", // (required)
-      date: new Date(date.toLocaleString()), // in 60 secs
-      });
-  }
+      channelId: 'testpush2',
+      title: type + ' time!!',
+      message: "Don't forget to add " + type + ' to your ' + pname + '!', // (required)
+      // date: new Date(date.toLocaleString()), // in 60 secs
+    });
+    // PushNotification.localNotificationSchedule({
+    //   //... You can use all the options from localNotifications
+    //   channelId: 'testpush2',
+    //   title: type + ' time!!',
+    //   message: "Don't forget to add " + type + ' to your ' + pname + '!', // (required)
+    //   date: new Date(date.toLocaleString()), // in 60 secs
+    // });
+  };
   return (
     <View style={defineType(type + 'BIGCARD')}>
       <View style={styles.cardHeader}>
         <Text style={defineType(type + '_TITLE')}>{type}</Text>
-        <TouchableOpacity onPress={() => {
-          testpush2();
-          console.log("Test sched");
-          console.log(schedson);
-          scase(type);
-          console.log('Test haha');
-          console.log(haha);
-        }}>
+        <TouchableOpacity
+          onPress={() => {
+            // testpush2();
+            // console.log('Test sched');
+            // console.log(schedson);
+            scase(type);
+          }}>
           <View>
             <Image
               style={defineType(type + '_BELL')}
@@ -225,12 +318,12 @@ export default function DropDownTime({type,sid,sched99,pname}) {
         <DateTimePicker
           testID="dateTimePicker"
           value={date}
-          display= 'clock'
+          display="compact"
           mode="time"
           is24Hour={false}
           onChange={onChange}
-          //accentColor={colors.newGreen2}
-          //style={{marginRight: 100, marginTop: -70}}
+          accentColor={colors.newGreen2}
+          style={{marginRight: 100, marginTop: -70}}
         />
       )}
     </View>

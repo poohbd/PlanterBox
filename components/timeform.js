@@ -16,15 +16,19 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import OffWatering from './offwatering';
 import TimeFormAuto from './timeformAuto';
 
-export default function TimeForm({data,allsche}) {
-  console.log("TestAllsche");
-  console.log(allsche);
+export default function TimeForm({data, allsche, sensor2}) {
+  console.log('TestAllsche', allsche);
+  console.log('TEST DATA', data);
   // const {wateringschedule} = allsche;
   const [isPickerFirstShow, setIsPickerFirstShow] = React.useState(false);
   const [isPickerEndShow, setIsPickerEndShow] = React.useState(false);
-  const [datefirst, setDateFirst] = React.useState(new Date(Date.now()));
+  const [datefirst, setDateFirst] = React.useState(
+    new Date(allsche.wateringschedule.time),
+  );
   const [dateend, setDateEnd] = React.useState(new Date(Date.now()));
-  // const [duration, setDuration] = React.useState(wateringschedule[0].duration);
+  const [duration, setDuration] = React.useState(
+    '' + allsche.wateringschedule.duration,
+  );
   // console.log("Test Duration");
   // console.log(duration);
   const id = data.SettingsID;
@@ -38,37 +42,43 @@ export default function TimeForm({data,allsche}) {
     const currentDate = selectedDate;
     setIsPickerFirstShow(false);
     setDateFirst(currentDate);
-    console.log('This is duration: '+duration)
+    console.log('This is duration: ' + duration);
   };
   const onChangeEnd = (event, selectedDate) => {
     const currentDate = selectedDate;
     setIsPickerEndShow(false);
     setDateEnd(currentDate);
   };
-  const changeMode = async (valueplan) =>{
-    const response = await fetch("http://localhost:3000/planterbox/settings/updateBoxSettings",{
-      method:"PUT",
-      headers : { 
+  const changeMode = async valueplan => {
+    const response = await fetch(
+      'http://localhost:3000/planterbox/settings/updateBoxSettings',
+      {
+        method: 'PUT',
+        headers: {
           'Content-Type': 'application/json',
-          'Accept': 'application/json'
-      },
-      body:JSON.stringify({
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
           id: id,
-          "wateringMode":valueplan,
-          })
-    }); 
-  }
+          wateringMode: valueplan,
+        }),
+      },
+    );
+  };
   const [openplan, setOpenplan] = React.useState(false);
-  const [valueplan, setValuePlan] = React.useState(data.wateringMode.toUpperCase());
+  const [valueplan, setValuePlan] = React.useState(
+    data.wateringMode.toUpperCase(),
+  );
   const [items, setItems] = React.useState([
     {
       label: (
-        <Text style={{fontFamily: 'Mitr-Regular', color: colors.newGreen2}}
-        onPress={() => {
-          changeMode('Schedule');
-          setValuePlan('SCHEDULE');
-          setOpenplan(false);
-        }}>
+        <Text
+          style={{fontFamily: 'Mitr-Regular', color: colors.newGreen2}}
+          onPress={() => {
+            changeMode('Schedule');
+            setValuePlan('SCHEDULE');
+            setOpenplan(false);
+          }}>
           SCHEDULE
         </Text>
       ),
@@ -76,12 +86,13 @@ export default function TimeForm({data,allsche}) {
     },
     {
       label: (
-        <Text style={{fontFamily: 'Mitr-Regular', color: colors.newGreen2}}
-        onPress={() => {
-          changeMode('Auto');
-          setValuePlan('AUTO');
-          setOpenplan(false);
-        }}>
+        <Text
+          style={{fontFamily: 'Mitr-Regular', color: colors.newGreen2}}
+          onPress={() => {
+            changeMode('Auto');
+            setValuePlan('AUTO');
+            setOpenplan(false);
+          }}>
           AUTO
         </Text>
       ),
@@ -89,12 +100,13 @@ export default function TimeForm({data,allsche}) {
     },
     {
       label: (
-        <Text style={{fontFamily: 'Mitr-Regular', color: colors.newGreen2}}
-        onPress={() => {
-          changeMode('Manual');
-          setValuePlan('MANUAL');
-          setOpenplan(false);
-        }}>
+        <Text
+          style={{fontFamily: 'Mitr-Regular', color: colors.newGreen2}}
+          onPress={() => {
+            changeMode('Manual');
+            setValuePlan('MANUAL');
+            setOpenplan(false);
+          }}>
           OFF
         </Text>
       ),
@@ -102,82 +114,121 @@ export default function TimeForm({data,allsche}) {
     },
   ]);
   console.log(valueplan);
+  const changeTime = async () => {
+    const response = await fetch(
+      'http://localhost:3000/planterbox/settings/updateWateringSchedule',
+      {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          sid: allsche.wateringschedule.WSID,
+          time: datefirst,
+          duration: parseInt(duration),
+        }),
+      },
+    );
+  };
   return (
-    
     <View style={styles.bigCard}>
-        <View>
-      <View style={styles.circleCard}>
-        <Text style={styles.circleCardText}>46%</Text>
-      </View>
-      <Text style={styles.cardWatering}>WATERING</Text>
-      <WateringDropdown zIndex={300} openplan={openplan} setOpenplan={setOpenplan} valueplan={valueplan} setValuePlan={setValuePlan} items={items} setItems={setItems}/>
-      {valueplan ==='SCHEDULE' &&(
-      <View style={styles.mediumCard}>
-        <Text style={styles.cardContent}> FROM </Text>
-        <Text style={styles.cardContent}> {schedule.duration}</Text>
-        <View style={styles.smallCard}>
-          {/* <View>
+      <View>
+        <View style={styles.circleCard}>
+          <Text style={styles.circleCardText}>{sensor2+'%'}}</Text>
+        </View>
+        <Text style={styles.cardWatering}>WATERING</Text>
+        <WateringDropdown
+          zIndex={300}
+          openplan={openplan}
+          setOpenplan={setOpenplan}
+          valueplan={valueplan}
+          setValuePlan={setValuePlan}
+          items={items}
+          setItems={setItems}
+        />
+        {valueplan === 'SCHEDULE' && (
+          <View style={styles.mediumCard}>
+            <Text style={styles.cardContent}> FROM </Text>
+            <View style={styles.smallCard}>
+              {/* <View>
             <TextInput style={styles.textTime} onChangeText={(duration) => setDuration(parseInt(duration))} defaultValue={allsche.wateringschedule[0].duration}/>
           </View> */}
-          {/* <TouchableOpacity onPress={showFirstTimePicker}>
-            <Text style={styles.textTime}>
-              {datefirst.toLocaleTimeString([], {
-                hour: '2-digit',
-                minute: '2-digit',
-                hour12: true,
-              })}
-            </Text>
-          </TouchableOpacity> */}
-        </View>
-        <Text style={styles.cardContent}> TO </Text>
-        <View style={styles.smallCard}>
-          <TouchableOpacity onPress={showEndTimePicker}>
-            <Text style={styles.textTime}>
-              {dateend.toLocaleTimeString([], {
-                hour: '2-digit',
-                minute: '2-digit',
-                hour12: true,
-              })}
-            </Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-      )}
-      {valueplan ==='AUTO' &&(
-        <TimeFormAuto data={data}/>
-      )}
-      {valueplan ==='MANUAL' &&(
-        <OffWatering />
-      )}
-      <Text style={styles.smText}>Soil Moisture</Text>
-      <Image
-        style={styles.image}
-        source={require('../assets/images/Waterlogo.png')}
-      />
-      {isPickerFirstShow && (
-        <DateTimePicker
-          testID="dateTimePicker1"
-          value={datefirst}
-          display="compact"
-          mode="time"
-          is24Hour={false}
-          onChange={onChangeFirst}
-          accentColor={colors.newGreen2}
-          style={{marginRight: 110, marginTop: -20}}
+              <TouchableOpacity onPress={showFirstTimePicker}>
+                <Text style={styles.textTime}>
+                  {datefirst.toLocaleTimeString([], {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: true,
+                  })}
+                </Text>
+              </TouchableOpacity>
+            </View>
+            <Text style={styles.cardContent}> DURATION </Text>
+            {/* <View style={styles.smallCard2}>
+              <TouchableOpacity onPress={showEndTimePicker}>
+                <Text style={styles.textTime}>
+                  {dateend.toLocaleTimeString([], {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: true,
+                  })}
+                </Text>
+              </TouchableOpacity>
+            </View> */}
+            <TextInput
+              style={styles.smallCard2}
+              onChangeText={setDuration}
+              value={duration}
+            />
+
+            <Text style={styles.cardContent}> </Text>
+            <TouchableOpacity
+              style={styles.saveButton}
+              onPress={() => {
+                console.log('datefirst: ' + datefirst);
+                // console.log('dateend: ' + dateend);
+                console.log('duration: ', duration);
+                changeTime();
+              }}>
+              <View>
+                <Text style={styles.textTime}>SAVE</Text>
+              </View>
+            </TouchableOpacity>
+            <Text style={styles.cardContent}> </Text>
+          </View>
+        )}
+        {valueplan === 'AUTO' && <TimeFormAuto data={data} />}
+        {valueplan === 'MANUAL' && <OffWatering />}
+        <Text style={styles.smText}>Soil Moisture</Text>
+        <Image
+          style={styles.image}
+          source={require('../assets/images/Waterlogo.png')}
         />
-      )}
-      {isPickerEndShow && (
-        <DateTimePicker
-          testID="dateTimePicker2"
-          value={dateend}
-          display="compact"
-          mode="time"
-          is24Hour={false}
-          onChange={onChangeEnd}
-          accentColor={colors.newGreen2}
-          style={{marginRight: 30, marginTop: 45}}
-        />
-      )}
+        {isPickerFirstShow && (
+          <DateTimePicker
+            testID="dateTimePicker1"
+            value={datefirst}
+            display="compact"
+            mode="time"
+            is24Hour={false}
+            onChange={onChangeFirst}
+            accentColor={colors.newGreen2}
+            style={{marginRight: 110, marginTop: -20}}
+          />
+        )}
+        {isPickerEndShow && (
+          <DateTimePicker
+            testID="dateTimePicker2"
+            value={dateend}
+            display="compact"
+            mode="time"
+            is24Hour={false}
+            onChange={onChangeEnd}
+            accentColor={colors.newGreen2}
+            style={{marginRight: 30, marginTop: 45}}
+          />
+        )}
       </View>
     </View>
   );
@@ -200,7 +251,7 @@ const styles = StyleSheet.create({
     zIndex: 102,
   },
   mediumCard: {
-    width: 200,
+    width: 240,
     height: 40,
     borderRadius: 20,
     backgroundColor: '#436E71',
@@ -222,8 +273,26 @@ const styles = StyleSheet.create({
     fontFamily: 'Mitr-Regular',
     fontSize: 10,
     paddingTop: -3,
-    paddingLeft: 10,
+    // paddingLeft: 10,
     zIndex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  smallCard2: {
+    width: 30,
+    height: 20,
+    borderRadius: 30,
+    backgroundColor: 'white',
+    fontFamily: 'Mitr-Regular',
+    fontSize: 10,
+    paddingTop: -3,
+    color: colors.newGreen2,
+    // paddingLeft: 10,
+    zIndex: 1,
+    // textAlign: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+    textAlign: 'center',
   },
   cardContent: {
     textAlign: 'center',
@@ -237,6 +306,19 @@ const styles = StyleSheet.create({
     fontSize: 10,
     color: 'white',
     paddingTop: 5,
+  },
+  saveButton: {
+    width: 40,
+    height: 20,
+    borderRadius: 30,
+    backgroundColor: 'white',
+    fontFamily: 'Mitr-Regular',
+    fontSize: 10,
+    paddingTop: -3,
+    // paddingLeft: 10,
+    zIndex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   textTime: {
     color: colors.newGreen2,

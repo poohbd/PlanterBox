@@ -26,7 +26,7 @@ const deviceWidth = Dimensions.get('screen').width;
 const deviceHeight = Dimensions.get('screen').height;
 
 export default ChooseCard = ({route, navigation}) => {
-  const {valuepreset,id,settingsid,UserID,UserName} = route.params;
+  const {valuepreset, id, settingsid, UserID, UserName} = route.params;
   const plantName = valuepreset;
   const ssid = settingsid;
   // const {valuepreset,id,sid} = route.params;
@@ -43,7 +43,7 @@ export default ChooseCard = ({route, navigation}) => {
   };
   const getWaterschedule = async () => {
     const source = axios.CancelToken.source();
-    const url = "http://localhost:3000/pbsetting/"+ssid+"/schedules";
+    const url = 'http://localhost:3000/pbsetting/' + ssid + '/schedules';
     try {
       const response = await axios.get(url, {cancelToken: source.token});
       if (response.status === 200) {
@@ -51,7 +51,7 @@ export default ChooseCard = ({route, navigation}) => {
         // response.data.forEach(element => {
         //   console.log("This is data : "+element);
         // });
-        // console.log(response.data);
+        console.log('getWaterschedule', response.data);
         setAllsche(response.data);
         // response.data.map((box)=>console.log(fetchBoxSetting(box.boxID)));
         return;
@@ -69,12 +69,14 @@ export default ChooseCard = ({route, navigation}) => {
       // console.log(settings);
     } catch (error) {
       console.error(error);
+    } finally {
+      setLoading(false);
     }
     // getSettingList(boxid);
     // console.log(data);
   };
   const [isLoading, setLoading] = useState(true);
-  
+
   const [data, setData] = useState();
   const getSetting = async () => {
     try {
@@ -92,11 +94,11 @@ export default ChooseCard = ({route, navigation}) => {
     } catch (error) {
       console.error(error);
     } finally {
-      setLoading(false);
+      // setLoading(false);
       // console.log(data);
     }
   };
-  
+
   const deleteBox = async () => {
     try {
       //console.log("boxidchoosecard :"+id);
@@ -108,15 +110,15 @@ export default ChooseCard = ({route, navigation}) => {
         },
       };
       const setting = await axios.request(config);
-      return navigation.navigate('Menu', {"UserID":UserID,"UserName":UserName});
+      return navigation.navigate('Menu', {UserID: UserID, UserName: UserName});
     } catch (error) {
       console.error(error);
     }
   };
   const [sched, setSched] = useState([]);
-  const getSchedule = async (ssid) => {
+  const getSchedule = async () => {
     const source = axios.CancelToken.source();
-    const url = "http://localhost:3000/pbsetting/"+ssid+"/schedules";
+    const url = 'http://localhost:3000/pbsetting/' + ssid + '/schedules';
     try {
       const response = await axios.get(url, {cancelToken: source.token});
       if (response.status === 200) {
@@ -124,6 +126,7 @@ export default ChooseCard = ({route, navigation}) => {
         // response.data.forEach(element => {
         //   console.log("This is data : "+element);
         // });
+        console.log('getSchedule', response.data);
         setSched(response.data);
         // response.data.map((box)=>console.log(fetchBoxSetting(box.boxID)));
         return;
@@ -133,14 +136,14 @@ export default ChooseCard = ({route, navigation}) => {
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
   useEffect(() => {
     getSetting();
-    getSchedule(ssid);
+    getSchedule();
     getWaterschedule();
   }, []);
-    
+
   const [sensor1, setSensor1] = useState('');
   const [sensor2, setSensor2] = useState('');
   const [sensor3, setSensor3] = useState('');
@@ -149,7 +152,7 @@ export default ChooseCard = ({route, navigation}) => {
   let mqttClient = null;
   MQTT.createClient({
     uri: 'mqtts://66d6b91771ff4fc7bb664c04cc3e7fbb.s2.eu.hivemq.cloud:8883',
-    clientId: 'clientId'+ Math.random().toString(16).substr(2, 8),
+    clientId: 'clientId' + Math.random().toString(16).substr(2, 8),
     user: 'ICERUS',
     pass: 'Projectyear3',
     auth: true,
@@ -166,19 +169,19 @@ export default ChooseCard = ({route, navigation}) => {
 
       client.on('message', function (msg) {
         //console.log('mqtt.event.message', msg);
-        if(msg.topic==='sensor/light'){
+        if (msg.topic === 'sensor/light') {
           setSensor1(msg.data);
         }
-        if(msg.topic==='sensor/rh'){
+        if (msg.topic === 'sensor/rh') {
           setSensor2(msg.data);
         }
-        if(msg.topic==='sensor/temp'){
+        if (msg.topic === 'sensor/temp') {
           setSensor3(msg.data);
         }
-        if(msg.topic==='sensor/watering'){
+        if (msg.topic === 'sensor/watering') {
           setSensorWaterBool(msg.data);
         }
-        if(msg.topic==='sensor/lighting'){
+        if (msg.topic === 'sensor/lighting') {
           setSensorLightBool(msg.data);
         }
       });
@@ -195,135 +198,201 @@ export default ChooseCard = ({route, navigation}) => {
     .catch(function (err) {
       console.log(err);
     });
-  
+
   return (
     <Context.Consumer>
-    {context => (
-    <SafeAreaView style={styles.container}>
-      {isLoading ? (
-        <ActivityIndicator size="large" color={colors.newGreen2} />
-      ) : (
-        <ScrollView>
-          <View style={styles.inline}>
-            <TouchableOpacity
-              style={styles.buttonBack}
-              onPress={() => navigation.navigate('MyPlant')}>
-              <Image source={require('../assets/images/back.png')} />
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.buttonNoti}
-              onPress={() => navigation.navigate('Tabs_Forum')}>
-              <Image source={require('../assets/images/noti.png')} />
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.buttonName}
-              onPress={() => navigation.navigate('UserProfileHome', {"UserID":context.UserID})}>
-              <View>
-                <Text
-                  style={{fontFamily: 'Mitr-Regular', color: colors.newGreen2}}>
-                  {context.UserName}
-                </Text>
+      {context => (
+        <SafeAreaView style={styles.container}>
+          {isLoading ? (
+            <ActivityIndicator size="large" color={colors.newGreen2} />
+          ) : (
+            <ScrollView>
+              <View style={styles.inline}>
+                <TouchableOpacity
+                  style={styles.buttonBack}
+                  onPress={() => navigation.navigate('MyPlant')}>
+                  <Image source={require('../assets/images/back.png')} />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.buttonNoti}
+                  onPress={() => navigation.navigate('Tabs_Forum')}>
+                  <Image source={require('../assets/images/noti.png')} />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.buttonName}
+                  onPress={() =>
+                    navigation.navigate('UserProfileHome', {
+                      UserID: context.UserID,
+                    })
+                  }>
+                  <View>
+                    <Text
+                      style={{
+                        fontFamily: 'Mitr-Regular',
+                        color: colors.newGreen2,
+                      }}>
+                      {context.UserName}
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.buttonGray}
+                  onPress={() =>
+                    navigation.navigate('UserProfileHome', {
+                      UserID: context.UserID,
+                    })
+                  }>
+                  <View>
+                    <Image
+                      source={require('../assets/images/graycircle.png')}
+                    />
+                  </View>
+                </TouchableOpacity>
               </View>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.buttonGray}
-              onPress={() => navigation.navigate('UserProfileHome', {"UserID":context.UserID})}>
-              <View>
-                <Image source={require('../assets/images/graycircle.png')} />
-              </View>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.containerNew}>
-            <Text style={styles.header}>
-              {plantName}
-              {'\n'}
-            </Text>
-            <Image style={styles.imageSun} source={pathImage(plantName)} />
-          </View>
-          <View style={styles.card}>
-            <View style={styles.cardContent}>
-              <TimeForm data={data} allsche={allsche.wateringschedule}/>
-              <LightForm data={data} />
-              <DropDownTime type="FERTILIZER" sid={settingsid} sched99={sched} pname={plantName} />
-              <DropDownTime type="PESTICIDE" sid={settingsid} sched99={sched} pname={plantName}/>
-            <TouchableOpacity
-              style={styles.buttonGray}
-              onPress={() => console.log(allsche.wateringschedule[0])}>
-              <Text
-                  style={{fontFamily: 'Mitr-Regular', color: colors.newGreen2}}>
-                  Console Log AllSChe
+              <View style={styles.containerNew}>
+                <Text style={styles.header}>
+                  {plantName}
+                  {'\n'}
                 </Text>
-            </TouchableOpacity>
-              
-              <View style={styles.view} />
-              <View style={styles.view} />
-              <View style={styles.view} />
-              {/* <DropDownTime type="FERTILIZER" />
+                <Image style={styles.imageSun} source={pathImage(plantName)} />
+              </View>
+              <View style={styles.card}>
+                <View style={styles.cardContent}>
+                  <TimeForm data={data} allsche={allsche} sensor2={sensor2} />
+                  <LightForm data={data} sensor1={sensor1} />
+                  <DropDownTime
+                    type="FERTILIZER"
+                    sid={settingsid}
+                    sched99={sched}
+                    pname={plantName}
+                  />
+                  <DropDownTime
+                    type="PESTICIDE"
+                    sid={settingsid}
+                    sched99={sched}
+                    pname={plantName}
+                  />
+                  <TouchableOpacity
+                    style={styles.buttonGray}
+                    onPress={() => console.log(allsche.wateringschedule)}>
+                    <Text
+                      style={{
+                        fontFamily: 'Mitr-Regular',
+                        color: colors.newGreen2,
+                      }}>
+                      Console Log AllSChe
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={styles.buttonGray}
+                    onPress={() => console.log(sched)}>
+                    <Text
+                      style={{
+                        fontFamily: 'Mitr-Regular',
+                        color: colors.newGreen2,
+                      }}>
+                      Console Log sched
+                    </Text>
+                  </TouchableOpacity>
+
+                  <View style={styles.view} />
+                  <View style={styles.view} />
+                  <View style={styles.view} />
+                  {/* <DropDownTime type="FERTILIZER" />
             <DropDownTime type="PESTICIDE" /> */}
-            </View>
-            <View style={styles.inline2}>
-              {sensorWaterBool === 'on' ?(
-                  <TouchableOpacity
-                    style={styles.watermanual}
-                    onPress={()=>mqttClient.publish('sensor/watering', 'off', 1, true)}>
-                    <View>  
-                      <Image source={require('../assets/images/wateron.png')} />
-                    </View>
-                  </TouchableOpacity>) :(
-                  <TouchableOpacity
-                  style={styles.watermanual}
-                  onPress={()=>mqttClient.publish('sensor/watering', 'on', 1, true)}>
-                  <View>  
-                    <Image source={require('../assets/images/wateroff.png')} />
-                  </View>
-                  </TouchableOpacity>)}
-              {sensorLightBool === 'off' ?(
-                  <TouchableOpacity
-                    style={styles.lightmanual}
-                    onPress={() => mqttClient.publish('sensor/lighting', 'low', 1, true)}>
-                    <View>
-                      <Image source={require('../assets/images/lightoff.png')} />
-                    </View>
-                  </TouchableOpacity>) : (null)}
-              {sensorLightBool === 'low' ?(
-                  <TouchableOpacity
-                    style={styles.lightmanual}
-                    onPress={() => mqttClient.publish('sensor/lighting', 'med', 1, true)}>
-                    <View>
-                      <Image source={require('../assets/images/lightlow.png')} />
-                    </View>
-                  </TouchableOpacity>) : (null)}
-              {sensorLightBool === 'med' ?(
-                  <TouchableOpacity
-                  style={styles.lightmanual}
-                  onPress={() => mqttClient.publish('sensor/lighting', 'high', 1, true)}>
-                  <View>
-                    <Image source={require('../assets/images/lightmed.png')} />
-                  </View>
-                </TouchableOpacity>) : (null)}
-              {sensorLightBool === 'high' ?(
-                  <TouchableOpacity
-                  style={styles.lightmanual}
-                  onPress={() => mqttClient.publish('sensor/lighting', 'off', 1, true)}>
-                  <View>
-                    <Image source={require('../assets/images/lighton.png')} />
-                  </View>
-                </TouchableOpacity>) : (null)}
-              
-            </View>
-            <View style={styles.space} />
-              <TouchableOpacity
-                style={styles.buttonDelete}
-                onPress={() => deleteBox()}>
-                <View>
-                <Text style={styles.buttonAddText}>DELETE BOX</Text>
                 </View>
-              </TouchableOpacity>
-            </View>
-        </ScrollView>
+                <View style={styles.inline2}>
+                  {sensorWaterBool === 'on' ? (
+                    <TouchableOpacity
+                      style={styles.watermanual}
+                      onPress={() =>
+                        mqttClient.publish('sensor/watering', 'off', 1, true)
+                      }>
+                      <View>
+                        <Image
+                          source={require('../assets/images/wateron.png')}
+                        />
+                      </View>
+                    </TouchableOpacity>
+                  ) : (
+                    <TouchableOpacity
+                      style={styles.watermanual}
+                      onPress={() =>
+                        mqttClient.publish('sensor/watering', 'on', 1, true)
+                      }>
+                      <View>
+                        <Image
+                          source={require('../assets/images/wateroff.png')}
+                        />
+                      </View>
+                    </TouchableOpacity>
+                  )}
+                  {sensorLightBool === 'off' ? (
+                    <TouchableOpacity
+                      style={styles.lightmanual}
+                      onPress={() =>
+                        mqttClient.publish('sensor/lighting', 'low', 1, true)
+                      }>
+                      <View>
+                        <Image
+                          source={require('../assets/images/lightoff.png')}
+                        />
+                      </View>
+                    </TouchableOpacity>
+                  ) : null}
+                  {sensorLightBool === 'low' ? (
+                    <TouchableOpacity
+                      style={styles.lightmanual}
+                      onPress={() =>
+                        mqttClient.publish('sensor/lighting', 'med', 1, true)
+                      }>
+                      <View>
+                        <Image
+                          source={require('../assets/images/lightlow.png')}
+                        />
+                      </View>
+                    </TouchableOpacity>
+                  ) : null}
+                  {sensorLightBool === 'med' ? (
+                    <TouchableOpacity
+                      style={styles.lightmanual}
+                      onPress={() =>
+                        mqttClient.publish('sensor/lighting', 'high', 1, true)
+                      }>
+                      <View>
+                        <Image
+                          source={require('../assets/images/lightmed.png')}
+                        />
+                      </View>
+                    </TouchableOpacity>
+                  ) : null}
+                  {sensorLightBool === 'high' ? (
+                    <TouchableOpacity
+                      style={styles.lightmanual}
+                      onPress={() =>
+                        mqttClient.publish('sensor/lighting', 'off', 1, true)
+                      }>
+                      <View>
+                        <Image
+                          source={require('../assets/images/lighton.png')}
+                        />
+                      </View>
+                    </TouchableOpacity>
+                  ) : null}
+                </View>
+                <View style={styles.space} />
+                <TouchableOpacity
+                  style={styles.buttonDelete}
+                  onPress={() => deleteBox()}>
+                  <View>
+                    <Text style={styles.buttonAddText}>DELETE BOX</Text>
+                  </View>
+                </TouchableOpacity>
+              </View>
+            </ScrollView>
+          )}
+        </SafeAreaView>
       )}
-    </SafeAreaView>
-    )}
     </Context.Consumer>
   );
 };
@@ -420,12 +489,13 @@ const styles = StyleSheet.create({
     backgroundColor: colors.red,
     // marginTop: deviceHeight * 0.03,
     //marginRight: deviceWidth*0.1,
-    backgroundColor: 'transparent',
+    // backgroundColor: 'transparent',
+    backgroundColor: colors.red,
   },
   inline2: {
-    display:'flex',
-    flexDirection:'row',
-    justifyContent:'space-around'
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
   },
   lightmanual: {
     width: 40,
