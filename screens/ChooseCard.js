@@ -31,11 +31,11 @@ export default ChooseCard = ({route, navigation}) => {
   const ssid = settingsid;
   pathImage = type => {
     switch (type) {
-      case 'Sunflower':
+      case 'Sunflower Sprout':
         return require('../assets/images/Sunflower.png');
-      case 'Basil':
+      case 'Holy Basil':
         return require('../assets/images/Basil.png');
-      case 'Cucumber':
+      case 'Coriander':
         return require('../assets/images/Cucumber.png');
     }
   };

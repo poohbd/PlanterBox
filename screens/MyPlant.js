@@ -54,13 +54,13 @@ export default MyPlant = ({route,navigation}) => {
           style={{fontFamily: 'Mitr-Regular', color: colors.newGreen2}}
           onPress={(setting) => {
             sunSelected();
-            setValuePreset('Sunflower');
+            setValuePreset('Coriander');
             setSID(1);
           }}>
-          Sunflower
+          Coriander
         </Text>
       ),
-      value: 'Sunflower',
+      value: 'Coriander',
     },
     {
       label: (
@@ -71,10 +71,24 @@ export default MyPlant = ({route,navigation}) => {
             setValuePreset('Basil');
             setSID(2);
           }}>
-          Basil
+          Holy Basil
         </Text>
       ),
       value: 'Basil',
+    },
+    {
+      label: (
+        <Text
+          style={{fontFamily: 'Mitr-Regular', color: colors.newGreen2}}
+          onPress={(setting) => {
+            sunSelected();
+            setValuePreset('Sunflower');
+            setSID(3);
+          }}>
+          Sunflower Sprout
+        </Text>
+      ),
+      value: 'Sunflower',
     },
   ]);
   const [opencustom, setOpenCustom] = React.useState(false);
@@ -92,12 +106,12 @@ export default MyPlant = ({route,navigation}) => {
   }
   const pathImage = type => {
     switch (type) {
-      case 'Sunflower':
+      case 'Sunflower Sprout':
         return require('../assets/images/Sunflower.png');
-      case 'Basil':
+      case 'Holy Basil':
         return require('../assets/images/Basil.png');
-      case 'Cucumber':
-        return require('../assets/images/Cucumber.png');
+      case 'Coriander':
+        return require('../assets/images/Coriander.png');
     }
   };
   const fetchBoxSetting = async (id, settings) => {

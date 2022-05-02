@@ -23,6 +23,7 @@ import axios from 'axios';
 
 export default function DropDownTime({type,sid,sched99,pname}) {
   const schedson = sched99;
+  const [haha, setHaha] = React.useState(sched99.pesticideschedule);
   const [openplan, setOpenplan] = React.useState(false);
   const [valueplan, setValuePlan] = React.useState('SCHEDULE');
   // const [fernoti, setFernoti] = React.useState('');
@@ -36,7 +37,7 @@ export default function DropDownTime({type,sid,sched99,pname}) {
 
   //const [test, setTest] = Osche.fertilizerschedule.length === 0 ? React.useState('New schedhule') : React.useState('Old Schedule');
   const [isPickerShow, setIsPickerShow] = React.useState(false);
-  const [date, setDate] = React.useState(new Date(sched99.fertilizerschedule.time));
+  const [date, setDate] = React.useState(new Date(Date.now()));
   const showTimePicker = () => {
     setIsPickerShow(true);
   };
@@ -229,6 +230,8 @@ export default function DropDownTime({type,sid,sched99,pname}) {
           console.log("Test sched");
           console.log(schedson);
           scase(type);
+          console.log('Test haha');
+          console.log(haha);
         }}>
           <View>
             <Image
