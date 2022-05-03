@@ -319,7 +319,7 @@ export default ChooseCard = ({route, navigation}) => {
                     <TouchableOpacity
                       style={styles.watermanual}
                       onPress={() =>
-                        mqttClient.publish('sensor/watering', 'off', 1, true)
+                        mqttClient.publish('sensor/watering', id+',off', 1, true)
                       }>
                       <View>
                         <Image
@@ -331,7 +331,7 @@ export default ChooseCard = ({route, navigation}) => {
                     <TouchableOpacity
                       style={styles.watermanual}
                       onPress={() =>
-                        mqttClient.publish('sensor/watering', 'on', 1, true)
+                        mqttClient.publish('sensor/watering', id+',on', 1, true)
                       }>
                       <View>
                         <Image
@@ -344,7 +344,7 @@ export default ChooseCard = ({route, navigation}) => {
                     <TouchableOpacity
                       style={styles.lightmanual}
                       onPress={() =>
-                        mqttClient.publish('sensor/lighting', 'low', 1, true)
+                        mqttClient.publish('sensor/lighting', id+',low', 1, true)
                       }>
                       <View>
                         <Image
@@ -357,7 +357,7 @@ export default ChooseCard = ({route, navigation}) => {
                     <TouchableOpacity
                       style={styles.lightmanual}
                       onPress={() =>
-                        mqttClient.publish('sensor/lighting', 'med', 1, true)
+                        mqttClient.publish('sensor/lighting', id+',med', 1, true)
                       }>
                       <View>
                         <Image
@@ -370,7 +370,7 @@ export default ChooseCard = ({route, navigation}) => {
                     <TouchableOpacity
                       style={styles.lightmanual}
                       onPress={() =>
-                        mqttClient.publish('sensor/lighting', 'high', 1, true)
+                        mqttClient.publish('sensor/lighting', id+',high', 1, true)
                       }>
                       <View>
                         <Image
@@ -383,7 +383,7 @@ export default ChooseCard = ({route, navigation}) => {
                     <TouchableOpacity
                       style={styles.lightmanual}
                       onPress={() =>
-                        mqttClient.publish('sensor/lighting', 'off', 1, true)
+                        mqttClient.publish('sensor/lighting', id+',off', 1, true)
                       }>
                       <View>
                         <Image
