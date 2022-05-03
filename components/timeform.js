@@ -31,6 +31,8 @@ export default function TimeForm({data, allsche, sensor2}) {
   );
   // console.log("Test Duration");
   // console.log(duration);
+  const splitlight = sensor2.split(',');
+
   const id = data.SettingsID;
   const showFirstTimePicker = () => {
     setIsPickerFirstShow(true);
@@ -135,7 +137,7 @@ export default function TimeForm({data, allsche, sensor2}) {
     <View style={styles.bigCard}>
       <View>
         <View style={styles.circleCard}>
-          <Text style={styles.circleCardText}>{sensor2+'%'}</Text>
+          <Text style={styles.circleCardText}>{parseInt(splitlight[1])+'%'}</Text>
         </View>
         <Text style={styles.cardWatering}>WATERING</Text>
         <WateringDropdown
@@ -239,7 +241,7 @@ const deviceHeight = Dimensions.get('screen').height;
 const styles = StyleSheet.create({
   bigCard: {
     width: 350,
-    height: 100,
+    height: 110,
     borderRadius: 30,
     backgroundColor: '#FFFFFF',
     fontFamily: 'Mitr-Regular',
@@ -249,6 +251,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginTop: 20,
     zIndex: 102,
+    marginBottom:0
   },
   mediumCard: {
     width: 240,
@@ -341,6 +344,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#436E71',
     marginTop: -37,
     marginLeft: -40,
+    
   },
   circleCardText: {
     fontFamily: 'Mitr-Regular',
@@ -353,10 +357,14 @@ const styles = StyleSheet.create({
     marginLeft: 259,
   },
   smText: {
+    position:'absolute',
     fontFamily: 'Mitr-Regular',
-    fontSize: 10,
+    fontSize: 13,
     color: '#436E71',
     marginLeft: -37,
-    marginTop: -10,
+    marginTop: 40,
+    lineHeight:13,
+    // color:"red"
+    //paddingTop:-
   },
 });

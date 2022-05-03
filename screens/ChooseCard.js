@@ -110,7 +110,7 @@ export default ChooseCard = ({route, navigation}) => {
         },
       };
       const setting = await axios.request(config);
-      return navigation.navigate('Menu', {UserID: UserID, UserName: UserName});
+      return navigation.navigate('Menu', {"UserID": UserID, "UserName": UserName});
     } catch (error) {
       console.error(error);
     }
@@ -272,7 +272,7 @@ export default ChooseCard = ({route, navigation}) => {
                     sched99={sched}
                     pname={plantName}
                   />
-                  <TouchableOpacity
+                  {/* <TouchableOpacity
                     style={styles.buttonGray}
                     onPress={() => console.log(allsche.wateringschedule)}>
                     <Text
@@ -293,11 +293,11 @@ export default ChooseCard = ({route, navigation}) => {
                       }}>
                       Console Log sched
                     </Text>
-                  </TouchableOpacity>
+                  </TouchableOpacity> */}
 
                   <View style={styles.view} />
-                  <View style={styles.view} />
-                  <View style={styles.view} />
+                  {/* <View style={styles.view} />
+                  <View style={styles.view} /> */}
                   {/* <DropDownTime type="FERTILIZER" />
             <DropDownTime type="PESTICIDE" /> */}
                 </View>

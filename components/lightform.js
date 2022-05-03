@@ -29,6 +29,7 @@ export default function LightForm({data, sensor1}) {
   const [valueplan, setValuePlan] = React.useState(
     data.lightingMode.toUpperCase(),
   );
+  const splitlight = sensor1.split(',');
   const showFirstTimePicker = () => {
     setIsPickerFirstShow(true);
   };
@@ -148,7 +149,7 @@ export default function LightForm({data, sensor1}) {
   return (
     <View style={styles.bigCard}>
       <View style={styles.circleCard}>
-        <Text style={styles.circleCardText}>{sensor1 + '%'}</Text>
+        <Text style={styles.circleCardText}>{parseInt(splitlight[1]) + '%'}</Text>
       </View>
       <Text style={styles.cardWatering}>LIGHT EXPOSURE</Text>
       <LightDropdown
