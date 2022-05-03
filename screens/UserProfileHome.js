@@ -16,7 +16,7 @@ export default UserProfileHome = ({route, navigation}) => {
     const [user,setUser] = React.useState("");
     const getUserFromApi = async () => {
         try{
-            const response = await axios.get('http://localhost:3000/user/getuser/'+parseInt(UserID));
+            const response = await axios.get('http://192.168.1.42:3000/user/getuser/'+parseInt(UserID));
             setUser(response.data);
         } catch (error){
             console.error(error);

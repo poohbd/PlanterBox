@@ -13,7 +13,7 @@ const deviceHeight = Dimensions.get('screen').height;
 export default SerialNumber = ({navigation}) => {
     const [serialNumber,setSerialNumber] = React.useState();
     const addBox = async (UserID) =>{
-      const response = await fetch("http://localhost:3000/user/addbox/"+UserID,{
+      const response = await fetch("http://192.168.1.42:3000/user/addbox/"+UserID,{
           method:"POST",
           headers : { 
               'Content-Type': 'application/json',

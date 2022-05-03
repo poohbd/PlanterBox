@@ -43,7 +43,7 @@ export default ChooseCard = ({route, navigation}) => {
   };
   const getWaterschedule = async () => {
     const source = axios.CancelToken.source();
-    const url = 'http://localhost:3000/pbsetting/' + ssid + '/schedules';
+    const url = 'http://192.168.1.42:3000/pbsetting/' + ssid + '/schedules';
     try {
       const response = await axios.get(url, {cancelToken: source.token});
       if (response.status === 200) {
@@ -82,7 +82,7 @@ export default ChooseCard = ({route, navigation}) => {
     try {
       const config = {
         method: 'POST',
-        url: 'http://localhost:3000/planterbox/settings',
+        url: 'http://192.168.1.42:3000/planterbox/settings',
         data: {
           id: id,
         },
@@ -104,7 +104,7 @@ export default ChooseCard = ({route, navigation}) => {
       //console.log("boxidchoosecard :"+id);
       const config = {
         method: 'DELETE',
-        url: 'http://localhost:3000/planterbox/delete',
+        url: 'http://192.168.1.42:3000/planterbox/delete',
         data: {
           id: id,
         },
@@ -118,7 +118,7 @@ export default ChooseCard = ({route, navigation}) => {
   const [sched, setSched] = useState([]);
   const getSchedule = async () => {
     const source = axios.CancelToken.source();
-    const url = 'http://localhost:3000/pbsetting/' + ssid + '/schedules';
+    const url = 'http://192.168.1.42:3000/pbsetting/' + ssid + '/schedules';
     try {
       const response = await axios.get(url, {cancelToken: source.token});
       if (response.status === 200) {
@@ -315,7 +315,7 @@ export default ChooseCard = ({route, navigation}) => {
             <DropDownTime type="PESTICIDE" /> */}
                 </View>
                 <View style={styles.inline2}>
-                  {sensorWaterBool === 'on' ? (
+                  {sensorWaterBool === id+',on' ? (
                     <TouchableOpacity
                       style={styles.watermanual}
                       onPress={() =>
@@ -340,7 +340,7 @@ export default ChooseCard = ({route, navigation}) => {
                       </View>
                     </TouchableOpacity>
                   )}
-                  {sensorLightBool === 'off' ? (
+                  {sensorLightBool === id+',off' ? (
                     <TouchableOpacity
                       style={styles.lightmanual}
                       onPress={() =>
@@ -353,7 +353,7 @@ export default ChooseCard = ({route, navigation}) => {
                       </View>
                     </TouchableOpacity>
                   ) : null}
-                  {sensorLightBool === 'low' ? (
+                  {sensorLightBool === id+',low' ? (
                     <TouchableOpacity
                       style={styles.lightmanual}
                       onPress={() =>
@@ -366,7 +366,7 @@ export default ChooseCard = ({route, navigation}) => {
                       </View>
                     </TouchableOpacity>
                   ) : null}
-                  {sensorLightBool === 'med' ? (
+                  {sensorLightBool === id+',med' ? (
                     <TouchableOpacity
                       style={styles.lightmanual}
                       onPress={() =>
@@ -379,7 +379,7 @@ export default ChooseCard = ({route, navigation}) => {
                       </View>
                     </TouchableOpacity>
                   ) : null}
-                  {sensorLightBool === 'high' ? (
+                  {sensorLightBool === id+',high' ? (
                     <TouchableOpacity
                       style={styles.lightmanual}
                       onPress={() =>

@@ -53,7 +53,7 @@ export default function TimeForm({data, allsche, sensor2}) {
   };
   const changeMode = async valueplan => {
     const response = await fetch(
-      'http://localhost:3000/planterbox/settings/updateBoxSettings',
+      'http://192.168.1.42:3000/planterbox/settings/updateBoxSettings',
       {
         method: 'PUT',
         headers: {
@@ -118,7 +118,7 @@ export default function TimeForm({data, allsche, sensor2}) {
   console.log(valueplan);
   const changeTime = async () => {
     const response = await fetch(
-      'http://localhost:3000/planterbox/settings/updateWateringSchedule',
+      'http://192.168.1.42:3000/planterbox/settings/updateWateringSchedule',
       {
         method: 'PUT',
         headers: {

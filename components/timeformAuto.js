@@ -39,7 +39,7 @@ export default function TimeFormAuto({data}) {
   //   }, []);
   const addMinMax = async () => {
     const response = await fetch(
-      'http://localhost:3000/planterbox/settings/updateBoxSettings',
+      'http://192.168.1.42:3000/planterbox/settings/updateBoxSettings',
       {
         method: 'PUT',
         headers: {
