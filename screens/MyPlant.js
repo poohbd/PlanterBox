@@ -91,6 +91,11 @@ export default MyPlant = ({route,navigation}) => {
       value: 'Sunflower',
     },
   ]);
+  const splitSensor = (sensor) => {
+    return sensor.split(',');
+  };
+  const showFirstTimePicker = () => {
+    setIsPickerFirstShow(true);
   const [opencustom, setOpenCustom] = React.useState(false);
   const [valuecustom, setValueCustom] = React.useState(null);
   const [searchQuery, setSearchQuery] = React.useState('');
@@ -194,56 +199,55 @@ export default MyPlant = ({route,navigation}) => {
   useEffect(() => {
     getBoxList();
   }, []);
-  // const [sensor1, setSensor1] = useState('');
-  // const [sensor2, setSensor2] = useState('');
-  // const [sensor3, setSensor3] = useState('');
-  // const [sensorWaterBool, setSensorWaterBool] = useState('');
-  // let mqttClient = null;
-  // MQTT.createClient({
-  //   uri: 'mqtts://66d6b91771ff4fc7bb664c04cc3e7fbb.s2.eu.hivemq.cloud:8883',
-  //   clientId: 'clientId'+ Math.random().toString(16).substr(2, 8),
-  //   user: 'ICERUS',
-  //   pass: 'Projectyear3',
-  //   auth: true,
-  //   //keepalive:60,
-  // })
-  //   .then(function (client) {
-  //     client.on('closed', function () {
-  //       console.log('mqtt.event.closed');
-  //     });
+  const [sensor1, setSensor1] = useState('');
+  const [sensor2, setSensor2] = useState('');
+  const [sensor3, setSensor3] = useState('');
+  let mqttClient = null;
+  MQTT.createClient({
+    uri: 'mqtts://66d6b91771ff4fc7bb664c04cc3e7fbb.s2.eu.hivemq.cloud:8883',
+    clientId: 'clientId'+ Math.random().toString(16).substr(2, 8),
+    user: 'ICERUS',
+    pass: 'Projectyear3',
+    auth: true,
+    //keepalive:60,
+  })
+    .then(function (client) {
+      client.on('closed', function () {
+        console.log('mqtt.event.closed');
+      });
 
-  //     client.on('error', function (msg) {
-  //       console.log('mqtt.event.error', msg);
-  //     });
+      client.on('error', function (msg) {
+        console.log('mqtt.event.error', msg);
+      });
 
-  //     client.on('message', function (msg) {
-  //       console.log('mqtt.event.message', msg);
-  //       if(msg.topic==='sensor/light'){
-  //         setSensor1(msg.data);
-  //       }
-  //       if(msg.topic==='sensor/rh'){
-  //         setSensor2(msg.data);
-  //       }
-  //       if(msg.topic==='sensor/temp'){
-  //         setSensor3(msg.data);
-  //       }
-  //       if(msg.topic==='sensor/watering'){
-  //         setSensorWaterBool(msg.data);
-  //       }
-  //     });
+      client.on('message', function (msg) {
+        console.log('mqtt.event.message', msg);
+        if(msg.topic==='sensor/light'){
+          setSensor1(msg.data);
+        }
+        if(msg.topic==='sensor/rh'){
+          setSensor2(msg.data);
+        }
+        if(msg.topic==='sensor/temp'){
+          setSensor3(msg.data);
+        }
+        if(msg.topic==='sensor/watering'){
+          setSensorWaterBool(msg.data);
+        }
+      });
 
-  //     client.on('connect', function () {
-  //       console.log('connected');
-  //       client.subscribe('sensor/+', 2);
-  //       mqttClient = client;
-  //       // client.publish('sensor2', 'planterbox', 2, false);
-  //     });
+      client.on('connect', function () {
+        console.log('connected');
+        client.subscribe('sensor/+', 2);
+        mqttClient = client;
+        // client.publish('sensor2', 'planterbox', 2, false);
+      });
 
-  //     client.connect();
-  //   })
-  //   .catch(function (err) {
-  //     console.log(err);
-  //   });
+      client.connect();
+    })
+    .catch(function (err) {
+      console.log(err);
+    });
   return (
     <Context.Consumer>
     {context => (
@@ -370,7 +374,7 @@ export default MyPlant = ({route,navigation}) => {
                         alignSelf: 'center',
                         paddingTop: 38,
                       }}>
-                      46%
+                      {parseInt(splitSensor(sensor1)[0])}
                     </Text>
                     <Text
                       style={{
@@ -394,7 +398,7 @@ export default MyPlant = ({route,navigation}) => {
                         alignSelf: 'center',
                         paddingTop: 18,
                       }}>
-                      30%
+                      {parseInt(splitSensor(sensor2)[0])+' %'}
                     </Text>
                     <Text
                       style={{
@@ -417,7 +421,7 @@ export default MyPlant = ({route,navigation}) => {
                       paddingLeft: 150,
                       marginTop: 40,
                     }}>
-                    34°C
+                    {parseInt(splitSensor(sensor3)[0])+'°C'}
                   </Text>
                 </View>
               </TouchableOpacity>
@@ -475,7 +479,7 @@ export default MyPlant = ({route,navigation}) => {
                       alignSelf: 'center',
                       paddingTop: 38,
                     }}>
-                    46%
+                    {parseInt(splitSensor(sensor1)[0])}
                   </Text>
                   <Text
                     style={{
@@ -499,7 +503,7 @@ export default MyPlant = ({route,navigation}) => {
                       alignSelf: 'center',
                       paddingTop: 18,
                     }}>
-                    30%
+                    {parseInt(splitSensor(sensor2)[0])+'%'}
                   </Text>
                   <Text
                     style={{
@@ -522,7 +526,7 @@ export default MyPlant = ({route,navigation}) => {
                     paddingLeft: 150,
                     marginTop: 40,
                   }}>
-                  34°C
+                  {parseInt(splitSensor(sensor3)[0])+'°C'}
                 </Text>
               </View>
             </TouchableOpacity>
@@ -625,7 +629,7 @@ export default MyPlant = ({route,navigation}) => {
                         alignSelf: 'center',
                         paddingTop: 38,
                       }}>
-                      46%
+                      {parseInt(splitSensor(sensor1)[0])}
                     </Text>
                     <Text
                       style={{
@@ -649,7 +653,7 @@ export default MyPlant = ({route,navigation}) => {
                         alignSelf: 'center',
                         paddingTop: 18,
                       }}>
-                      30%
+                      {parseInt(splitSensor(sensor2)[0])+' %'}
                     </Text>
                     <Text
                       style={{
@@ -931,4 +935,4 @@ const styles = StyleSheet.create({
     fontFamily: 'Mitr-Regular',
     fontSize: 13,
   },
-});
+})};
