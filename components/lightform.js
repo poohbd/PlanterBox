@@ -149,7 +149,7 @@ export default function LightForm({data, sensor1}) {
   return (
     <View style={styles.bigCard}>
       <View style={styles.circleCard}>
-        <Text style={styles.circleCardText}>{parseInt(splitlight[1]) + '%'}</Text>
+        <Text style={styles.circleCardText}>{parseInt(splitlight[1])}</Text>
       </View>
       <Text style={styles.cardWatering}>LIGHT EXPOSURE</Text>
       <LightDropdown
@@ -205,7 +205,7 @@ export default function LightForm({data, sensor1}) {
       {valueplan === 'AUTO' && <LightFormAuto data={data} />}
       {valueplan === 'MANUAL' && <OffLight lightStatus={data.lightStatus} />}
 
-      <Text style={styles.smText}>20,000 LUX</Text>
+      <Text style={styles.smText}>{parseInt(splitlight[1])+" LUX"}</Text>
       {data.lightStatus === 'ON' && (
         <Image
           style={styles.image}
