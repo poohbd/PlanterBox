@@ -68,7 +68,7 @@ export default MyPlant = ({route,navigation}) => {
           style={{fontFamily: 'Mitr-Regular', color: colors.newGreen2}}
           onPress={() => {
             basilSelected();
-            setValuePreset('Basil');
+            setValuePreset('Holy Basil');
             setSID(2);
           }}>
           Holy Basil

@@ -110,7 +110,7 @@ export default ChooseCard = ({route, navigation}) => {
         },
       };
       const setting = await axios.request(config);
-      return navigation.navigate('Menu', {UserID: UserID, UserName: UserName});
+      return navigation.navigate('Menu', {"UserID": UserID, "UserName": UserName});
     } catch (error) {
       console.error(error);
     }
@@ -272,7 +272,7 @@ export default ChooseCard = ({route, navigation}) => {
                     sched99={sched}
                     pname={plantName}
                   />
-                  <TouchableOpacity
+                  {/* <TouchableOpacity
                     style={styles.buttonGray}
                     onPress={() => console.log(allsche.wateringschedule)}>
                     <Text
@@ -293,11 +293,11 @@ export default ChooseCard = ({route, navigation}) => {
                       }}>
                       Console Log sched
                     </Text>
-                  </TouchableOpacity>
+                  </TouchableOpacity> */}
 
                   <View style={styles.view} />
-                  <View style={styles.view} />
-                  <View style={styles.view} />
+                  {/* <View style={styles.view} />
+                  <View style={styles.view} /> */}
                   {/* <DropDownTime type="FERTILIZER" />
             <DropDownTime type="PESTICIDE" /> */}
                 </View>
@@ -486,21 +486,24 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     padding: 0,
+    marginTop: 8,
     backgroundColor: colors.red,
     // marginTop: deviceHeight * 0.03,
     //marginRight: deviceWidth*0.1,
-    // backgroundColor: 'transparent',
-    backgroundColor: colors.red,
+    backgroundColor: 'transparent',
+    // backgroundColor: colors.red,
   },
   inline2: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-around',
+    // justifyContent: 'center',
   },
   lightmanual: {
     width: 40,
     height: 40,
     padding: 0,
+    marginRight: 40,
     backgroundColor: colors.brown,
     // marginTop: deviceHeight * 0.03,
     //marginLeft: deviceWidth*0.1,

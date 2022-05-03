@@ -18,6 +18,8 @@ import {Formik} from 'formik';
 import * as yup from 'yup';
 import UserProfile from './UserProfile';
 import axios from 'axios';
+import Context from '../Context/context';
+
 
 const a ={};
 
@@ -71,6 +73,8 @@ export default UserChangeName = ({route, navigation}) => {
      };
 
   return (
+    <Context.Consumer>
+    {context => (
     
     <Formik
       initialValues={{
@@ -128,10 +132,12 @@ export default UserChangeName = ({route, navigation}) => {
           {/* <FlatButton text="LOGIN" onPress={() => navigation.navigate('Register')} /> */}
           <FlatButton onPress={handleSubmit} text="CHANGE" title="CHANGE" color='white' height='20'/>
           <View style={styles.space}/>
-          <Text style={styles.loginText} onPress={() => navigation.navigate('Menu')}> CANCEL</Text>
+          <Text style={styles.loginText} onPress={() => navigation.navigate('Menu',{"UserID": context.UserID, "UserName": context.UserName})}> CANCEL</Text>
         </View>
       )}
     </Formik>
+    )}
+    </Context.Consumer>
   );
 };
 

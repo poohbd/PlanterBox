@@ -4,6 +4,7 @@ import { View, Text, StyleSheet, Image,TouchableOpacity,TextInput,Button,Modal,A
 import colors from '../assets/colors/colors';
 import FlatButton from '../components/button';
 import axios from 'axios';
+import Context from '../Context/context';
 
 const deviceWidth = Dimensions.get('screen').width;
 const deviceHeight = Dimensions.get('screen').height;
@@ -23,8 +24,10 @@ export default UserProfileHome = ({route, navigation}) => {
     }
     getUserFromApi()
     return (
+        <Context.Consumer>
+        {context => (
         <View style={styles.container}>
-            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Menu')}>
+            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Menu',{"UserID": context.UserID, "UserName": context.UserName})}>
                 <View>
                     <Text style={styles.buttonText}>BACK</Text>
                 </View>
@@ -41,7 +44,8 @@ export default UserProfileHome = ({route, navigation}) => {
             <View style={styles.space} /><View style={styles.space} />
             <FlatButton text="Change USERNAME/EMAIL" onPress={() => navigation.navigate('UserChangeName', {"UserID":UserID})} /> 
         </View>
-        
+        )}
+        </Context.Consumer>
     )
 }
 

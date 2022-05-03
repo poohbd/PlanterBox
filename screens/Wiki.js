@@ -344,6 +344,8 @@ inlineRight: {
     marginTop: 5,
     //marginBottom:15,
     alignSelf:'center',
+    width:100,
+    height:100
 },
   buttonText: {
     color: colors.newGreen2,
