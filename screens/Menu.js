@@ -45,6 +45,7 @@ export default Menu= ({route,navigation}) => {
   const UU = route.params;
   const UserID = UU.UserID;
   const UserName = UU.UserName;
+  console.log(UserID);
   return (
     <Context.Consumer>
     {context => (
