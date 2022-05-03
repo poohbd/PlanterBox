@@ -114,7 +114,7 @@ export default function TimeForm({data,allsche}) {
       {valueplan ==='SCHEDULE' &&(
       <View style={styles.mediumCard}>
         <Text style={styles.cardContent}> FROM </Text>
-        <Text style={styles.cardContent}> {schedule.duration}</Text>
+        {/* <Text style={styles.cardContent}> {schedule.duration}</Text> */}
         <View style={styles.smallCard}>
           {/* <View>
             <TextInput style={styles.textTime} onChangeText={(duration) => setDuration(parseInt(duration))} defaultValue={allsche.wateringschedule[0].duration}/>

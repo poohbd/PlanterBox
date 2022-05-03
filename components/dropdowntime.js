@@ -20,12 +20,12 @@ import axios from 'axios';
 
 export default function DropDownTime({type,sid,sched99,pname}) {
   const schedson = sched99;
-  useEffect(() => {
-    setHaha(sched99);
-  }, [sched99]);
-  const [haha, setHaha] = React.useState(sched99);
-  console.log("Test Haha");
-  console.log(haha.fertilizerschedule.time);
+  // useEffect(() => {
+  //   setHaha(sched99);
+  // }, [sched99]);
+  // const [haha, setHaha] = React.useState(sched99);
+  // console.log("Test Haha");
+  // console.log(haha.fertilizerschedule.time);
   const [openplan, setOpenplan] = React.useState(false);
   const [valueplan, setValuePlan] = React.useState('SCHEDULE');
   // const [fernoti, setFernoti] = React.useState('');
