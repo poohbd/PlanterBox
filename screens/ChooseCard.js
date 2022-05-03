@@ -110,7 +110,7 @@ export default ChooseCard = ({route, navigation}) => {
         },
       };
       const setting = await axios.request(config);
-      return navigation.navigate('Menu', {"UserID": UserID, "UserName": UserName});
+      return navigation.navigate('Menu', {UserID: UserID, UserName: UserName});
     } catch (error) {
       console.error(error);
     }
@@ -295,7 +295,20 @@ export default ChooseCard = ({route, navigation}) => {
                     </Text>
                   </TouchableOpacity> */}
 
-                  <View style={styles.view} />
+                  <View style={styles.tempCard}>
+                    <View style={styles.tempCardTextBox}>
+                      <View style={styles.tempCardCircle}>
+                        <View style={styles.tempCardInnerCircle}>
+                          <Text style={styles.tempCardCircleText}>
+                            {parseInt(sensor3.split(',')[1])}°C
+                          </Text>
+                        </View>
+                      </View>
+                    </View>
+                    <View style={styles.tempCardTextBox}>
+                      <Text style={styles.tempCardText}>TEMPERATURE</Text>
+                    </View>
+                  </View>
                   {/* <View style={styles.view} />
                   <View style={styles.view} /> */}
                   {/* <DropDownTime type="FERTILIZER" />
@@ -409,6 +422,61 @@ const styles = StyleSheet.create({
     paddingLeft: 60,
     alignSelf: 'center',
     marginTop: 20,
+  },
+  tempCard: {
+    width: 350,
+    height: 100,
+    borderRadius: 30,
+    backgroundColor: colors.newGreen2,
+    fontFamily: 'Mitr-Regular',
+    fontSize: 23,
+    // paddingTop: 50,
+    paddingLeft: 60,
+    alignSelf: 'center',
+    marginTop: 20,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  tempCardTextBox: {
+    position: 'relative',
+    // alignItems: 'center',
+    justifyContent: 'center',
+    height: 100,
+    // backgroundColor: '#FDEBD9',
+  },
+  tempCardText: {
+    fontFamily: 'Mitr-Regular',
+    color: '#FAFAFA',
+    fontSize: 17,
+    marginLeft: 10,
+  },
+  tempCardCircle: {
+    width: 70,
+    height: 70,
+    borderRadius: 70,
+    backgroundColor: '#FDEBD9',
+    marginLeft: -40,
+    alignItems: 'center',
+    justifyContent: 'center',
+    // flexDirection: 'row',
+  },
+  tempCardInnerCircle: {
+    position: 'relative',
+    width: 55,
+    height: 55,
+    borderRadius: 70,
+    backgroundColor: '#FAD0A6',
+    // marginTop: -37,
+    // marginLeft: -40,
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  tempCardCircleText: {
+    fontFamily: 'Mitr-Regular',
+    fontSize: 20,
+    color: '#E57E18',
   },
   container: {
     // flex: 1,

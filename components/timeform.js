@@ -137,7 +137,9 @@ export default function TimeForm({data, allsche, sensor2}) {
     <View style={styles.bigCard}>
       <View>
         <View style={styles.circleCard}>
-          <Text style={styles.circleCardText}>{parseInt(splitlight[1])+'%'}</Text>
+          <Text style={styles.circleCardText}>
+            {parseInt(splitlight[1]) + '%'}
+          </Text>
         </View>
         <Text style={styles.cardWatering}>WATERING</Text>
         <WateringDropdown
@@ -251,7 +253,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginTop: 20,
     zIndex: 102,
-    marginBottom:0
+    marginBottom: 0,
   },
   mediumCard: {
     width: 240,
@@ -297,18 +299,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     textAlign: 'center',
   },
+  // cardContent: {
+  //   textAlign: 'center',
+  //   fontFamily: 'Mitr-Regular',
+  //   fontSize: 10,
+  //   color: 'white',
+  // },
   cardContent: {
     textAlign: 'center',
     fontFamily: 'Mitr-Regular',
     fontSize: 10,
     color: 'white',
-  },
-  cardContent: {
-    textAlign: 'center',
-    fontFamily: 'Mitr-Regular',
-    fontSize: 10,
-    color: 'white',
-    paddingTop: 5,
+    paddingTop: 2,
   },
   saveButton: {
     width: 40,
@@ -344,26 +346,26 @@ const styles = StyleSheet.create({
     backgroundColor: '#436E71',
     marginTop: -37,
     marginLeft: -40,
-    
   },
   circleCardText: {
     fontFamily: 'Mitr-Regular',
     fontSize: 30,
     paddingTop: 10,
     paddingLeft: 5,
+    color: '#FAFAFA',
   },
   image: {
     marginTop: -83,
     marginLeft: 259,
   },
   smText: {
-    position:'absolute',
+    position: 'absolute',
     fontFamily: 'Mitr-Regular',
     fontSize: 13,
     color: '#436E71',
     marginLeft: -37,
     marginTop: 40,
-    lineHeight:13,
+    lineHeight: 13,
     // color:"red"
     //paddingTop:-
   },

@@ -149,7 +149,8 @@ export default function LightForm({data, sensor1}) {
   return (
     <View style={styles.bigCard}>
       <View style={styles.circleCard}>
-        <Text style={styles.circleCardText}>{parseInt(splitlight[1]) + '%'}</Text>
+        <Text style={styles.circleCardText}>{parseInt(splitlight[1])}</Text>
+        <Text style={styles.circleCardText2}>LUX</Text>
       </View>
       <Text style={styles.cardWatering}>LIGHT EXPOSURE</Text>
       <LightDropdown
@@ -205,7 +206,7 @@ export default function LightForm({data, sensor1}) {
       {valueplan === 'AUTO' && <LightFormAuto data={data} />}
       {valueplan === 'MANUAL' && <OffLight lightStatus={data.lightStatus} />}
 
-      <Text style={styles.smText}>20,000 LUX</Text>
+      <Text style={styles.smText}>{parseInt(splitlight[1])} LUX</Text>
       {data.lightStatus === 'ON' && (
         <Image
           style={styles.image}
@@ -269,7 +270,8 @@ const styles = StyleSheet.create({
     fontFamily: 'Mitr-Regular',
     fontSize: 10,
     paddingTop: -3,
-    paddingLeft: 10,
+    // paddingLeft: 10,
+    alignItems: 'center',
     zIndex: 1,
   },
   bigCard: {
@@ -286,7 +288,7 @@ const styles = StyleSheet.create({
     zIndex: 101,
   },
   mediumCard: {
-    //width: 200,
+    width: 240,
     height: 40,
     borderRadius: 20,
     backgroundColor: '#C8A805',
@@ -316,14 +318,15 @@ const styles = StyleSheet.create({
     fontFamily: 'Mitr-Regular',
     fontSize: 10,
     color: 'white',
+    paddingTop: 1,
   },
-  cardContent: {
-    textAlign: 'center',
-    fontFamily: 'Mitr-Regular',
-    fontSize: 10,
-    color: 'white',
-    paddingTop: 5,
-  },
+  // cardContent: {
+  //   textAlign: 'center',
+  //   fontFamily: 'Mitr-Regular',
+  //   fontSize: 10,
+  //   color: 'white',
+  //   // paddingTop: 5,
+  // },
   textTime: {
     color: colors.newGreen2,
     fontSize: 10,
@@ -345,12 +348,24 @@ const styles = StyleSheet.create({
     backgroundColor: '#C8A805',
     marginTop: -37,
     marginLeft: -40,
+    alignItems: 'center',
+    flexDirection: 'row',
   },
   circleCardText: {
     fontFamily: 'Mitr-Regular',
     fontSize: 30,
+    // paddingTop: 10,
+    paddingLeft: 5,
+    color: '#FAFAFA',
+    // textAlign: 'center',
+  },
+  circleCardText2: {
+    fontFamily: 'Mitr-Regular',
+    fontSize: 10,
     paddingTop: 10,
     paddingLeft: 5,
+    color: '#FAFAFA',
+    // textAlign: 'center',
   },
   image: {
     marginTop: -110,
@@ -358,9 +373,9 @@ const styles = StyleSheet.create({
   },
   smText: {
     fontFamily: 'Mitr-Regular',
-    fontSize: 10,
+    fontSize: 15,
     color: '#C8A805',
-    marginLeft: -37,
-    marginTop: -25,
+    marginLeft: -27,
+    marginTop: -30,
   },
 });
