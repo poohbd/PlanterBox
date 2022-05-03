@@ -181,7 +181,7 @@ export default ChooseCard = ({route, navigation}) => {
         if (msg.topic === 'sensor/watering') {
           setSensorWaterBool(msg.data);
         }
-        if (msg.topic === 'sensor/lighting') {
+        if (msg.topic === 'sensor/led') {
           setSensorLightBool(msg.data);
         }
       });
@@ -315,11 +315,11 @@ export default ChooseCard = ({route, navigation}) => {
             <DropDownTime type="PESTICIDE" /> */}
                 </View>
                 <View style={styles.inline2}>
-                  {sensorWaterBool === id+',on' ? (
+                  {sensorWaterBool === 124+',on' ? (
                     <TouchableOpacity
                       style={styles.watermanual}
                       onPress={() =>
-                        mqttClient.publish('sensor/watering', id+',off', 1, true)
+                        mqttClient.publish('sensor/watering', 124+',off', 1, true)
                       }>
                       <View>
                         <Image
@@ -331,7 +331,7 @@ export default ChooseCard = ({route, navigation}) => {
                     <TouchableOpacity
                       style={styles.watermanual}
                       onPress={() =>
-                        mqttClient.publish('sensor/watering', id+',on', 1, true)
+                        mqttClient.publish('sensor/watering', 124+',on', 1, true)
                       }>
                       <View>
                         <Image
@@ -340,11 +340,11 @@ export default ChooseCard = ({route, navigation}) => {
                       </View>
                     </TouchableOpacity>
                   )}
-                  {sensorLightBool === id+',off' ? (
+                  {sensorLightBool === 124+',off' ? (
                     <TouchableOpacity
                       style={styles.lightmanual}
                       onPress={() =>
-                        mqttClient.publish('sensor/lighting', id+',low', 1, true)
+                        mqttClient.publish('sensor/lighting', 124+',low', 1, true)
                       }>
                       <View>
                         <Image
@@ -353,11 +353,11 @@ export default ChooseCard = ({route, navigation}) => {
                       </View>
                     </TouchableOpacity>
                   ) : null}
-                  {sensorLightBool === id+',low' ? (
+                  {sensorLightBool === 124+',low' ? (
                     <TouchableOpacity
                       style={styles.lightmanual}
                       onPress={() =>
-                        mqttClient.publish('sensor/lighting', id+',med', 1, true)
+                        mqttClient.publish('sensor/lighting', 124+',med', 1, true)
                       }>
                       <View>
                         <Image
@@ -366,11 +366,11 @@ export default ChooseCard = ({route, navigation}) => {
                       </View>
                     </TouchableOpacity>
                   ) : null}
-                  {sensorLightBool === id+',med' ? (
+                  {sensorLightBool === 124+',med' ? (
                     <TouchableOpacity
                       style={styles.lightmanual}
                       onPress={() =>
-                        mqttClient.publish('sensor/lighting', id+',high', 1, true)
+                        mqttClient.publish('sensor/lighting', 124+',high', 1, true)
                       }>
                       <View>
                         <Image
@@ -379,11 +379,11 @@ export default ChooseCard = ({route, navigation}) => {
                       </View>
                     </TouchableOpacity>
                   ) : null}
-                  {sensorLightBool === id+',high' ? (
+                  {sensorLightBool === 124+',high' ? (
                     <TouchableOpacity
                       style={styles.lightmanual}
                       onPress={() =>
-                        mqttClient.publish('sensor/lighting', id+',off', 1, true)
+                        mqttClient.publish('sensor/lighting', 124+',off', 1, true)
                       }>
                       <View>
                         <Image
