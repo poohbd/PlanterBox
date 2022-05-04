@@ -23,12 +23,12 @@ import Context from '../Context/context';
 
 //import { CircularCard } from "react-native-circular-card-view";
 const baseUrl = 'http://localhost:3000';
-export default MyPlant = ({route,navigation}) => {
+export default MyPlant = ({route, navigation}) => {
   /*const UserID = navigation.getParent().getParent();
   console.log("UserID:"+UserID);*/
   const UU = route.params;
   const UserID = UU.UserID;
-  console.log("This is father fucker :"+UserID)
+  console.log('This is father fucker :' + UserID);
   // console.log(sensor2);
   const [isNewBox, setIsNewBox] = React.useState(false);
   const [isSun, setIsSun] = React.useState(false);
@@ -46,13 +46,13 @@ export default MyPlant = ({route,navigation}) => {
     setIsBasil(true);
     setNotSelected(false);
   }
-  const [sid,setSID] = React.useState(0);
+  const [sid, setSID] = React.useState(0);
   const [items, setItems] = React.useState([
     {
       label: (
         <Text
           style={{fontFamily: 'Mitr-Regular', color: colors.newGreen2}}
-          onPress={(setting) => {
+          onPress={setting => {
             sunSelected();
             setValuePreset('Coriander');
             setSID(1);
@@ -80,9 +80,9 @@ export default MyPlant = ({route,navigation}) => {
       label: (
         <Text
           style={{fontFamily: 'Mitr-Regular', color: colors.newGreen2}}
-          onPress={(setting) => {
+          onPress={setting => {
             sunSelected();
-            setValuePreset('Sunflower');
+            setValuePreset('Sunflower Sprout');
             setSID(3);
           }}>
           Sunflower Sprout
@@ -91,14 +91,17 @@ export default MyPlant = ({route,navigation}) => {
       value: 'Sunflower',
     },
   ]);
-  
+
   const showFirstTimePicker = () => {
     setIsPickerFirstShow(true);
-  }
+  };
   const [opencustom, setOpenCustom] = React.useState(false);
   const [valuecustom, setValueCustom] = React.useState(null);
   const [searchQuery, setSearchQuery] = React.useState('');
-  const onChangeSearch = query => setSearchQuery(query);
+  const onChangeSearch = query => {
+    setSearchQuery(query);
+    
+  }
   const [modalVisible, setModalVisible] = React.useState(false);
   const [notiVisible, setNotiVisible] = React.useState(false);
   var array = [];
@@ -141,23 +144,22 @@ export default MyPlant = ({route,navigation}) => {
   const [data, setData] = useState([]);
   const [boxid, setBoxId] = useState([]);
   const [settings, setSettings] = useState([]);
-  const postPreset = async(sID,bID,uid,usn) => {
-    try{
-      console.log("SID: "+sID+"BoxID: "+bID);
+  const postPreset = async (sID, bID, uid, usn) => {
+    try {
+      console.log('SID: ' + sID + 'BoxID: ' + bID);
       const config = {
         method: 'POST',
         url: `${baseUrl}/planterbox/selectPreset`,
         data: {
           settingsID: sID,
-          boxID: bID
+          boxID: bID,
         },
       };
-      const response = await axios.request(config)
-      navigation.navigate('Menu',{"UserID":uid,"UserName":usn} );
-    }catch (error) {
+      const response = await axios.request(config);
+      navigation.navigate('Menu', {UserID: uid, UserName: usn});
+    } catch (error) {
       console.error(error);
     }
-
   };
   const getBoxList = async () => {
     const source = axios.CancelToken.source();
@@ -171,7 +173,6 @@ export default MyPlant = ({route,navigation}) => {
         });
         setSettings(response.data);
         // response.data.map((box)=>console.log(fetchBoxSetting(box.boxID)));
-        setIsLoading(false);
         return;
       } else {
         throw new Error('Failed to Get Box List');
@@ -187,6 +188,8 @@ export default MyPlant = ({route,navigation}) => {
       // console.log(settings);
     } catch (error) {
       console.error(error);
+    } finally {
+      setIsLoading(false);
     }
     // getSettingList(boxid);
     // console.log(data);
@@ -198,18 +201,20 @@ export default MyPlant = ({route,navigation}) => {
   useEffect(() => {
     getBoxList();
   }, []);
-  
+
   const [sensor1, setSensor1] = useState('');
   const [sensor2, setSensor2] = useState('');
   const [sensor3, setSensor3] = useState('');
   let mqttClient = null;
   MQTT.createClient({
     uri: 'mqtts://66d6b91771ff4fc7bb664c04cc3e7fbb.s2.eu.hivemq.cloud:8883',
+    // uri: 'mqtt://broker.mqttdashboard.com:1883',
+    // port: 8000,
     clientId: 'clientId' + Math.random().toString(16).substr(2, 8),
     user: 'ICERUS',
     pass: 'Projectyear3',
     auth: true,
-    //keepalive:60,
+    keepalive: 40,
   })
     .then(function (client) {
       client.on('closed', function () {
@@ -221,7 +226,7 @@ export default MyPlant = ({route,navigation}) => {
       });
 
       client.on('message', function (msg) {
-        //console.log('mqtt.event.message', msg);
+        console.log('mqtt.event.message', msg);
         if (msg.topic === 'sensor/light') {
           setSensor1(msg.data);
         }
@@ -231,13 +236,19 @@ export default MyPlant = ({route,navigation}) => {
         if (msg.topic === 'sensor/temp') {
           setSensor3(msg.data);
         }
+        // if (msg.topic === 'testtopic/225') {
+        //   setSensor1(msg.data);
+        // }
       });
 
       client.on('connect', function () {
         console.log('connected');
-        client.subscribe('sensor/+', 2);
+        // client.subscribe('sensor/+', 2);
+        client.subscribe('sensor/light', 2);
+        client.subscribe('sensor/rh', 2);
+        client.subscribe('sensor/temp', 2);
         mqttClient = client;
-        // client.publish('sensor2', 'planterbox', 2, false);
+        // client.publish('testtopic/225', '125,50', 2, false);
       });
 
       client.connect();
@@ -252,51 +263,324 @@ export default MyPlant = ({route,navigation}) => {
 
   return (
     <Context.Consumer>
-    {context => (
-    <ScrollView style={styles.container}>
-      {/* <Text>{settings.wateringMode}</Text> */}
-      <View style={styles.inline}>
-        <TouchableOpacity
-          style={styles.buttonNoti}
-          onPress={() => setNotiVisible(true)}>
-          <Image source={require('../assets/images/noti.png')} />
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.buttonName}
-          onPress={() => navigation.navigate('UserProfileHome', {"UserID":context.UserID})}>
-          <View>
-            <Text style={{fontFamily: 'Mitr-Regular', color: colors.newGreen2}}>
-              {context.UserName}
-            </Text>
+      {context => (
+        <ScrollView style={styles.container}>
+          {/* <Text>{settings.wateringMode}</Text> */}
+          <View style={styles.inline}>
+            <TouchableOpacity
+              style={styles.buttonNoti}
+              onPress={() => setNotiVisible(true)}>
+              <Image source={require('../assets/images/noti.png')} />
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.buttonName}
+              onPress={() =>
+                navigation.navigate('UserProfileHome', {UserID: context.UserID})
+              }>
+              <View>
+                <Text
+                  style={{fontFamily: 'Mitr-Regular', color: colors.newGreen2}}>
+                  {context.UserName}
+                </Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.buttonGray}
+              onPress={() =>
+                navigation.navigate('UserProfileHome', {UserID: context.UserID})
+              }>
+              <View>
+                <Image
+                  style={styles.image_gray}
+                  source={require('../assets/images/graycircle.png')}
+                />
+              </View>
+            </TouchableOpacity>
           </View>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.buttonGray}
-          onPress={() => navigation.navigate('UserProfileHome', {"UserID":context.UserID})}>
-          <View>
-            <Image
-              style={styles.image_gray}
-              source={require('../assets/images/graycircle.png')}
-            />
-          </View>
-        </TouchableOpacity>
-      </View>
 
-      <Searchbar
-        placeholder="Search"
-        icon={require('../assets/images/search.png')}
-        clearIcon={require('../assets/images/delete.png')}
-        onChangeText={onChangeSearch}
-        value={searchQuery}
-        style={styles.search}
-        inputStyle={{color: '#FFFFFF'}}
-      />
-      <View>
-        
-        {settings.map(setting => (
-        <View>
+          <Searchbar
+            placeholder="Search"
+            icon={require('../assets/images/search.png')}
+            clearIcon={require('../assets/images/delete.png')}
+            onChangeText={onChangeSearch}
+            value={searchQuery}
+            style={styles.search}
+            inputStyle={{color: '#FFFFFF'}}
+          />
           <View>
-          {setting.SettingsID === 0 && !valuepreset ? (
+            {settings.map(setting => (
+              <View>
+                <View>
+                  {setting.SettingsID === 0 && !valuepreset ? (
+                    <View style={styles.cardContent}>
+                      <DropDownPicker
+                        open={openpreset}
+                        value={valuepreset}
+                        items={items}
+                        setOpen={setOpenPreset}
+                        setValue={setValuePreset}
+                        setItems={setItems}
+                        style={styles.dropdownpreset}
+                        dropDownContainerStyle={{
+                          borderColor: colors.newGreen2,
+                          width: 200,
+                          alignSelf: 'center',
+                        }}
+                        placeholder="SELECT PRESET"
+                        placeholderStyle={{
+                          color: colors.newGreen2,
+                          fontSize: 14,
+                          fontFamily: 'Mitr-Regular',
+                          textAlign: 'center',
+                          justifyContent: 'space-between',
+                        }}
+                        listItemLabelStyle={{
+                          color: colors.newGreen2,
+                          textAlign: 'center',
+                        }}
+                        zIndex={99}
+                      />
+                      <TouchableOpacity
+                        style={styles.dropdowncustom}
+                        onPress={() => setModalVisible(true)}>
+                        <Text
+                          style={{
+                            color: colors.newGreen2,
+                            textAlign: 'center',
+                            fontFamily: 'Mitr-Regular',
+                          }}>
+                          CUSTOMIZE
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
+                  ) : null}
+                </View>
+                <View>
+                  {setting.SettingsID === 0 && valuepreset ? (
+                    <FadeInView>
+                      <TouchableOpacity
+                        onPress={() =>
+                          // navigation.navigate('ChooseCard', {
+                          //   valuepreset: {valuepreset},
+                          // })
+                          console.log(valuepreset)
+                        }>
+                        <View style={styles.cardContentDone}>
+                          <Text
+                            style={{
+                              color: colors.newGreen2,
+                              fontSize: 15,
+                              textAlign: 'right',
+                              fontFamily: 'Mitr-Regular',
+                              alignSelf: 'flex-start',
+                              paddingLeft: 10,
+                              marginTop: 0,
+                            }}>
+                            {valuepreset}
+                          </Text>
+                          <Image
+                            style={styles.imageSun}
+                            source={pathImage(valuepreset)}
+                          />
+                          <View style={styles.cardContentCircle}>
+                            <Text
+                              style={{
+                                color: '#DBB907',
+                                textAlign: 'center',
+                                fontSize: 20,
+                                fontFamily: 'Mitr-Regular',
+                                alignSelf: 'center',
+                                paddingTop: 38,
+                              }}>
+                              {parseInt(splitlight[1])}
+                            </Text>
+                            <Text
+                              style={{
+                                color: colors.newGreen2,
+                                textAlign: 'center',
+                                fontSize: 13,
+                                fontFamily: 'Mitr-Regular',
+                                paddingTop: 20,
+                              }}>
+                              Light
+                            </Text>
+                          </View>
+
+                          <View style={styles.cardContentCircle2}>
+                            <Text
+                              style={{
+                                color: '#DBB907',
+                                textAlign: 'center',
+                                fontSize: 20,
+                                fontFamily: 'Mitr-Regular',
+                                alignSelf: 'center',
+                                paddingTop: 18,
+                              }}>
+                              {parseInt(splitwater[1]) + ' %'}
+                            </Text>
+                            <Text
+                              style={{
+                                color: colors.newGreen2,
+                                textAlign: 'center',
+                                fontSize: 13,
+                                alignSelf: 'baseline',
+                                fontFamily: 'Mitr-Regular',
+                                marginTop: 10,
+                              }}>
+                              Soil Moisture
+                            </Text>
+                          </View>
+                          <Text
+                            style={{
+                              color: colors.newGreen2,
+                              fontSize: 22,
+                              fontFamily: 'Mitr-Regular',
+                              alignSelf: 'center',
+                              paddingLeft: 150,
+                              marginTop: 40,
+                            }}>
+                            {parseInt(splittemp[1]) + '°C'}
+                          </Text>
+                        </View>
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        style={styles.buttonAdd}
+                        onPress={() =>
+                          postPreset(
+                            sid,
+                            setting.boxID,
+                            context.UserID,
+                            context.UserName,
+                          )
+                        }>
+                        <View>
+                          <Text style={styles.buttonAddText}>
+                            + SAVE PRESET
+                          </Text>
+                        </View>
+                      </TouchableOpacity>
+                    </FadeInView>
+                  ) : null}
+                </View>
+                {setting.SettingsID !== 0 ? (
+                  <View>
+                    <TouchableOpacity
+                      onPress={() =>
+                        navigation.navigate('ChooseCard', {
+                          valuepreset: setting.planterboxsettings.SettingName,
+                          id: setting.boxID,
+                          settingsid: setting.SettingsID,
+                          UserID: context.UserID,
+                          UserName: context.UserName,
+                        })
+                      }>
+                      <View style={styles.cardContentDone}>
+                        <Text
+                          style={{
+                            color: colors.newGreen2,
+                            fontSize: 15,
+                            textAlign: 'right',
+                            fontFamily: 'Mitr-Regular',
+                            alignSelf: 'flex-start',
+                            paddingLeft: 10,
+                            marginTop: 0,
+                          }}>
+                          {setting.planterboxsettings.SettingName}
+                        </Text>
+                        {/* <Text
+                  style={{fontFamily: 'Mitr-Regular', color: colors.newGreen2}}>
+                  sensorLight:{sensor1} sensorRH:{sensor2} sensorTemp:{sensor3}
+                </Text> */}
+                        <Image
+                          style={styles.imageSun}
+                          source={pathImage(
+                            setting.planterboxsettings.SettingName,
+                          )}
+                        />
+                        {/* <Image style={styles.imageSun} source = {pathImage(valuepreset)}/> */}
+                        <View style={styles.cardContentCircle}>
+                          <Text
+                            style={{
+                              color: '#DBB907',
+                              textAlign: 'center',
+                              fontSize: 20,
+                              fontFamily: 'Mitr-Regular',
+                              alignSelf: 'center',
+                              paddingTop: 38,
+                            }}>
+                            {parseInt(splitlight[1])}
+                          </Text>
+                          <Text
+                            style={{
+                              color: colors.newGreen2,
+                              textAlign: 'center',
+                              fontSize: 13,
+                              fontFamily: 'Mitr-Regular',
+                              paddingTop: 20,
+                            }}>
+                            Light
+                          </Text>
+                        </View>
+
+                        <View style={styles.cardContentCircle2}>
+                          <Text
+                            style={{
+                              color: '#DBB907',
+                              textAlign: 'center',
+                              fontSize: 20,
+                              fontFamily: 'Mitr-Regular',
+                              alignSelf: 'center',
+                              paddingTop: 18,
+                            }}>
+                            {parseInt(splitwater[1]) + '%'}
+                          </Text>
+                          <Text
+                            style={{
+                              color: colors.newGreen2,
+                              textAlign: 'center',
+                              fontSize: 13,
+                              alignSelf: 'baseline',
+                              fontFamily: 'Mitr-Regular',
+                              marginTop: 10,
+                            }}>
+                            Soil Moisture
+                          </Text>
+                        </View>
+                        <Text
+                          style={{
+                            color: colors.newGreen2,
+                            fontSize: 22,
+                            fontFamily: 'Mitr-Regular',
+                            alignSelf: 'center',
+                            paddingLeft: 150,
+                            marginTop: 40,
+                          }}>
+                          {parseInt(splittemp[1]) + '°C'}
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
+                  </View>
+                ) : null}
+              </View>
+            ))}
+            {/* {sensorWaterBool === 'on' ?(
+        <TouchableOpacity style={{backgroundColor:"blue",width:100,height:50,alignSelf:'flex-start'}} onPress={()=>mqttClient.publish('sensor/watering', 'off', 1, true)}>
+          <Text>Test Water</Text>
+        </TouchableOpacity>) :( 
+        <TouchableOpacity style={{backgroundColor:"grey",width:100,height:50,alignSelf:'flex-start'}} onPress={()=>mqttClient.publish('sensor/watering', 'on', 1, true)}>
+        <Text>Test Water</Text>
+        </TouchableOpacity>)} */}
+            {/* {sensor2 === '1' ?(
+        <TouchableOpacity style={{backgroundColor:"blue",width:100,height:50,alignSelf:'flex-end'}} onPress={()=>mqttClient.publish('sensor/water', '0', 2, true)}>
+        
+          <Text>Test Water</Text>
+        </TouchableOpacity>) :(
+          <TouchableOpacity style={{backgroundColor:"grey",width:100,height:50,alignSelf:'flex-end'}} onPress={()=>mqttClient.publish('sensor/water', '1', 2, true)}>
+        
+          <Text>Test Water</Text>
+        </TouchableOpacity>
+        )} */}
+            {isNewBox && !valuepreset ? (
               <View style={styles.cardContent}>
                 <DropDownPicker
                   open={openpreset}
@@ -338,354 +622,99 @@ export default MyPlant = ({route,navigation}) => {
                   </Text>
                 </TouchableOpacity>
               </View>
-          ):null}</View>
-          <View>
-          {setting.SettingsID === 0 && valuepreset ?(
-            <FadeInView>
-              <TouchableOpacity
-                onPress={() =>
-                  // navigation.navigate('ChooseCard', {
-                  //   valuepreset: {valuepreset},
-                  // })
-                  console.log(valuepreset)
-                }>
-                <View style={styles.cardContentDone}>
-                  <Text
-                    style={{
-                      color: colors.newGreen2,
-                      fontSize: 15,
-                      textAlign: 'right',
-                      fontFamily: 'Mitr-Regular',
-                      alignSelf: 'flex-start',
-                      paddingLeft: 10,
-                      marginTop: 0,
-                    }}>
-                    {valuepreset}
-                  </Text>
-                  <Image
-                    style={styles.imageSun}
-                    source={pathImage(valuepreset)}
-                  />
-                  <View style={styles.cardContentCircle}>
-                    <Text
-                      style={{
-                        color: '#DBB907',
-                        textAlign: 'center',
-                        fontSize: 20,
-                        fontFamily: 'Mitr-Regular',
-                        alignSelf: 'center',
-                        paddingTop: 38,
-                      }}>
-                      {parseInt(splitlight[1])}
-                    </Text>
-                    <Text
-                      style={{
-                        color: colors.newGreen2,
-                        textAlign: 'center',
-                        fontSize: 13,
-                        fontFamily: 'Mitr-Regular',
-                        paddingTop: 20,
-                      }}>
-                      Light
-                    </Text>
-                  </View>
+            ) : null}
 
-                  <View style={styles.cardContentCircle2}>
-                    <Text
-                      style={{
-                        color: '#DBB907',
-                        textAlign: 'center',
-                        fontSize: 20,
-                        fontFamily: 'Mitr-Regular',
-                        alignSelf: 'center',
-                        paddingTop: 18,
-                      }}>
-                      {parseInt(splitwater[1])+' %'}
-                    </Text>
-                    <Text
-                      style={{
-                        color: colors.newGreen2,
-                        textAlign: 'center',
-                        fontSize: 13,
-                        alignSelf: 'baseline',
-                        fontFamily: 'Mitr-Regular',
-                        marginTop: 10,
-                      }}>
-                      Soil Moisture
-                    </Text>
-                  </View>
-                  <Text
-                    style={{
-                      color: colors.newGreen2,
-                      fontSize: 22,
-                      fontFamily: 'Mitr-Regular',
-                      alignSelf: 'center',
-                      paddingLeft: 150,
-                      marginTop: 40,
-                    }}>
-                    {parseInt(splittemp[1])+'°C'}
-                  </Text>
-                </View>
-              </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.buttonAdd}
-          onPress={() => postPreset(sid,setting.boxID,context.UserID,context.UserName)}>
-          <View>
-            <Text style={styles.buttonAddText}>+ SAVE PRESET</Text>
-          </View>
-        </TouchableOpacity>
-            </FadeInView>
-            
-          ):null}</View>
-          {setting.SettingsID !== 0 ? (
-          <View>
-            <TouchableOpacity
-              onPress={() =>
-                navigation.navigate('ChooseCard', {
-                  valuepreset: setting.planterboxsettings.SettingName,
-                  id: setting.boxID,
-                  settingsid: setting.SettingsID,
-                  UserID: context.UserID,
-                  UserName: context.UserName,
-                })
-              }>
-              <View style={styles.cardContentDone}>
-                <Text
-                  style={{
-                    color: colors.newGreen2,
-                    fontSize: 15,
-                    textAlign: 'right',
-                    fontFamily: 'Mitr-Regular',
-                    alignSelf: 'flex-start',
-                    paddingLeft: 10,
-                    marginTop: 0,
-                  }}>
-                  {setting.planterboxsettings.SettingName}
-                </Text>
-                {/* <Text
-                  style={{fontFamily: 'Mitr-Regular', color: colors.newGreen2}}>
-                  sensorLight:{sensor1} sensorRH:{sensor2} sensorTemp:{sensor3}
-                </Text> */}
-                <Image
-                  style={styles.imageSun}
-                  source={pathImage(setting.planterboxsettings.SettingName)}
-                />
-                {/* <Image style={styles.imageSun} source = {pathImage(valuepreset)}/> */}
-                <View style={styles.cardContentCircle}>
-                  <Text
-                    style={{
-                      color: '#DBB907',
-                      textAlign: 'center',
-                      fontSize: 20,
-                      fontFamily: 'Mitr-Regular',
-                      alignSelf: 'center',
-                      paddingTop: 38,
-                    }}>
-                    {parseInt(splitlight[1])}
-                  </Text>
-                  <Text
-                    style={{
-                      color: colors.newGreen2,
-                      textAlign: 'center',
-                      fontSize: 13,
-                      fontFamily: 'Mitr-Regular',
-                      paddingTop: 20,
-                    }}>
-                    Light
-                  </Text>
-                </View>
+            <View style={styles.containerNew}>
+              {isNewBox && valuepreset ? (
+                <FadeInView>
+                  <TouchableOpacity
+                    onPress={() =>
+                      navigation.navigate('ChooseCard', {
+                        valuepreset: {valuepreset},
+                      })
+                    }>
+                    <View style={styles.cardContentDone}>
+                      <Text
+                        style={{
+                          color: colors.newGreen2,
+                          fontSize: 15,
+                          textAlign: 'right',
+                          fontFamily: 'Mitr-Regular',
+                          alignSelf: 'flex-start',
+                          paddingLeft: 10,
+                          marginTop: 0,
+                        }}>
+                        {valuepreset}
+                      </Text>
+                      <Image
+                        style={styles.imageSun}
+                        source={pathImage(valuepreset)}
+                      />
+                      <View style={styles.cardContentCircle}>
+                        <Text
+                          style={{
+                            color: '#DBB907',
+                            textAlign: 'center',
+                            fontSize: 20,
+                            fontFamily: 'Mitr-Regular',
+                            alignSelf: 'center',
+                            paddingTop: 38,
+                          }}>
+                          {parseInt(splitlight[1])}
+                        </Text>
+                        <Text
+                          style={{
+                            color: colors.newGreen2,
+                            textAlign: 'center',
+                            fontSize: 13,
+                            fontFamily: 'Mitr-Regular',
+                            paddingTop: 20,
+                          }}>
+                          Light
+                        </Text>
+                      </View>
 
-                <View style={styles.cardContentCircle2}>
-                  <Text
-                    style={{
-                      color: '#DBB907',
-                      textAlign: 'center',
-                      fontSize: 20,
-                      fontFamily: 'Mitr-Regular',
-                      alignSelf: 'center',
-                      paddingTop: 18,
-                    }}>
-                    {parseInt(splitwater[1])+'%'}
-                  </Text>
-                  <Text
-                    style={{
-                      color: colors.newGreen2,
-                      textAlign: 'center',
-                      fontSize: 13,
-                      alignSelf: 'baseline',
-                      fontFamily: 'Mitr-Regular',
-                      marginTop: 10,
-                    }}>
-                    Soil Moisture
-                  </Text>
-                </View>
-                <Text
-                  style={{
-                    color: colors.newGreen2,
-                    fontSize: 22,
-                    fontFamily: 'Mitr-Regular',
-                    alignSelf: 'center',
-                    paddingLeft: 150,
-                    marginTop: 40,
-                  }}>
-                  {parseInt(splittemp[1])+'°C'}
-                </Text>
-              </View>
-            </TouchableOpacity>
-          </View>):null}</View>
-        ))}
-        {/* {sensorWaterBool === 'on' ?(
-        <TouchableOpacity style={{backgroundColor:"blue",width:100,height:50,alignSelf:'flex-start'}} onPress={()=>mqttClient.publish('sensor/watering', 'off', 1, true)}>
-          <Text>Test Water</Text>
-        </TouchableOpacity>) :( 
-        <TouchableOpacity style={{backgroundColor:"grey",width:100,height:50,alignSelf:'flex-start'}} onPress={()=>mqttClient.publish('sensor/watering', 'on', 1, true)}>
-        <Text>Test Water</Text>
-        </TouchableOpacity>)} */}
-        {/* {sensor2 === '1' ?(
-        <TouchableOpacity style={{backgroundColor:"blue",width:100,height:50,alignSelf:'flex-end'}} onPress={()=>mqttClient.publish('sensor/water', '0', 2, true)}>
-        
-          <Text>Test Water</Text>
-        </TouchableOpacity>) :(
-          <TouchableOpacity style={{backgroundColor:"grey",width:100,height:50,alignSelf:'flex-end'}} onPress={()=>mqttClient.publish('sensor/water', '1', 2, true)}>
-        
-          <Text>Test Water</Text>
-        </TouchableOpacity>
-        )} */}
-        {isNewBox && !valuepreset ? (
-          <View style={styles.cardContent}>
-            <DropDownPicker
-              open={openpreset}
-              value={valuepreset}
-              items={items}
-              setOpen={setOpenPreset}
-              setValue={setValuePreset}
-              setItems={setItems}
-              style={styles.dropdownpreset}
-              dropDownContainerStyle={{
-                borderColor: colors.newGreen2,
-                width: 200,
-                alignSelf: 'center',
-              }}
-              placeholder="SELECT PRESET"
-              placeholderStyle={{
-                color: colors.newGreen2,
-                fontSize: 14,
-                fontFamily: 'Mitr-Regular',
-                textAlign: 'center',
-                justifyContent: 'space-between',
-              }}
-              listItemLabelStyle={{
-                color: colors.newGreen2,
-                textAlign: 'center',
-              }}
-              zIndex={99}
-            />
-            <TouchableOpacity
-              style={styles.dropdowncustom}
-              onPress={() => setModalVisible(true)}>
-              <Text
-                style={{
-                  color: colors.newGreen2,
-                  textAlign: 'center',
-                  fontFamily: 'Mitr-Regular',
-                }}>
-                CUSTOMIZE
-              </Text>
-            </TouchableOpacity>
-          </View>
-        ) : null}
+                      <View style={styles.cardContentCircle2}>
+                        <Text
+                          style={{
+                            color: '#DBB907',
+                            textAlign: 'center',
+                            fontSize: 20,
+                            fontFamily: 'Mitr-Regular',
+                            alignSelf: 'center',
+                            paddingTop: 18,
+                          }}>
+                          {parseInt(splitwater[1]) + ' %'}
+                        </Text>
+                        <Text
+                          style={{
+                            color: colors.newGreen2,
+                            textAlign: 'center',
+                            fontSize: 13,
+                            alignSelf: 'baseline',
+                            fontFamily: 'Mitr-Regular',
+                            marginTop: 10,
+                          }}>
+                          Soil Moisture
+                        </Text>
+                      </View>
+                      <Text
+                        style={{
+                          color: colors.newGreen2,
+                          fontSize: 22,
+                          fontFamily: 'Mitr-Regular',
+                          alignSelf: 'center',
+                          paddingLeft: 150,
+                          marginTop: 40,
+                        }}>
+                        34°C
+                      </Text>
+                    </View>
+                  </TouchableOpacity>
+                </FadeInView>
+              ) : null}
 
-        <View style={styles.containerNew}>
-          {isNewBox && valuepreset ? (
-            <FadeInView>
-              <TouchableOpacity
-                onPress={() =>
-                  navigation.navigate('ChooseCard', {
-                    valuepreset: {valuepreset},
-                  })
-                }>
-                <View style={styles.cardContentDone}>
-                  <Text
-                    style={{
-                      color: colors.newGreen2,
-                      fontSize: 15,
-                      textAlign: 'right',
-                      fontFamily: 'Mitr-Regular',
-                      alignSelf: 'flex-start',
-                      paddingLeft: 10,
-                      marginTop: 0,
-                    }}>
-                    {valuepreset}
-                  </Text>
-                  <Image
-                    style={styles.imageSun}
-                    source={pathImage(valuepreset)}
-                  />
-                  <View style={styles.cardContentCircle}>
-                    <Text
-                      style={{
-                        color: '#DBB907',
-                        textAlign: 'center',
-                        fontSize: 20,
-                        fontFamily: 'Mitr-Regular',
-                        alignSelf: 'center',
-                        paddingTop: 38,
-                      }}>
-                      {parseInt(splitlight[1])}
-                    </Text>
-                    <Text
-                      style={{
-                        color: colors.newGreen2,
-                        textAlign: 'center',
-                        fontSize: 13,
-                        fontFamily: 'Mitr-Regular',
-                        paddingTop: 20,
-                      }}>
-                      Light
-                    </Text>
-                  </View>
-
-                  <View style={styles.cardContentCircle2}>
-                    <Text
-                      style={{
-                        color: '#DBB907',
-                        textAlign: 'center',
-                        fontSize: 20,
-                        fontFamily: 'Mitr-Regular',
-                        alignSelf: 'center',
-                        paddingTop: 18,
-                      }}>
-                      {parseInt(splitwater[1])+' %'}
-                    </Text>
-                    <Text
-                      style={{
-                        color: colors.newGreen2,
-                        textAlign: 'center',
-                        fontSize: 13,
-                        alignSelf: 'baseline',
-                        fontFamily: 'Mitr-Regular',
-                        marginTop: 10,
-                      }}>
-                      Soil Moisture
-                    </Text>
-                  </View>
-                  <Text
-                    style={{
-                      color: colors.newGreen2,
-                      fontSize: 22,
-                      fontFamily: 'Mitr-Regular',
-                      alignSelf: 'center',
-                      paddingLeft: 150,
-                      marginTop: 40,
-                    }}>
-                    34°C
-                  </Text>
-                </View>
-              </TouchableOpacity>
-            </FadeInView>
-          ) : null}
-
-          {/* {isBasil & !notSelected?
+              {/* {isBasil & !notSelected?
           <View style={styles.cardContentDone}>
               <Text style={{color:colors.newGreen2,fontSize:15, textAlign:'right', fontFamily:"Mitr-Regular", alignSelf:'flex-start', paddingLeft:10, marginTop:0   }}>{valuepreset}</Text>
               <Image style={styles.imageSun} source = {pathImage(valuepreset)}/>
@@ -699,20 +728,20 @@ export default MyPlant = ({route,navigation}) => {
               </View>       
               <Text style={{color:colors.newGreen2,fontSize:22, fontFamily:"Mitr-Regular", alignSelf:'center', paddingLeft:150, marginTop:40   }}>34°C</Text>
           </View>:null} */}
-        </View>
+            </View>
 
-        <TouchableOpacity
-          style={styles.buttonAdd}
-          onPress={() => navigation.navigate('SerialNumber')}>
-          <View>
-            <Text style={styles.buttonAddText}>+ ADD NEW BOX</Text>
+            <TouchableOpacity
+              style={styles.buttonAdd}
+              onPress={() => navigation.navigate('SerialNumber')}>
+              <View>
+                <Text style={styles.buttonAddText}>+ ADD NEW BOX</Text>
+              </View>
+            </TouchableOpacity>
           </View>
-        </TouchableOpacity>
-      </View>
-      <CustomizeModal modalVisible={modalVisible} closeModal={closeModal} />
-      <Notification notiVisible={notiVisible} closeNoti={closeNoti} /> 
-    </ScrollView>
-    )}
+          <CustomizeModal modalVisible={modalVisible} closeModal={closeModal} />
+          <Notification notiVisible={notiVisible} closeNoti={closeNoti} />
+        </ScrollView>
+      )}
     </Context.Consumer>
   );
 };

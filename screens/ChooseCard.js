@@ -76,7 +76,8 @@ export default ChooseCard = ({route, navigation}) => {
     // console.log(data);
   };
   const [isLoading, setLoading] = useState(true);
-
+  const [isLoading2, setLoading2] = useState(true);
+  const [isLoading3, setLoading3] = useState(true);
   const [data, setData] = useState();
   const getSetting = async () => {
     try {
@@ -94,7 +95,7 @@ export default ChooseCard = ({route, navigation}) => {
     } catch (error) {
       console.error(error);
     } finally {
-      // setLoading(false);
+      setLoading2(false);
       // console.log(data);
     }
   };
@@ -135,6 +136,8 @@ export default ChooseCard = ({route, navigation}) => {
       }
     } catch (error) {
       console.error(error);
+    } finally {
+      setLoading3(false);
     }
   };
 
@@ -181,14 +184,18 @@ export default ChooseCard = ({route, navigation}) => {
         if (msg.topic === 'sensor/watering') {
           setSensorWaterBool(msg.data);
         }
-        if (msg.topic === 'sensor/lighting') {
+        if (msg.topic === 'sensor/led') {
           setSensorLightBool(msg.data);
         }
       });
 
       client.on('connect', function () {
         console.log('connected');
-        client.subscribe('sensor/+', 2);
+        client.subscribe('sensor/light', 2);
+        client.subscribe('sensor/rh', 2);
+        client.subscribe('sensor/temp', 2);
+        client.subscribe('sensor/watering', 2);
+        client.subscribe('sensor/led', 2);
         mqttClient = client;
         // client.publish('sensor2', 'planterbox', 2, false);
       });
@@ -203,7 +210,7 @@ export default ChooseCard = ({route, navigation}) => {
     <Context.Consumer>
       {context => (
         <SafeAreaView style={styles.container}>
-          {isLoading ? (
+          {isLoading || isLoading2 || isLoading3 ? (
             <ActivityIndicator size="large" color={colors.newGreen2} />
           ) : (
             <ScrollView>
@@ -315,11 +322,16 @@ export default ChooseCard = ({route, navigation}) => {
             <DropDownTime type="PESTICIDE" /> */}
                 </View>
                 <View style={styles.inline2}>
-                  {sensorWaterBool === 'on' ? (
+                  {sensorWaterBool.split(',')[1] === 'on' ? (
                     <TouchableOpacity
                       style={styles.watermanual}
                       onPress={() =>
-                        mqttClient.publish('sensor/watering', id+',off', 1, true)
+                        mqttClient.publish(
+                          'sensor/watering',
+                          '124,off',
+                          1,
+                          true,
+                        )
                       }>
                       <View>
                         <Image
@@ -331,7 +343,7 @@ export default ChooseCard = ({route, navigation}) => {
                     <TouchableOpacity
                       style={styles.watermanual}
                       onPress={() =>
-                        mqttClient.publish('sensor/watering', id+',on', 1, true)
+                        mqttClient.publish('sensor/watering', '124,on', 1, true)
                       }>
                       <View>
                         <Image
@@ -340,11 +352,11 @@ export default ChooseCard = ({route, navigation}) => {
                       </View>
                     </TouchableOpacity>
                   )}
-                  {sensorLightBool === 'off' ? (
+                  {sensorLightBool.split(',')[1] === 'off' ? (
                     <TouchableOpacity
                       style={styles.lightmanual}
                       onPress={() =>
-                        mqttClient.publish('sensor/lighting', id+',low', 1, true)
+                        mqttClient.publish('sensor/led', '124,low', 1, true)
                       }>
                       <View>
                         <Image
@@ -353,11 +365,11 @@ export default ChooseCard = ({route, navigation}) => {
                       </View>
                     </TouchableOpacity>
                   ) : null}
-                  {sensorLightBool === 'low' ? (
+                  {sensorLightBool.split(',')[1] === 'low' ? (
                     <TouchableOpacity
                       style={styles.lightmanual}
                       onPress={() =>
-                        mqttClient.publish('sensor/lighting', id+',med', 1, true)
+                        mqttClient.publish('sensor/led', '124,med', 1, true)
                       }>
                       <View>
                         <Image
@@ -366,11 +378,11 @@ export default ChooseCard = ({route, navigation}) => {
                       </View>
                     </TouchableOpacity>
                   ) : null}
-                  {sensorLightBool === 'med' ? (
+                  {sensorLightBool.split(',')[1] === 'med' ? (
                     <TouchableOpacity
                       style={styles.lightmanual}
                       onPress={() =>
-                        mqttClient.publish('sensor/lighting', id+',high', 1, true)
+                        mqttClient.publish('sensor/led', '124,high', 1, true)
                       }>
                       <View>
                         <Image
@@ -379,11 +391,11 @@ export default ChooseCard = ({route, navigation}) => {
                       </View>
                     </TouchableOpacity>
                   ) : null}
-                  {sensorLightBool === 'high' ? (
+                  {sensorLightBool.split(',')[1] === 'high' ? (
                     <TouchableOpacity
                       style={styles.lightmanual}
                       onPress={() =>
-                        mqttClient.publish('sensor/lighting', id+',off', 1, true)
+                        mqttClient.publish('sensor/led', '124,off', 1, true)
                       }>
                       <View>
                         <Image
