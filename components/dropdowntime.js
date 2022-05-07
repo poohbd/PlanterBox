@@ -91,7 +91,6 @@ export default function DropDownTime({type, sid, sched99, pname}) {
 
   const putFer = async () => {
     try {
-      console.log('testputFer');
       const config = {
         method: 'PUT',
         url: 'http://192.168.1.42:3000/planterbox/settings/updateFertilizerSchedule',
@@ -231,7 +230,9 @@ export default function DropDownTime({type, sid, sched99, pname}) {
       //... You can use all the options from localNotifications
       channelId: 'testpush2',
       title: type + ' time!!',
-      message: "Don't forget to add " + type + ' to your ' + pname + '!', // (required)
+      message: "Add " + type + ' to your ' + pname + '!', // (required)
+      // repeatType: 'time',
+      // repeatTime: 30 * 1000
       // date: new Date(date.toLocaleString()), // in 60 secs
     });
     // PushNotification.localNotificationSchedule({
@@ -242,6 +243,10 @@ export default function DropDownTime({type, sid, sched99, pname}) {
     //   date: new Date(date.toLocaleString()), // in 60 secs
     // });
   };
+
+  const cancelpush = () => {
+    PushNotification.cancelAllLocalNotifications()
+  }
   return (
     <View style={defineType(type + 'BIGCARD')}>
       <View style={styles.cardHeader}>
@@ -249,8 +254,10 @@ export default function DropDownTime({type, sid, sched99, pname}) {
         <TouchableOpacity
           onPress={() => {
             testpush2();
+            // cancelpush();
             // console.log('Test sched');
-            console.log(schedson);
+            console.log('TestInterval');
+            console.log(valueplan);
             scase(type);
           }}>
           <View>
