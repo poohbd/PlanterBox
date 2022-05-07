@@ -374,7 +374,7 @@ const styles = StyleSheet.create({
   },
   smText: {
     fontFamily: 'Mitr-Regular',
-    fontSize: 15,
+    fontSize: 13,
     color: '#C8A805',
     marginLeft: -30,
     marginTop: -30,

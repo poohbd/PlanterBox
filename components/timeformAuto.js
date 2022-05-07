@@ -202,7 +202,7 @@ const styles = StyleSheet.create({
   },
   textTime: {
     color: colors.newGreen2,
-    fontSize: 12,
+    fontSize: 9,
     fontFamily: 'Mitr-Regular',
     textAlign: 'center',
     // justifyContent: 'space-between',

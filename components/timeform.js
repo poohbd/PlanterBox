@@ -287,11 +287,13 @@ const styles = StyleSheet.create({
   smallCard2: {
     width: 30,
     height: 20,
-    borderRadius: 30,
+    borderRadius: 10,
     backgroundColor: 'white',
     fontFamily: 'Mitr-Regular',
-    fontSize: 10,
+    fontSize: 9,
     paddingTop: 0,
+    paddingBottom: 0,
+    paddingLeft: 10,
     color: colors.newGreen2,
     // paddingLeft: 10,
     zIndex: 1,
@@ -363,9 +365,9 @@ const styles = StyleSheet.create({
   smText: {
     position: 'absolute',
     fontFamily: 'Mitr-Regular',
-    fontSize: 13,
+    fontSize: 10,
     color: '#436E71',
-    marginLeft: -37,
+    marginLeft: -45,
     marginTop: 40,
     lineHeight: 13,
     // color:"red"

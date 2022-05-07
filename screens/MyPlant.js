@@ -279,7 +279,7 @@ export default MyPlant = ({route, navigation}) => {
               }>
               <View>
                 <Text
-                  style={{fontFamily: 'Mitr-Regular', color: colors.newGreen2}}>
+                  style={{fontFamily: 'Mitr-Regular', color: colors.newGreen2,width: 120,marginLeft: -12}}>
                   {context.UserName}
                 </Text>
               </View>

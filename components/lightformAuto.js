@@ -136,6 +136,7 @@ const styles = StyleSheet.create({
         fontFamily: 'Mitr-Regular',
         fontSize: 10,
         paddingTop: -3,
+        paddingBottom: -3,
         paddingLeft: 10,
         zIndex: 1,
     },
@@ -165,7 +166,7 @@ const styles = StyleSheet.create({
     },
     textTime:{
         color: colors.newGreen2,
-        fontSize:12,
+        fontSize:9,
         fontFamily:"Mitr-Regular",
         textAlign:"center",
         justifyContent:'space-between',

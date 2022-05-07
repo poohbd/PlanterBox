@@ -50,7 +50,7 @@ export default Menu = ({route, navigation}) => {
   const UU = route.params;
   const UserID = UU.UserID;
   const UserName = UU.UserName;
-  console.log(UserID);
+  // console.log(UserID);
   return (
     <Context.Consumer>
       {context => (
@@ -70,7 +70,7 @@ export default Menu = ({route, navigation}) => {
               }}>
               <View>
                 <Text
-                  style={{fontFamily: 'Mitr-Regular', color: colors.newGreen2}}>
+                  style={{fontFamily: 'Mitr-Regular', color: colors.newGreen2,width: 120,marginLeft: -7}}>
                   {UserName}
                 </Text>
               </View>
@@ -327,8 +327,8 @@ const styles = StyleSheet.create({
     fontFamily: 'Mitr-Regular',
     fontSize: 16,
     flexShrink: 1,
-    width: 80,
-    marginLeft: -10,
+    width: 120,
+    marginLeft: -25,
   },
   buttonText2: {
     color: colors.newGreen2,
@@ -336,7 +336,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Mitr-Regular',
     fontSize: 12,
     flexShrink: 1,
-    width: 80,
-    marginLeft: -10,
+    width: 100,
+    marginLeft: -18,
   },
 });

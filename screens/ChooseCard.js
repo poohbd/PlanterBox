@@ -237,6 +237,8 @@ export default ChooseCard = ({route, navigation}) => {
                       style={{
                         fontFamily: 'Mitr-Regular',
                         color: colors.newGreen2,
+                        width: 120,
+                        marginLeft: -12,
                       }}>
                       {context.UserName}
                     </Text>
@@ -487,7 +489,7 @@ const styles = StyleSheet.create({
   },
   tempCardCircleText: {
     fontFamily: 'Mitr-Regular',
-    fontSize: 20,
+    fontSize: 15,
     color: '#E57E18',
   },
   container: {
@@ -536,7 +538,7 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30,
     marginTop: deviceHeight * 0.085,
-    marginLeft: deviceWidth * 0.5,
+    marginLeft: deviceWidth * 0.4,
     backgroundColor: 'transparent',
   },
   buttonBack: {

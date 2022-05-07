@@ -27,6 +27,7 @@ export default UserProfileHome = ({route, navigation}) => {
         <Context.Consumer>
         {context => (
         <View style={styles.container}>
+            <View style={styles.space}/><View style={styles.space}/>
             <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Menu',{"UserID": context.UserID, "UserName": context.UserName})}>
                 <View>
                     <Text style={styles.buttonText}>BACK</Text>
