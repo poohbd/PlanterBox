@@ -206,10 +206,10 @@ export default function TimeForm({data, allsche, sensor2}) {
         {valueplan === 'AUTO' && <TimeFormAuto data={data} />}
         {valueplan === 'MANUAL' && <OffWatering />}
         <Text style={styles.smText}>Soil Moisture</Text>
-        <Image
+        {/* <Image
           style={styles.image}
           source={require('../assets/images/Waterlogo.png')}
-        />
+        /> */}
         {isPickerFirstShow && (
           <DateTimePicker
             testID="dateTimePicker1"
@@ -356,8 +356,9 @@ const styles = StyleSheet.create({
     color: '#FAFAFA',
   },
   image: {
-    marginTop: -59,
+    marginTop: -80,
     marginLeft: 259,
+    marginBottom:20
   },
   smText: {
     position: 'absolute',

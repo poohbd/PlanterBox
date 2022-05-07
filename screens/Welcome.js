@@ -50,8 +50,8 @@ export default Welcome = ({navigation}) => {
         <Image source={require('../assets/images/uppercircle.png')}></Image>
       </View>
       {/* <FlatButton text="TEST" onPress={() => testpush2()} /> */}
-      <View style={{alignItems: 'center', top: 180}}>
-        <Image source={require('../assets/images/tree.png')}></Image>
+      <View style={{alignItems: 'center', top: 225}}>
+        <Image style={{width: 85,height: 100}} source={require('../assets/images/tree.png')}></Image>
         <Text style={styles.intro}>{'\n'}WELCOME TO FARM-O-MATIC</Text>
         <Text style={styles.intro}>
           A PLATFORM THAT WILL MAKE PLANTING EASIER

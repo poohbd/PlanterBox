@@ -284,21 +284,21 @@ export default function DropDownTime({type, sid, sched99, pname}) {
           }}
           placeholder={valueplan}
           placeholderStyle={{
-            color: colors.newGreen2,
-            fontSize: 9,
+            color: '#707070',
+            fontSize: 10,
             fontFamily: 'Mitr-Regular',
             textAlign: 'center',
             justifyContent: 'space-between',
           }}
           labelStyle={{
             fontFamily: 'Mitr-Regular',
-            color: colors.newGreen2,
+            color: '#707070',
             textAlign: 'center',
             fontSize: 10,
             justifyContent: 'space-between',
           }}
           listItemLabelStyle={{
-            color: colors.newGreen2,
+            color: '#707070',
             textAlign: 'center',
             fontSize: 10,
             fontFamily: 'Mitr-Regular',
@@ -440,7 +440,7 @@ const styles = StyleSheet.create({
     zIndex: 99,
   },
   textTime: {
-    color: colors.newGreen2,
+    color: '#707070',
     fontSize: 14,
     fontFamily: 'Mitr-Regular',
     textAlign: 'center',
