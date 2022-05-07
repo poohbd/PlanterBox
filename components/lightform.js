@@ -49,7 +49,7 @@ export default function LightForm({data, sensor1}) {
 
   const changeMode = async valueplan => {
     const response = await fetch(
-      'http://localhost:3000/planterbox/settings/updateBoxSettings',
+      'http://my-app-dpydq.ondigitalocean.app/planterbox/settings/updateBoxSettings',
       {
         method: 'PUT',
         headers: {
@@ -65,7 +65,7 @@ export default function LightForm({data, sensor1}) {
   };
   const changeTime = async () => {
     const response = await fetch(
-      'http://localhost:3000/planterbox/settings/updateBoxSettings',
+      'http://my-app-dpydq.ondigitalocean.app/planterbox/settings/updateBoxSettings',
       {
         method: 'PUT',
         headers: {
@@ -82,7 +82,7 @@ export default function LightForm({data, sensor1}) {
   };
   const changePower = async () => {
     const response = await fetch(
-      'http://localhost:3000/planterbox/settings/updateBoxSettings',
+      'http://my-app-dpydq.ondigitalocean.app/planterbox/settings/updateBoxSettings',
       {
         method: 'PUT',
         headers: {
@@ -150,7 +150,7 @@ export default function LightForm({data, sensor1}) {
     <View style={styles.bigCard}>
       <View style={styles.circleCard}>
         <Text style={styles.circleCardText}>{parseInt(splitlight[1])}</Text>
-        <Text style={styles.circleCardText2}>LUX</Text>
+        {/* <Text style={styles.circleCardText2}>LUX</Text> */}
       </View>
       <Text style={styles.cardWatering}>LIGHT EXPOSURE</Text>
       <LightDropdown
@@ -207,7 +207,7 @@ export default function LightForm({data, sensor1}) {
       {valueplan === 'MANUAL' && <OffLight lightStatus={data.lightStatus} />}
 
       <Text style={styles.smText}>{parseInt(splitlight[1])} LUX</Text>
-      {data.lightStatus === 'ON' && (
+      {/* {data.lightStatus === 'ON' && (
         <Image
           style={styles.image}
           source={require('../assets/images/lightlogo.png')}
@@ -218,7 +218,7 @@ export default function LightForm({data, sensor1}) {
           style={styles.image}
           source={require('../assets/images/light-off.png')}
         />
-      )}
+      )} */}
       <Slider
         style={{width: 120, height: 40, zIndex: 99}}
         minimumValue={0}
@@ -228,7 +228,7 @@ export default function LightForm({data, sensor1}) {
         value={power}
         onValueChange={setPower}
         onSlidingComplete={changePower}
-        marginTop={6}
+        marginTop={-80}
         marginLeft={45}
       />
       {isPickerFirstShow && (
@@ -239,7 +239,7 @@ export default function LightForm({data, sensor1}) {
           mode="time"
           is24Hour={false}
           onChange={onChangeFirst}
-          accentColor={colors.newGreen2}
+          accentColor={'#C8A805'}
           style={{marginRight: 110, marginTop: -20}}
         />
       )}
@@ -251,7 +251,7 @@ export default function LightForm({data, sensor1}) {
           mode="time"
           is24Hour={false}
           onChange={onChangeEnd}
-          accentColor={colors.newGreen2}
+          accentColor='#C8A805'
           style={{marginRight: 30, marginTop: 40}}
         />
       )}
@@ -355,9 +355,10 @@ const styles = StyleSheet.create({
     fontFamily: 'Mitr-Regular',
     fontSize: 30,
     // paddingTop: 10,
-    paddingLeft: 5,
+    paddingLeft: 17,
     color: '#FAFAFA',
     // textAlign: 'center',
+    //alignText:'center'
   },
   circleCardText2: {
     fontFamily: 'Mitr-Regular',
@@ -375,7 +376,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Mitr-Regular',
     fontSize: 15,
     color: '#C8A805',
-    marginLeft: -27,
+    marginLeft: -30,
     marginTop: -30,
   },
 });

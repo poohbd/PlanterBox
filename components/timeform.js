@@ -53,7 +53,7 @@ export default function TimeForm({data, allsche, sensor2}) {
   };
   const changeMode = async valueplan => {
     const response = await fetch(
-      'http://localhost:3000/planterbox/settings/updateBoxSettings',
+      'http://my-app-dpydq.ondigitalocean.app/planterbox/settings/updateBoxSettings',
       {
         method: 'PUT',
         headers: {
@@ -118,7 +118,7 @@ export default function TimeForm({data, allsche, sensor2}) {
   console.log(valueplan);
   const changeTime = async () => {
     const response = await fetch(
-      'http://localhost:3000/planterbox/settings/updateWateringSchedule',
+      'http://my-app-dpydq.ondigitalocean.app/planterbox/settings/updateWateringSchedule',
       {
         method: 'PUT',
         headers: {
@@ -205,10 +205,10 @@ export default function TimeForm({data, allsche, sensor2}) {
         {valueplan === 'AUTO' && <TimeFormAuto data={data} />}
         {valueplan === 'MANUAL' && <OffWatering />}
         <Text style={styles.smText}>Soil Moisture</Text>
-        <Image
+        {/* <Image
           style={styles.image}
           source={require('../assets/images/Waterlogo.png')}
-        />
+        /> */}
         {isPickerFirstShow && (
           <DateTimePicker
             testID="dateTimePicker1"
@@ -355,8 +355,9 @@ const styles = StyleSheet.create({
     color: '#FAFAFA',
   },
   image: {
-    marginTop: -83,
+    marginTop: -80,
     marginLeft: 259,
+    marginBottom:20
   },
   smText: {
     position: 'absolute',
