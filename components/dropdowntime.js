@@ -231,6 +231,8 @@ export default function DropDownTime({type, sid, sched99, pname}) {
       channelId: 'testpush2',
       title: type + ' time!!',
       message: "Add " + type + ' to your ' + pname + '!', // (required)
+      // repeatType: 'day',
+      // repeatTime: 2,
       // repeatType: 'time',
       // repeatTime: 30 * 1000
       // date: new Date(date.toLocaleString()), // in 60 secs
