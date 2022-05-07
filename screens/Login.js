@@ -10,7 +10,7 @@ export default Login = ({navigation}) => {
     const [email,setEmail] = React.useState("");
     const [password,setPassword] = React.useState("");
     const validateLogin = async () =>{
-        const response = await fetch("http://localhost:3000/user/login",{
+        const response = await fetch("http://my-app-dpydq.ondigitalocean.app/user/login",{
             method:"POST",
             headers : { 
                 'Content-Type': 'application/json',
@@ -79,6 +79,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     image :{
+        width: 85,
+        height: 100,
         marginBottom: 30,
         alignSelf:'center',
     },

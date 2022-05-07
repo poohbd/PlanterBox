@@ -23,7 +23,7 @@ export default Wikicontent = ({route, navigation}) => {
     try {
       const config = {
         method: 'POST',
-        url: 'http://localhost:3000/wiki/search',
+        url: 'http://my-app-dpydq.ondigitalocean.app/wiki/search',
         data: {
           plantname: plantname,
         },

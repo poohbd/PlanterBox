@@ -22,7 +22,7 @@ import axios from 'axios';
 import Context from '../Context/context';
 
 //import { CircularCard } from "react-native-circular-card-view";
-const baseUrl = 'http://localhost:3000';
+const baseUrl = 'http://my-app-dpydq.ondigitalocean.app';
 export default MyPlant = ({route, navigation}) => {
   /*const UserID = navigation.getParent().getParent();
   console.log("UserID:"+UserID);*/
@@ -125,7 +125,7 @@ export default MyPlant = ({route, navigation}) => {
     try {
       const config = {
         method: 'POST',
-        url: 'http://localhost:3000/planterbox/settings',
+        url: 'http://my-app-dpydq.ondigitalocean.app/planterbox/settings',
         data: {
           id: id,
         },
@@ -326,7 +326,7 @@ export default MyPlant = ({route, navigation}) => {
                           width: 200,
                           alignSelf: 'center',
                         }}
-                        placeholder="SELECT PRESET"
+                        placeholder="CHOOSE PLANT"
                         placeholderStyle={{
                           color: colors.newGreen2,
                           fontSize: 14,
@@ -340,7 +340,7 @@ export default MyPlant = ({route, navigation}) => {
                         }}
                         zIndex={99}
                       />
-                      <TouchableOpacity
+                      {/* <TouchableOpacity
                         style={styles.dropdowncustom}
                         onPress={() => setModalVisible(true)}>
                         <Text
@@ -351,7 +351,7 @@ export default MyPlant = ({route, navigation}) => {
                           }}>
                           CUSTOMIZE
                         </Text>
-                      </TouchableOpacity>
+                      </TouchableOpacity> */}
                     </View>
                   ) : null}
                 </View>
@@ -400,7 +400,7 @@ export default MyPlant = ({route, navigation}) => {
                                 textAlign: 'center',
                                 fontSize: 13,
                                 fontFamily: 'Mitr-Regular',
-                                paddingTop: 20,
+                                paddingTop: 25,
                               }}>
                               Light
                             </Text>
@@ -444,7 +444,7 @@ export default MyPlant = ({route, navigation}) => {
                         </View>
                       </TouchableOpacity>
                       <TouchableOpacity
-                        style={styles.buttonAdd}
+                        style={styles.buttonAdd2}
                         onPress={() =>
                           postPreset(
                             sid,
@@ -455,7 +455,7 @@ export default MyPlant = ({route, navigation}) => {
                         }>
                         <View>
                           <Text style={styles.buttonAddText}>
-                            + SAVE PRESET
+                            SAVE PRESET
                           </Text>
                         </View>
                       </TouchableOpacity>
@@ -814,6 +814,15 @@ const styles = StyleSheet.create({
     //marginLeft: deviceWidth*0.4,
     alignSelf: 'center',
   },
+  buttonAdd2: {
+    paddingVertical: 8,
+    width: 150,
+    backgroundColor: '#8BB5B8',
+    borderRadius: 20,
+    marginTop: deviceHeight * 0.03,
+    //marginLeft: deviceWidth*0.4,
+    alignSelf: 'center',
+  },
   // card: {
   //   fontFamily: 'Mitr-Regular',
   //   fontSize: 23,
@@ -844,10 +853,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: colors.newGreen2,
     borderRadius: 15,
-    shadowColor: colors.lightGray,
-    shadowOffset: {width: 0, height: 0},
-    shadowOpacity: 1,
-    shadowRadius: 8,
+    // shadowColor: colors.lightGray,
+    // shadowOffset: {width: 0, height: 0},
+    // shadowOpacity: 1,
+    // shadowRadius: 8,
     flexDirection: 'column',
     marginTop: 20,
     marginBottom: 6,
@@ -864,9 +873,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#CAD0D0',
     borderRadius: 15,
     shadowColor: colors.lightGray,
-    shadowOffset: {width: 0, height: 0},
-    shadowOpacity: 1,
-    shadowRadius: 8,
+    shadowOffset: {width: 10, height: 8},
+    shadowOpacity: 0.5,
+    shadowRadius: 5,
     flexDirection: 'column',
     marginTop: 20,
     marginBottom: 6,

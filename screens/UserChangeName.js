@@ -52,7 +52,7 @@ export default UserChangeName = ({route, navigation}) => {
         const {email,username,password} = values;
         const config = {
           method: 'PATCH',
-          url: 'http://localhost:3000/user/'+UserID,
+          url: 'http://my-app-dpydq.ondigitalocean.app/user/'+UserID,
           data: {
             email: email,
             username: username,
