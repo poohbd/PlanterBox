@@ -27,7 +27,7 @@ export default Wiki= ({route,navigation}) => {
   const [swiki, setSwiki] = useState([]);
   const getWikiList = async () => {
     const source = axios.CancelToken.source();
-    const url = "http://localhost:3000/wiki/listposts";
+    const url = "http://192.168.1.42:3000/wiki/listposts";
     try {
       const response = await axios.get(url, {cancelToken: source.token});
       if (response.status === 200) {
@@ -57,7 +57,7 @@ export default Wiki= ({route,navigation}) => {
     try {
       const config = {
         method: 'POST',
-        url: 'http://localhost:3000/wiki/search',
+        url: 'http://192.168.1.42:3000/wiki/search',
         data: {
           plantname: searchQuery,
         },

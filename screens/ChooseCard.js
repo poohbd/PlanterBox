@@ -43,7 +43,7 @@ export default ChooseCard = ({route, navigation}) => {
   };
   const getWaterschedule = async () => {
     const source = axios.CancelToken.source();
-    const url = 'http://localhost:3000/pbsetting/' + ssid + '/schedules';
+    const url = 'http://192.168.1.42:3000/pbsetting/' + ssid + '/schedules';
     try {
       const response = await axios.get(url, {cancelToken: source.token});
       if (response.status === 200) {
@@ -83,7 +83,7 @@ export default ChooseCard = ({route, navigation}) => {
     try {
       const config = {
         method: 'POST',
-        url: 'http://localhost:3000/planterbox/settings',
+        url: 'http://192.168.1.42:3000/planterbox/settings',
         data: {
           id: id,
         },
@@ -105,7 +105,7 @@ export default ChooseCard = ({route, navigation}) => {
       //console.log("boxidchoosecard :"+id);
       const config = {
         method: 'DELETE',
-        url: 'http://localhost:3000/planterbox/delete',
+        url: 'http://192.168.1.42:3000/planterbox/delete',
         data: {
           id: id,
         },
@@ -119,7 +119,7 @@ export default ChooseCard = ({route, navigation}) => {
   const [sched, setSched] = useState([]);
   const getSchedule = async () => {
     const source = axios.CancelToken.source();
-    const url = 'http://localhost:3000/pbsetting/' + ssid + '/schedules';
+    const url = 'http://192.168.1.42:3000/pbsetting/' + ssid + '/schedules';
     try {
       const response = await axios.get(url, {cancelToken: source.token});
       if (response.status === 200) {

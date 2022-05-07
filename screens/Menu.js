@@ -133,6 +133,7 @@ export default Menu = ({route, navigation}) => {
               </View>
             </TouchableOpacity>
           </View>
+          <View style={styles.space} />
           <View style={styles.inline}>
             <TouchableOpacity
               style={styles.lowerbutton}

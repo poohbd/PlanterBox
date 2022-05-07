@@ -91,9 +91,10 @@ export default function DropDownTime({type, sid, sched99, pname}) {
 
   const putFer = async () => {
     try {
+      console.log('testputFer');
       const config = {
         method: 'PUT',
-        url: 'http://localhost:3000/planterbox/settings/updateFertilizerSchedule',
+        url: 'http://192.168.1.42:3000/planterbox/settings/updateFertilizerSchedule',
         data: {
           sid: schedson.fertilizerschedule.FSID,
           time: date,
@@ -111,7 +112,7 @@ export default function DropDownTime({type, sid, sched99, pname}) {
     try {
       const config = {
         method: 'PUT',
-        url: 'http://localhost:3000/planterbox/settings/updatePesticideSchedule',
+        url: 'http://192.168.1.42:3000/planterbox/settings/updatePesticideSchedule',
         data: {
           sid: schedson.pesticideschedule.PSID,
           time: date,
@@ -247,9 +248,9 @@ export default function DropDownTime({type, sid, sched99, pname}) {
         <Text style={defineType(type + '_TITLE')}>{type}</Text>
         <TouchableOpacity
           onPress={() => {
-            // testpush2();
+            testpush2();
             // console.log('Test sched');
-            // console.log(schedson);
+            console.log(schedson);
             scase(type);
           }}>
           <View>
@@ -318,7 +319,7 @@ export default function DropDownTime({type, sid, sched99, pname}) {
         <DateTimePicker
           testID="dateTimePicker"
           value={date}
-          display="compact"
+          display="clock"
           mode="time"
           is24Hour={false}
           onChange={onChange}
@@ -390,7 +391,7 @@ const styles = StyleSheet.create({
   },
   fertilizerBell: {
     justifyContent: 'center',
-    marginLeft: 215,
+    marginLeft: 185,
   },
   pesticideSmallCard: {
     backgroundColor: colors.brown,
@@ -410,7 +411,7 @@ const styles = StyleSheet.create({
   },
   pesticideBell: {
     justifyContent: 'center',
-    marginLeft: 222,
+    marginLeft: 190,
   },
   dropdownSchedule: {
     width: 120,

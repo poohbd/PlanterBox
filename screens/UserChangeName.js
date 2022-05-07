@@ -52,7 +52,7 @@ export default UserChangeName = ({route, navigation}) => {
         const {email,username,password} = values;
         const config = {
           method: 'PATCH',
-          url: 'http://localhost:3000/user/'+UserID,
+          url: 'http://192.168.1.42:3000/user/'+UserID,
           data: {
             email: email,
             username: username,
