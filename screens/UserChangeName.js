@@ -68,7 +68,7 @@ export default UserChangeName = ({route, navigation}) => {
             
             )
         } else {
-          return navigation.navigate("UserProfileHome");
+          return navigation.navigate("UserProfileHome", {'UserID':UserID});
         }
      };
 
