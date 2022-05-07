@@ -344,7 +344,7 @@ export default ChooseCard = ({route, navigation}) => {
                     <TouchableOpacity
                       style={styles.lightmanual}
                       onPress={() =>
-                        mqttClient.publish('sensor/lighting', 124+',low', 1, true)
+                        mqttClient.publish('sensor/led', 124+',low', 1, true)
                       }>
                       <View>
                         <Image
@@ -357,7 +357,7 @@ export default ChooseCard = ({route, navigation}) => {
                     <TouchableOpacity
                       style={styles.lightmanual}
                       onPress={() =>
-                        mqttClient.publish('sensor/lighting', 124+',med', 1, true)
+                        mqttClient.publish('sensor/led', 124+',med', 1, true)
                       }>
                       <View>
                         <Image
@@ -370,7 +370,7 @@ export default ChooseCard = ({route, navigation}) => {
                     <TouchableOpacity
                       style={styles.lightmanual}
                       onPress={() =>
-                        mqttClient.publish('sensor/lighting', 124+',high', 1, true)
+                        mqttClient.publish('sensor/led', 124+',high', 1, true)
                       }>
                       <View>
                         <Image
@@ -383,7 +383,7 @@ export default ChooseCard = ({route, navigation}) => {
                     <TouchableOpacity
                       style={styles.lightmanual}
                       onPress={() =>
-                        mqttClient.publish('sensor/lighting', 124+',off', 1, true)
+                        mqttClient.publish('sensor/led', 124+',off', 1, true)
                       }>
                       <View>
                         <Image

@@ -213,7 +213,7 @@ export default function TimeForm({data, allsche, sensor2}) {
           <DateTimePicker
             testID="dateTimePicker1"
             value={datefirst}
-            display="compact"
+            display="clock"
             mode="time"
             is24Hour={false}
             onChange={onChangeFirst}
@@ -225,7 +225,7 @@ export default function TimeForm({data, allsche, sensor2}) {
           <DateTimePicker
             testID="dateTimePicker2"
             value={dateend}
-            display="compact"
+            display="clock"
             mode="time"
             is24Hour={false}
             onChange={onChangeEnd}

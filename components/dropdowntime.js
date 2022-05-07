@@ -318,7 +318,7 @@ export default function DropDownTime({type, sid, sched99, pname}) {
         <DateTimePicker
           testID="dateTimePicker"
           value={date}
-          display="compact"
+          display="clock"
           mode="time"
           is24Hour={false}
           onChange={onChange}
