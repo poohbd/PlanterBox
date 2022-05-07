@@ -53,7 +53,7 @@ export default function TimeForm({data, allsche, sensor2}) {
   };
   const changeMode = async valueplan => {
     const response = await fetch(
-      'http://192.168.1.42:3000/planterbox/settings/updateBoxSettings',
+      'https://my-app-dpydq.ondigitalocean.app/planterbox/settings/updateBoxSettings',
       {
         method: 'PUT',
         headers: {
@@ -118,7 +118,7 @@ export default function TimeForm({data, allsche, sensor2}) {
   console.log(valueplan);
   const changeTime = async () => {
     const response = await fetch(
-      'http://192.168.1.42:3000/planterbox/settings/updateWateringSchedule',
+      'https://my-app-dpydq.ondigitalocean.app/planterbox/settings/updateWateringSchedule',
       {
         method: 'PUT',
         headers: {
@@ -144,6 +144,7 @@ export default function TimeForm({data, allsche, sensor2}) {
         <Text style={styles.cardWatering}>WATERING</Text>
         <WateringDropdown
           zIndex={300}
+          elevation={300}
           openplan={openplan}
           setOpenplan={setOpenplan}
           valueplan={valueplan}
@@ -186,7 +187,7 @@ export default function TimeForm({data, allsche, sensor2}) {
               value={duration}
             />
 
-            <Text style={styles.cardContent}> </Text>
+            
             <TouchableOpacity
               style={styles.saveButton}
               onPress={() => {
@@ -290,14 +291,14 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     fontFamily: 'Mitr-Regular',
     fontSize: 10,
-    paddingTop: -3,
+    paddingTop: 0,
     color: colors.newGreen2,
     // paddingLeft: 10,
     zIndex: 1,
     // textAlign: 'center',
-    justifyContent: 'center',
-    alignItems: 'center',
-    textAlign: 'center',
+    // justifyContent: 'center',
+    // alignItems: 'center',
+    // textAlign: 'center',
   },
   // cardContent: {
   //   textAlign: 'center',

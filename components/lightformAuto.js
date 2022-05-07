@@ -31,7 +31,7 @@ export default function LightFormAuto ({data}){
     //     getJson();
     //   }, []);
     const addMinMax = async () =>{
-        const response = await fetch("http://192.168.1.42:3000/planterbox/settings/updateBoxSettings",{
+        const response = await fetch("https://my-app-dpydq.ondigitalocean.app/planterbox/settings/updateBoxSettings",{
           method:"PUT",
           headers : { 
               'Content-Type': 'application/json',
@@ -114,30 +114,30 @@ const styles = StyleSheet.create({
         zIndex: 3
     },
     mediumCard: {
-        //width: 200,
-        height:40,
+        width: 230,
+        height: 50,
         borderRadius: 20,
         backgroundColor: '#C8A805',
         fontFamily: 'Mitr-Regular',
         fontSize: 23,
-        paddingTop:10,
-        alignSelf:'center',
-        display:'flex',
-        flexDirection:'row',
-        marginTop:20,
-        marginLeft: 20 ,
-        zIndex: 1
+        paddingTop: 10,
+        alignSelf: 'center',
+        display: 'flex',
+        flexDirection: 'row',
+        marginTop: 10,
+        marginLeft: 20,
+        zIndex: 1,
     },
-    smallCard:{
-        // width: 60,
-        height:20,
+    smallCard: {
+        width: 45,
+        height: 35,
         borderRadius: 30,
         backgroundColor: 'white',
         fontFamily: 'Mitr-Regular',
         fontSize: 10,
-        paddingTop:-3,
-        paddingLeft:10,
-        zIndex : 1
+        paddingTop: -3,
+        paddingLeft: 10,
+        zIndex: 1,
     },
     saveButton:{
         width: 50,

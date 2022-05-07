@@ -65,6 +65,8 @@ export default function WateringDropdown({openplan,setOpenplan,valueplan,setValu
         fontFamily: 'Mitr-Regular',
       }}
       zIndex={99}
+      elevation={99}
+      stickyHeader={true}
     />
   );
 }

@@ -49,7 +49,7 @@ export default function LightForm({data, sensor1}) {
 
   const changeMode = async valueplan => {
     const response = await fetch(
-      'http://192.168.1.42:3000/planterbox/settings/updateBoxSettings',
+      'https://my-app-dpydq.ondigitalocean.app/planterbox/settings/updateBoxSettings',
       {
         method: 'PUT',
         headers: {
@@ -65,7 +65,7 @@ export default function LightForm({data, sensor1}) {
   };
   const changeTime = async () => {
     const response = await fetch(
-      'http://192.168.1.42:3000/planterbox/settings/updateBoxSettings',
+      'https://my-app-dpydq.ondigitalocean.app/planterbox/settings/updateBoxSettings',
       {
         method: 'PUT',
         headers: {
@@ -82,7 +82,7 @@ export default function LightForm({data, sensor1}) {
   };
   const changePower = async () => {
     const response = await fetch(
-      'http://192.168.1.42:3000/planterbox/settings/updateBoxSettings',
+      'https://my-app-dpydq.ondigitalocean.app/planterbox/settings/updateBoxSettings',
       {
         method: 'PUT',
         headers: {

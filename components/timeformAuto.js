@@ -39,7 +39,7 @@ export default function TimeFormAuto({data}) {
   //   }, []);
   const addMinMax = async () => {
     const response = await fetch(
-      'http://192.168.1.42:3000/planterbox/settings/updateBoxSettings',
+      'https://my-app-dpydq.ondigitalocean.app/planterbox/settings/updateBoxSettings',
       {
         method: 'PUT',
         headers: {
@@ -157,8 +157,8 @@ const styles = StyleSheet.create({
     zIndex: 3,
   },
   mediumCard: {
-    width: 200,
-    height: 40,
+    width: 210,
+    height: 50,
     borderRadius: 20,
     backgroundColor: '#436E71',
     fontFamily: 'Mitr-Regular',
@@ -172,8 +172,8 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   smallCard: {
-    width: 40,
-    height: 20,
+    width: 45,
+    height: 35,
     borderRadius: 30,
     backgroundColor: 'white',
     fontFamily: 'Mitr-Regular',
@@ -205,7 +205,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontFamily: 'Mitr-Regular',
     textAlign: 'center',
-    justifyContent: 'space-between',
+    // justifyContent: 'space-between',
     marginRight: 10,
   },
   cardWatering: {

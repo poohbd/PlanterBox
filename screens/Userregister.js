@@ -51,7 +51,7 @@ export default Userregister = ({navigation}) => {
         const {email,password,username} = values;
         const config = {
           method: 'POST',
-          url: 'http://my-app-dpydq.ondigitalocean.app/user/register',
+          url: 'https://my-app-dpydq.ondigitalocean.app/user/register',
           data: {
             email: email,
             username: username,

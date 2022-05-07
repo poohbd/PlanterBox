@@ -93,7 +93,7 @@ export default function DropDownTime({type, sid, sched99, pname}) {
     try {
       const config = {
         method: 'PUT',
-        url: 'http://192.168.1.42:3000/planterbox/settings/updateFertilizerSchedule',
+        url: 'https://my-app-dpydq.ondigitalocean.app/planterbox/settings/updateFertilizerSchedule',
         data: {
           sid: schedson.fertilizerschedule.FSID,
           time: date,
@@ -111,7 +111,7 @@ export default function DropDownTime({type, sid, sched99, pname}) {
     try {
       const config = {
         method: 'PUT',
-        url: 'http://192.168.1.42:3000/planterbox/settings/updatePesticideSchedule',
+        url: 'https://my-app-dpydq.ondigitalocean.app/planterbox/settings/updatePesticideSchedule',
         data: {
           sid: schedson.pesticideschedule.PSID,
           time: date,

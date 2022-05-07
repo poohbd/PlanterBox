@@ -10,7 +10,7 @@ export default Login = ({navigation}) => {
     const [email,setEmail] = React.useState("");
     const [password,setPassword] = React.useState("");
     const validateLogin = async () =>{
-        const response = await fetch("http://my-app-dpydq.ondigitalocean.app/user/login",{
+        const response = await fetch("https://my-app-dpydq.ondigitalocean.app/user/login",{
             method:"POST",
             headers : { 
                 'Content-Type': 'application/json',
