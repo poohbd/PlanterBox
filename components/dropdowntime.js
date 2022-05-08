@@ -235,7 +235,7 @@ export default function DropDownTime({type, sid, sched99, pname}) {
       // repeatTime: 2,
       // repeatType: 'time',
       // repeatTime: 30 * 1000
-      // date: new Date(date.toLocaleString()), // in 60 secs
+      date: new Date(date.toLocaleString()), // in 60 secs
     });
     // PushNotification.localNotificationSchedule({
     //   //... You can use all the options from localNotifications
@@ -331,7 +331,7 @@ export default function DropDownTime({type, sid, sched99, pname}) {
           display="clock"
           mode="time"
           is24Hour={false}
-          minimumDate= {new Date(Date.now())}
+          // minimumDate= {new Date(Date.now())}
           onChange={onChange}
           accentColor={colors.newGreen2}
           style={{marginRight: 100, marginTop: -70}}
