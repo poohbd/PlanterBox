@@ -76,6 +76,8 @@ export default Wikicontent = ({route, navigation}) => {
                     style={{
                       fontFamily: 'Mitr-Regular',
                       color: colors.newGreen2,
+                      width: 120,
+                      marginLeft: -15,
                     }}>
                     {context.UserName}
                   </Text>
@@ -344,7 +346,7 @@ const styles = StyleSheet.create({
     height: 30,
   },
   trick: {
-    width: 250,
+    width: 300,
     height: 40,
     borderRadius: 20,
     backgroundColor: '#CAD0D0',

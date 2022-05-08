@@ -154,7 +154,8 @@ export default function LightForm({data, sensor1}) {
       </View>
       <Text style={styles.cardWatering}>LIGHT EXPOSURE</Text>
       <LightDropdown
-        zIndex={300}
+        zIndex={1000}
+        elevation={1000}
         openplan={openplan}
         setOpenplan={setOpenplan}
         valueplan={valueplan}
@@ -362,7 +363,7 @@ const styles = StyleSheet.create({
   },
   circleCardText2: {
     fontFamily: 'Mitr-Regular',
-    fontSize: 10,
+    fontSize: 9,
     paddingTop: 10,
     paddingLeft: 5,
     color: '#FAFAFA',

@@ -94,7 +94,7 @@ export default Wiki= ({route,navigation}) => {
               style={styles.buttonName}
               onPress={() => navigation.navigate('UserProfileHome', {"UserID":context.UserID})}>
               <View>
-                <Text style={{fontFamily: 'Mitr-Regular', color: colors.newGreen2}}>
+                <Text style={{fontFamily: 'Mitr-Regular', color: colors.newGreen2,width: 120,marginLeft: -15}}>
                   {context.UserName}
                 </Text>
               </View>
@@ -351,9 +351,10 @@ inlineRight: {
     color: colors.newGreen2,
     marginTop: -50,
     fontFamily: 'Mitr-Regular',
-    fontSize: 16,
+    fontSize: 12,
     flexShrink:1, 
     width:80,
+    flexWrap:'wrap',
     //marginLeft:-10,
     alignSelf:'center',
 },

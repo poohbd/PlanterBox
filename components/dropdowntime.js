@@ -224,8 +224,8 @@ export default function DropDownTime({type, sid, sched99, pname}) {
   // };
 
   const testpush2 = () => {
-    console.log('This is test push2');
-    console.log(date);
+    // console.log('This is test push2');
+    // console.log(date);
     PushNotification.localNotification({
       //... You can use all the options from localNotifications
       channelId: 'testpush2',
@@ -331,6 +331,7 @@ export default function DropDownTime({type, sid, sched99, pname}) {
           display="clock"
           mode="time"
           is24Hour={false}
+          minimumDate= {new Date(Date.now())}
           onChange={onChange}
           accentColor={colors.newGreen2}
           style={{marginRight: 100, marginTop: -70}}
